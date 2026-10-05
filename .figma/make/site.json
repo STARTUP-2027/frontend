@@ -1,0 +1,10 @@
+{
+  "description": "Delivers a sleek, interactive SaaS website with dynamic product demos, real-time metrics, and tiered pricing to boost conversions and user engagement.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
