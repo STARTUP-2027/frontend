@@ -84,13 +84,13 @@ export default function PricingPage() {
   ];
 
   const featureMatrix = [
-    { name: "Workspace Seats", starter: "5 Members", pro: "Unlimited", enterprise: "Unlimited" },
-    { name: "AI Automations / mo", starter: "10 Workflows", pro: "Unlimited", enterprise: "Unlimited" },
-    { name: "Analytics Latency", starter: "Standard (p99 250ms)", pro: "Sub-second (p99 12ms)", enterprise: "Dedicated Edge Shard" },
-    { name: "Pre-built Integrations", starter: "50+ Connectors", pro: "150+ Connectors", enterprise: "Custom Connectors + SDK" },
-    { name: "SSO & SCIM (Okta / Azure)", starter: "—", pro: "Add-on", enterprise: "Included (Full SCIM)" },
-    { name: "Support SLA", starter: "Community & Email", pro: "Priority 24/7 (1h SLA)", enterprise: "Dedicated Architect (15m SLA)" },
-    { name: "Data Residency & BYOK", starter: "US-East Shared", pro: "Multi-Region", enterprise: "Dedicated Tenant + BYOK" },
+    { name: "Course Library Access", starter: "10 Foundational", pro: "All 50+ Masterclasses", enterprise: "Unlimited + Private Tracks" },
+    { name: "Interactive Sandboxes", starter: "Standard (Node/Py)", pro: "Advanced (GPU + Rust)", enterprise: "Custom Sandboxes & Clusters" },
+    { name: "AI Code Assistant", starter: "Basic Hints", pro: "Real-time AI Copilot", enterprise: "Custom Org Fine-Tuning" },
+    { name: "Verified Certificates", starter: "Standard", pro: "LinkedIn Shareable", enterprise: "Accredited Org Badges" },
+    { name: "Course Creator Studio", starter: "—", pro: "—", enterprise: "Included (Full Creator Hub)" },
+    { name: "Mentor Code Reviews", starter: "Community", pro: "Priority Expert Review", enterprise: "Dedicated Staff Advisor" },
+    { name: "Team Analytics & SSO", starter: "—", pro: "—", enterprise: "Included (Okta, Azure, SCIM)" },
   ];
 
   return (
@@ -171,9 +171,9 @@ export default function PricingPage() {
 
                   <button
                     className={plan.popular ? "button" : "price-button"}
-                    onClick={() => navigate(plan.name === "Enterprise" ? "/talk-to-sales" : "/signup")}
+                    onClick={() => navigate("/signup")}
                   >
-                    {plan.name === "Enterprise" ? "Talk to sales" : "Start free trial"} <Icon name="arrow" />
+                    {plan.name === "Team & Enterprise" ? "Enroll Engineering Team" : "Start learning free"} <Icon name="arrow" />
                   </button>
 
                   <small>WHAT’S INCLUDED</small>
@@ -191,7 +191,7 @@ export default function PricingPage() {
           </div>
 
           <p className="pricing-note">
-            All plans include SSL encryption, 99.99% uptime guarantee, and community access.
+            All plans include interactive sandbox access, certificate verification, and Discord community support.
           </p>
         </section>
 
@@ -200,7 +200,7 @@ export default function PricingPage() {
           <div className="comparison-header">
             <span className="section-pill-tag">PLAN MATRIX</span>
             <h2>Compare full features & capabilities</h2>
-            <p>Every detail transparently outlined so you can pick the right tier for your team.</p>
+            <p>Every detail transparently outlined so you can pick the right tier for your career or team.</p>
           </div>
 
           <div className="comparison-table-wrap">
@@ -257,14 +257,14 @@ export default function PricingPage() {
         {/* BOTTOM CTA */}
         <section className="product-cta-banner">
           <div className="cta-banner-content">
-            <h2>Ready to unlock exponential team momentum?</h2>
-            <p>Start your 14-day trial today. No credit card required.</p>
+            <h2>Ready to unlock exponential engineering momentum?</h2>
+            <p>Start learning today with free project-based sandboxes. No credit card required.</p>
             <div className="banner-actions">
               <Link to="/signup" className="product-primary-btn">
-                Start free trial
+                Enroll free now
               </Link>
-              <Link to="/talk-to-sales" className="product-secondary-btn">
-                Talk to sales
+              <Link to="/courses" className="product-secondary-btn">
+                Browse course catalog
               </Link>
             </div>
           </div>
