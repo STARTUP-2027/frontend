@@ -1,418 +1,152 @@
-import { useState, useMemo } from "react";
-import { Link } from "react-router";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router";
 import { SiteFooter, SiteNav } from "../../App";
 import { useTheme } from "../theme";
-
-type Category = "all" | "crm" | "dev" | "data" | "finance" | "communication";
-
-interface IntegrationApp {
-  id: string;
-  name: string;
-  category: Category;
-  tag: string;
-  desc: string;
-  icon: string;
-  connectedDefault?: boolean;
-  syncType: "Bi-directional" | "Real-time CDC" | "Event Webhook";
-}
-
-const APPS: IntegrationApp[] = [
-  { id: "slack", name: "Slack", category: "communication", tag: "Messaging", desc: "Push real-time alerts, approval requests, and automated KPI digests directly into channels.", icon: "💬", syncType: "Bi-directional", connectedDefault: true },
-  { id: "salesforce", name: "Salesforce", category: "crm", tag: "CRM", desc: "Bi-directionally sync pipeline stages, account intelligence, and custom object records without latency.", icon: "☁️", syncType: "Bi-directional", connectedDefault: true },
-  { id: "github", name: "GitHub", category: "dev", tag: "Engineering", desc: "Correlate code commits, pull requests, and CI/CD pipelines directly with production metrics.", icon: "🐙", syncType: "Event Webhook", connectedDefault: true },
-  { id: "stripe", name: "Stripe", category: "finance", tag: "Billing", desc: "Stream invoices, subscription changes, and MRR movements straight into your intelligence layer.", icon: "💳", syncType: "Real-time CDC", connectedDefault: true },
-  { id: "snowflake", name: "Snowflake", category: "data", tag: "Warehouse", desc: "Query data directly in Snowflake using Astra's zero-copy federated query engine.", icon: "❄️", syncType: "Bi-directional" },
-  { id: "postgres", name: "PostgreSQL", category: "data", tag: "Database", desc: "Connect read-replicas with instant schema auto-discovery and end-to-end TLS 1.3 encryption.", icon: "🐘", syncType: "Real-time CDC" },
-  { id: "linear", name: "Linear", category: "dev", tag: "Productivity", desc: "Link engineering issue velocity to customer impact and automated sprint reporting.", icon: "📐", syncType: "Bi-directional" },
-  { id: "notion", name: "Notion", category: "communication", tag: "Knowledge", desc: "Turn documentation and roadmap databases into dynamic, live-updating team widgets.", icon: "📝", syncType: "Bi-directional" },
-  { id: "hubspot", name: "HubSpot", category: "crm", tag: "Marketing", desc: "Enrich inbound marketing contacts and trigger personalized automation sequences.", icon: "🎯", syncType: "Bi-directional" },
-  { id: "aws", name: "Amazon Web Services", category: "dev", tag: "Cloud", desc: "Ingest CloudWatch metrics, S3 data lakes, and EventBridge streams with zero lag.", icon: "⚡", syncType: "Event Webhook" },
-  { id: "datadog", name: "Datadog", category: "dev", tag: "Observability", desc: "Ingest APM traces and error budgets to automatically orchestrate incident response flows.", icon: "🐶", syncType: "Real-time CDC" },
-  { id: "supabase", name: "Supabase", category: "data", tag: "Backend", desc: "Direct integration with Postgres and Auth for instantaneous realtime database subscriptions.", icon: "⚡", syncType: "Real-time CDC" },
-];
+import { useCourses } from "../context/CourseContext";
 
 export default function IntegrationsPage() {
   const { dark } = useTheme();
-  const [selectedCategory, setSelectedCategory] = useState<Category>("all");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [connectedApps, setConnectedApps] = useState<Record<string, boolean>>({
-    slack: true,
-    salesforce: true,
-    github: true,
-    stripe: true,
-  });
-  const [activeCodeLang, setActiveCodeLang] = useState<"ts" | "curl" | "python" | "go">("ts");
-  const [apiSuccess, setApiSuccess] = useState(false);
+  const navigate = useNavigate();
+  const { enrollInCourse, isEnrolled } = useCourses();
 
-  const filteredApps = useMemo(() => {
-    return APPS.filter((app) => {
-      const matchesCat = selectedCategory === "all" || app.category === selectedCategory;
-      const matchesSearch = app.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                            app.desc.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                            app.tag.toLowerCase().includes(searchQuery.toLowerCase());
-      return matchesCat && matchesSearch;
-    });
-  }, [selectedCategory, searchQuery]);
+  const [pods, setPods] = useState([
+    { id: "astra-core-7f8a1", status: "Running", cpu: "12m", memory: "48Mi", ready: "1/1" },
+    { id: "astra-core-7f8a2", status: "Running", cpu: "14m", memory: "52Mi", ready: "1/1" },
+    { id: "astra-core-7f8a3", status: "Running", cpu: "11m", memory: "46Mi", ready: "1/1" },
+  ]);
+  const [isDeploying, setIsDeploying] = useState(false);
 
-  const toggleConnect = (id: string) => {
-    setConnectedApps((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
-  };
+  const enrolled = isEnrolled("cloud-devops-k8s");
 
-  const handleTestApi = () => {
-    setApiSuccess(true);
-    setTimeout(() => setApiSuccess(false), 3000);
+  const handleDeployNewVersion = () => {
+    setIsDeploying(true);
+    const newPodId = `astra-core-9b2c${Math.floor(10 + Math.random() * 89)}`;
+    
+    // Add pending pod
+    setPods((prev) => [
+      { id: newPodId, status: "ContainerCreating", cpu: "0m", memory: "12Mi", ready: "0/1" },
+      ...prev.slice(0, 2)
+    ]);
+
+    setTimeout(() => {
+      setPods((prev) =>
+        prev.map((p) => (p.id === newPodId ? { ...p, status: "Running", ready: "1/1", cpu: "15m", memory: "50Mi" } : p))
+      );
+      setIsDeploying(false);
+    }, 1200);
   };
 
   return (
-    <div className={`subpage app integrations-product-page ${dark ? "dark" : ""}`}>
-      <div className="subpage-noise" />
+    <div className={`subpage app ${dark ? "dark" : ""} min-h-screen flex flex-col bg-[var(--bg)] text-[var(--text)]`}>
       <SiteNav />
 
-      <main className="product-page-main">
-        {/* HERO SECTION */}
-        <section className="product-hero">
-          <div className="product-hero-badge">
-            <span className="badge-dot" style={{ background: "#06b6d4" }} />
-            <span>Astra Integration Hub</span>
-            <span className="badge-pill">150+ Connectors</span>
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-28 space-y-16">
+        {/* Domain Hero */}
+        <section className="text-center max-w-3xl mx-auto space-y-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/30">
+            <span>☁️</span> Cloud & DevOps Track
           </div>
-
-          <h1 className="product-hero-title">
-            Every tool in your stack. <br />
-            <em className="gradient-text-integrations">Connected in perfect harmony.</em>
+          <h1 className="text-3xl sm:text-5xl font-black tracking-tight">
+            Master Cloud Infrastructure: <br />
+            <em className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-indigo-400">
+              Kubernetes, Terraform & GitOps
+            </em>
           </h1>
-
-          <p className="product-hero-subtitle">
-            Bi-directional real-time data synchronization across all your databases, CRMs, 
-            communication channels, and cloud infrastructure. Zero duct tape required.
+          <p className="text-sm text-[var(--muted)] leading-relaxed">
+            From containerizing applications with multi-stage Dockerfiles to provisioning multi-region AWS/GCP clusters with Terraform and automated ArgoCD GitOps pipelines.
           </p>
 
-          <div className="product-hero-actions">
-            <Link to="/signup" className="product-primary-btn">
-              Explore all 150+ apps
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </Link>
-            <a href="#api-studio" className="product-secondary-btn">
-              View Developer API Docs
+          <div className="flex flex-wrap justify-center gap-4 pt-2">
+            <button
+              onClick={() => {
+                enrollInCourse("cloud-devops-k8s");
+                navigate("/learn/cloud-devops-k8s");
+              }}
+              className="button button-lg text-xs font-extrabold shadow-xl hover:scale-105 transition-transform"
+            >
+              {enrolled ? "Resume DevOps Classroom →" : "Enroll in DevOps Masterclass Free →"}
+            </button>
+            <a href="#playground" className="button-secondary button-lg text-xs font-bold">
+              <span>⚡</span> Launch Cluster Simulator
             </a>
-          </div>
-
-          {/* Quick Metrics */}
-          <div className="hero-metrics-bar">
-            <div className="metric-item">
-              <b>150+</b>
-              <small>Pre-built Connectors</small>
-            </div>
-            <div className="metric-divider" />
-            <div className="metric-item">
-              <b>&lt; 250ms</b>
-              <small>Sync Latency</small>
-            </div>
-            <div className="metric-divider" />
-            <div className="metric-item">
-              <b>Bi-directional</b>
-              <small>Two-way Realtime Sync</small>
-            </div>
-            <div className="metric-divider" />
-            <div className="metric-item">
-              <b>Custom Webhooks</b>
-              <small>Unlimited Endpoints</small>
-            </div>
           </div>
         </section>
 
-        {/* INTERACTIVE INTEGRATION DIRECTORY & APP GRID */}
-        <section className="integrations-directory-section">
-          <div className="directory-header">
-            <div className="directory-search-box">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-              <input
-                type="text"
-                placeholder="Search 150+ integrations by name, protocol, or tag (e.g. Salesforce, Postgres, Webhook)..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              {searchQuery && (
-                <button onClick={() => setSearchQuery("")} className="clear-search-btn">✕</button>
-              )}
+        {/* Interactive Kubernetes & GitOps Lab */}
+        <section id="playground" className="p-6 sm:p-8 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-2xl space-y-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-[var(--border-soft)] pb-4">
+            <div>
+              <span className="text-[10px] font-extrabold uppercase tracking-widest text-amber-400">Live Kubernetes Cluster Simulator</span>
+              <h2 className="text-lg font-black mt-0.5">Automated Rolling Deployment & Pod Scaling</h2>
+            </div>
+            <button
+              onClick={handleDeployNewVersion}
+              disabled={isDeploying}
+              className="button button-sm text-xs font-bold flex items-center gap-1.5"
+            >
+              <span>{isDeploying ? "Rolling out..." : "🚀 Trigger GitOps Canary Deployment"}</span>
+            </button>
+          </div>
+
+          {/* Pods Table Simulator */}
+          <div className="rounded-2xl bg-[#090812] border border-amber-500/20 overflow-hidden font-mono text-xs">
+            <div className="p-3 bg-[#110e20] border-b border-gray-800 flex justify-between text-[11px] text-gray-400">
+              <span>Cluster: k8s.astra.production (us-east-1)</span>
+              <span>Namespace: default • Deployment: astra-core (v2.6)</span>
             </div>
 
-            <div className="category-pill-bar">
-              {[
-                { id: "all", label: "All Integrations" },
-                { id: "crm", label: "CRMs & Sales" },
-                { id: "dev", label: "Developer & Cloud" },
-                { id: "data", label: "Databases & Storage" },
-                { id: "finance", label: "Finance & Billing" },
-                { id: "communication", label: "Communication" },
-              ].map((cat) => (
-                <button
-                  key={cat.id}
-                  className={`category-pill ${selectedCategory === cat.id ? "active" : ""}`}
-                  onClick={() => setSelectedCategory(cat.id as Category)}
-                >
-                  {cat.label}
-                </button>
+            <div className="divide-y divide-gray-800">
+              <div className="grid grid-cols-4 p-3 text-gray-500 font-bold text-[10px] uppercase">
+                <span>Pod Name</span>
+                <span>Ready</span>
+                <span>Status</span>
+                <span>CPU / Mem</span>
+              </div>
+              {pods.map((pod) => (
+                <div key={pod.id} className="grid grid-cols-4 p-3 items-center text-gray-300">
+                  <span className="text-amber-300 font-bold truncate pr-2">{pod.id}</span>
+                  <span>{pod.ready}</span>
+                  <span className="flex items-center gap-1.5">
+                    <span className={`w-2 h-2 rounded-full ${pod.status === "Running" ? "bg-emerald-400 animate-pulse" : "bg-amber-400 animate-spin"}`} />
+                    <span className={pod.status === "Running" ? "text-emerald-400" : "text-amber-400"}>{pod.status}</span>
+                  </span>
+                  <span className="text-gray-400">{pod.cpu} / {pod.memory}</span>
+                </div>
               ))}
             </div>
           </div>
-
-          {/* App Cards Grid */}
-          <div className="apps-grid">
-            {filteredApps.map((app) => {
-              const isConnected = !!connectedApps[app.id];
-              return (
-                <div key={app.id} className={`app-card ${isConnected ? "is-connected" : ""}`}>
-                  <div className="app-card-top">
-                    <div className="app-icon-wrapper">
-                      <span className="app-emoji">{app.icon}</span>
-                    </div>
-                    <div className="app-status-wrap">
-                      <span className={`sync-pill ${app.syncType.toLowerCase().replace(/\s+/g, "-")}`}>
-                        {app.syncType}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="app-card-body">
-                    <div className="app-title-row">
-                      <h4>{app.name}</h4>
-                      <span className="app-tag-badge">{app.tag}</span>
-                    </div>
-                    <p>{app.desc}</p>
-                  </div>
-
-                  <div className="app-card-footer">
-                    <button
-                      onClick={() => toggleConnect(app.id)}
-                      className={`connect-btn ${isConnected ? "connected" : ""}`}
-                    >
-                      {isConnected ? (
-                        <>
-                          <span className="dot active-green" />
-                          Connected
-                        </>
-                      ) : (
-                        "+ Connect App"
-                      )}
-                    </button>
-                    <Link to="/signup" className="config-link">
-                      Configure →
-                    </Link>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
         </section>
 
-        {/* INTERACTIVE SCHEMA FIELD MAPPER */}
-        <section className="schema-mapper-section">
-          <div className="section-pill-tag">VISUAL FIELD MAPPING</div>
-          <h2 className="section-title">Zero-code schema synchronization</h2>
-          <p className="section-subtitle">Map fields across heterogenous databases and SaaS tools with point-and-click ease.</p>
-
-          <div className="mapper-canvas-card">
-            <div className="mapper-grid">
-              {/* Source Column */}
-              <div className="mapper-col">
-                <div className="col-header">
-                  <span className="source-badge">SOURCE</span>
-                  <h4>Salesforce CRM</h4>
-                </div>
-                <div className="field-box active-field">
-                  <span>account.annual_revenue</span>
-                  <small>Currency (USD)</small>
-                </div>
-                <div className="field-box">
-                  <span>contact.primary_email</span>
-                  <small>String (Email)</small>
-                </div>
-                <div className="field-box">
-                  <span>opportunity.stage_name</span>
-                  <small>Enum (Stage)</small>
-                </div>
-              </div>
-
-              {/* Center Transformation Node */}
-              <div className="mapper-center-node">
-                <div className="engine-circle">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                  <span>Astra Universal Schema</span>
-                </div>
-                <div className="sync-pulse-line">
-                  <span className="flowing-dot" />
-                </div>
-              </div>
-
-              {/* Destination Column */}
-              <div className="mapper-col">
-                <div className="col-header">
-                  <span className="dest-badge">DESTINATION</span>
-                  <h4>Snowflake Data Cloud</h4>
-                </div>
-                <div className="field-box active-field">
-                  <span>PUBLIC.METRICS.ARR_VALUE</span>
-                  <small>NUMERIC(18,2)</small>
-                </div>
-                <div className="field-box">
-                  <span>PUBLIC.USERS.USER_EMAIL</span>
-                  <small>VARCHAR(255)</small>
-                </div>
-                <div className="field-box">
-                  <span>PUBLIC.PIPELINE.DEAL_STATUS</span>
-                  <small>VARCHAR(50)</small>
-                </div>
-              </div>
-            </div>
-
-            <div className="mapper-status-bar">
-              <div className="status-item">
-                <span className="dot green" />
-                <span>CDC Stream Active (0.18s latency)</span>
-              </div>
-              <div className="status-item">
-                <span>Conflict Resolution: <b>Last Write Wins (Deterministic)</b></span>
-              </div>
-            </div>
+        {/* Masterclass Pillars */}
+        <section className="space-y-6">
+          <div className="text-center max-w-2xl mx-auto space-y-2">
+            <span className="text-[11px] font-extrabold uppercase tracking-wider text-amber-400">Curriculum Roadmap</span>
+            <h2 className="text-2xl sm:text-3xl font-black">Production Cloud Infrastructure Pillars</h2>
           </div>
-        </section>
 
-        {/* DEVELOPER API & WEBHOOK STUDIO */}
-        <section id="api-studio" className="developer-api-section">
-          <div className="api-studio-card">
-            <div className="api-studio-left">
-              <span className="badge-pill">DEVELOPER FIRST</span>
-              <h2>Universal REST & GraphQL APIs</h2>
-              <p>
-                Need custom integrations? Use our fully typed SDKs and robust webhook engine 
-                to connect proprietary on-premise systems with full enterprise security.
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] space-y-3">
+              <span className="text-2xl">☸️</span>
+              <h3 className="text-base font-extrabold">1. Production Kubernetes</h3>
+              <p className="text-xs text-[var(--muted)] leading-relaxed">
+                Master Deployments, StatefulSets, Ingress NGINX, Horizontal Pod Autoscaling (HPA), and zero-downtime rolling upgrades.
               </p>
-
-              <div className="api-features-list">
-                <div className="api-feat-item">
-                  <span className="feat-bullet">01</span>
-                  <div>
-                    <b>Strict OpenAPI 3.1 & TypeScript Types</b>
-                    <p>Auto-generate client SDKs for any language in your stack.</p>
-                  </div>
-                </div>
-                <div className="api-feat-item">
-                  <span className="feat-bullet">02</span>
-                  <div>
-                    <b>Guaranteed Exactly-Once Webhook Delivery</b>
-                    <p>Automatic retry with exponential backoff and replay debugging.</p>
-                  </div>
-                </div>
-              </div>
-
-              <button onClick={handleTestApi} className="product-primary-btn test-api-btn">
-                {apiSuccess ? "Payload Delivered (200 OK)" : "Test Sample Payload"}
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-              </button>
             </div>
 
-            <div className="api-studio-right">
-              <div className="code-editor-window">
-                <div className="code-header">
-                  <div className="code-tabs">
-                    {(["ts", "curl", "python", "go"] as const).map((lang) => (
-                      <button
-                        key={lang}
-                        className={`code-tab ${activeCodeLang === lang ? "active" : ""}`}
-                        onClick={() => setActiveCodeLang(lang)}
-                      >
-                        {lang.toUpperCase()}
-                      </button>
-                    ))}
-                  </div>
-                  <span className="code-auth-badge">Bearer API_KEY</span>
-                </div>
-
-                <div className="code-body">
-                  <pre>
-                    {activeCodeLang === "ts" && `import { AstraClient } from "@astra/sdk";
-
-const astra = new AstraClient({
-  apiKey: process.env.ASTRA_SECRET_KEY,
-});
-
-// Stream real-time telemetry event
-const response = await astra.events.ingest({
-  entityId: "usr_94821a",
-  eventType: "subscription.upgraded",
-  payload: {
-    tier: "Enterprise",
-    arrDelta: 48000,
-    currency: "USD",
-  },
-});
-
-console.log("Synced to Snowflake + Slack:", response.status);`}
-
-                    {activeCodeLang === "curl" && `curl -X POST https://api.astra.ai/v1/events \\
-  -H "Authorization: Bearer sec_live_89481b942c" \\
-  -H "Content-Type: application/json" \\
-  -d '{
-    "entityId": "usr_94821a",
-    "eventType": "subscription.upgraded",
-    "payload": { "tier": "Enterprise", "arrDelta": 48000 }
-  }'`}
-
-                    {activeCodeLang === "python" && `from astra import AstraClient
-
-client = AstraClient(api_key="sec_live_89481b942c")
-
-res = client.events.ingest(
-    entity_id="usr_94821a",
-    event_type="subscription.upgraded",
-    payload={"tier": "Enterprise", "arrDelta": 48000}
-)
-print(f"Status: {res.status_code}")`}
-
-                    {activeCodeLang === "go" && `package main
-
-import (
-  "context"
-  "github.com/astra-ai/astra-go"
-)
-
-func main() {
-  client := astra.NewClient("sec_live_89481b942c")
-  _ = client.Events.Ingest(context.Background(), astra.IngestParams{
-    EntityID:  "usr_94821a",
-    EventType: "subscription.upgraded",
-  })
-}`}
-                  </pre>
-                </div>
-
-                {apiSuccess && (
-                  <div className="api-test-banner">
-                    <span className="badge-dot" style={{ background: "#10b981" }} />
-                    <span>HTTP 200 OK — Delivered in 28ms to 3 downstream subscribers.</span>
-                  </div>
-                )}
-              </div>
+            <div className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] space-y-3">
+              <span className="text-2xl">🏗️</span>
+              <h3 className="text-base font-extrabold">2. Terraform & Cloud IaC</h3>
+              <p className="text-xs text-[var(--muted)] leading-relaxed">
+                Provision repeatable VPC networks, IAM security roles, managed EKS/GKE clusters, and RDS databases with modular HCL code.
+              </p>
             </div>
-          </div>
-        </section>
 
-        {/* BOTTOM CTA */}
-        <section className="product-cta-banner">
-          <div className="cta-banner-content">
-            <h2>Ready to eliminate data silos forever?</h2>
-            <p>Connect your first application in less than 2 minutes.</p>
-            <div className="banner-actions">
-              <Link to="/signup" className="product-primary-btn">
-                Start connecting tools
-              </Link>
-              <Link to="/talk-to-sales" className="product-secondary-btn">
-                Request custom connector
-              </Link>
+            <div className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] space-y-3">
+              <span className="text-2xl">🔄</span>
+              <h3 className="text-base font-extrabold">3. GitOps & ArgoCD CI/CD</h3>
+              <p className="text-xs text-[var(--muted)] leading-relaxed">
+                Implement automated continuous delivery with ArgoCD, Helm charts, automated rollback canaries, and Prometheus observability.
+              </p>
             </div>
           </div>
         </section>

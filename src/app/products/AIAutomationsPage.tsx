@@ -1,418 +1,256 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router";
 import { SiteFooter, SiteNav } from "../../App";
 import { useTheme } from "../theme";
+import { useCourses } from "../context/CourseContext";
 
 export default function AIAutomationsPage() {
   const { dark } = useTheme();
-  const [activeStep, setActiveStep] = useState<number>(1);
-  const [isRunning, setIsRunning] = useState<boolean>(false);
-  const [selectedBlueprint, setSelectedBlueprint] = useState<"churn" | "lead" | "incident" | "invoice">("churn");
-  const [logs, setLogs] = useState<Array<{ id: number; time: string; msg: string; type: "info" | "success" | "ai" }>>([
-    { id: 1, time: "10:42:01", msg: "Workflow engine initialized and listening on webhooks", type: "info" },
-    { id: 2, time: "10:42:04", msg: "Trigger received: Zendesk ticket #4819 (Priority: Urgent)", type: "info" },
+  const navigate = useNavigate();
+  const { enrollInCourse, isEnrolled } = useCourses();
+
+  const [selectedModel, setSelectedModel] = useState<"claude" | "deepseek" | "gpt4">("claude");
+  const [promptQuery, setPromptQuery] = useState("Build an autonomous agent that reads GitHub issues and writes PRs");
+  const [isRunning, setIsRunning] = useState(false);
+  const [activeStep, setActiveStep] = useState(1);
+  const [simulatedStream, setSimulatedStream] = useState<string[]>([
+    "✓ System prompt initialized with LangGraph cyclic constraints",
+    "✓ Tool definitions loaded: [github_api, code_evaluator, git_commit]"
   ]);
 
-  const blueprints = {
-    churn: {
-      title: "VIP Customer Churn Prevention",
-      trigger: "Zendesk High-Priority Ticket / Negative Sentiment",
-      aiReasoning: "Astra LLM scores sentiment (-0.84), flags $45k ARR contract renewal in 30d",
-      action: "Slack #exec-churn alert + Stripe draft 20% discount offer + Notify Maya Chen",
-      impact: "Reduced churn by 34% across 1,200 enterprise accounts",
-    },
-    lead: {
-      title: "High-Intent Inbound Enrichment",
-      trigger: "Form submission on Pricing page from Fortune 500 domain",
-      aiReasoning: "Enrich with Clearbit/LinkedIn data, assign tier: Enterprise Tier 1",
-      action: "Instantly create Salesforce Opportunity & book round-robin calendar slot",
-      impact: "12-minute faster lead response time; 41% higher close rate",
-    },
-    incident: {
-      title: "Automated Production Triage",
-      trigger: "Datadog p99 latency spike alert (>500ms in us-east-1)",
-      aiReasoning: "Correlate error logs with latest GitHub release SHA-8f4b12",
-      action: "Trigger automatic rollback canary & dispatch PagerDuty alert to on-call",
-      impact: "MTTR decreased from 42 mins to 90 seconds",
-    },
-    invoice: {
-      title: "Autonomous Invoice Reconciliation",
-      trigger: "New PDF invoice attached to billing@company.com",
-      aiReasoning: "OCR extract line items, verify against Purchase Order in NetSuite",
-      action: "Approve payment if <$5,000 threshold; otherwise route to VP Finance",
-      impact: "Automated 8,400 monthly hours of manual accounting entry",
-    },
-  };
+  const enrolled = isEnrolled("ai-agents-masterclass");
 
-  const handleTestRun = () => {
+  const handleRunAgent = () => {
     if (isRunning) return;
     setIsRunning(true);
     setActiveStep(1);
-    
-    setLogs((prev) => [
-      { id: Date.now(), time: new Date().toLocaleTimeString(), msg: "Initiating live workflow simulation...", type: "info" },
-      ...prev.slice(0, 4)
-    ]);
+    setSimulatedStream([`[0ms] 🚀 Dispatched prompt to ${selectedModel.toUpperCase()} reasoning engine...`]);
 
     setTimeout(() => {
       setActiveStep(2);
-      setLogs((prev) => [
-        { id: Date.now(), time: new Date().toLocaleTimeString(), msg: "AI Reasoning: Extracted intent with 99.4% confidence", type: "ai" },
-        ...prev
+      setSimulatedStream((prev) => [
+        ...prev,
+        "[16ms] 🔍 Embedding query & executing Vector RAG retrieval (Cosine similarity: 0.961)..."
       ]);
-    }, 1200);
+    }, 700);
 
     setTimeout(() => {
       setActiveStep(3);
-      setLogs((prev) => [
-        { id: Date.now(), time: new Date().toLocaleTimeString(), msg: "Branch Condition matched: ARR > $20k -> Executive Path", type: "info" },
-        ...prev
+      setSimulatedStream((prev) => [
+        ...prev,
+        "[42ms] 🧠 Multi-step reasoning: Deconstructed into 4 sub-tasks (Repo clone, AST parse, Code edit, Lint test)..."
       ]);
-    }, 2400);
+    }, 1500);
 
     setTimeout(() => {
       setActiveStep(4);
-      setLogs((prev) => [
-        { id: Date.now(), time: new Date().toLocaleTimeString(), msg: "Execution finished: Webhooks delivered (200 OK in 142ms)", type: "success" },
-        ...prev
+      setSimulatedStream((prev) => [
+        ...prev,
+        "[64ms] ✅ Docker sandbox executed unit tests. All assertions passed with 0 memory errors."
       ]);
       setIsRunning(false);
-    }, 3600);
+    }, 2400);
   };
 
   return (
-    <div className={`subpage app automations-product-page ${dark ? "dark" : ""}`}>
-      <div className="subpage-noise" />
+    <div className={`subpage app ${dark ? "dark" : ""} min-h-screen flex flex-col bg-[var(--bg)] text-[var(--text)]`}>
       <SiteNav />
 
-      <main className="product-page-main">
-        {/* HERO SECTION */}
-        <section className="product-hero">
-          <div className="product-hero-badge">
-            <span className="badge-dot ai-dot" />
-            <span>Astra Autonomous Studio 2.0</span>
-            <span className="badge-pill">Zero-Code Multi-Agent</span>
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-28 space-y-16">
+        {/* Domain Hero */}
+        <section className="text-center max-w-3xl mx-auto space-y-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider bg-purple-500/10 text-purple-400 border border-purple-500/30">
+            <span>✨</span> AI & Machine Learning Track
           </div>
-
-          <h1 className="product-hero-title">
-            Put complex business logic <br />
-            <em className="gradient-text-ai">on self-driving autopilot.</em>
+          <h1 className="text-3xl sm:text-5xl font-black tracking-tight">
+            Master Autonomous <br />
+            <em className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-indigo-400">
+              AI Agents & Multi-Agent Swarms
+            </em>
           </h1>
-
-          <p className="product-hero-subtitle">
-            Orchestrate multi-step AI agents, database triggers, and human approvals into resilient, 
-            self-healing workflows. Scale operations without multiplying headcount.
+          <p className="text-sm text-[var(--muted)] leading-relaxed">
+            Move beyond simple prompt wrappers. Learn how to architect, evaluate, and deploy production-grade agentic graphs, hybrid vector search pipelines, and self-correcting LLM systems.
           </p>
 
-          <div className="product-hero-actions">
-            <button 
-              onClick={handleTestRun}
-              className="product-primary-btn glow-btn"
-              disabled={isRunning}
+          <div className="flex flex-wrap justify-center gap-4 pt-2">
+            <button
+              onClick={() => {
+                enrollInCourse("ai-agents-masterclass");
+                navigate("/learn/ai-agents-masterclass");
+              }}
+              className="button button-lg text-xs font-extrabold shadow-xl hover:scale-105 transition-transform"
             >
-              {isRunning ? "Simulating Execution..." : "Run Live Workflow Demo"}
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="m9 7 8 5-8 5V7Z"/></svg>
+              {enrolled ? "Resume AI Classroom →" : "Enroll in AI Masterclass Free →"}
             </button>
-            <Link to="/signup" className="product-secondary-btn">
-              Build free workflow
-            </Link>
-          </div>
-
-          {/* Quick Metrics */}
-          <div className="hero-metrics-bar">
-            <div className="metric-item">
-              <b>18.4M+</b>
-              <small>Monthly Actions Executed</small>
-            </div>
-            <div className="metric-divider" />
-            <div className="metric-item">
-              <b>142ms</b>
-              <small>Median Execution Time</small>
-            </div>
-            <div className="metric-divider" />
-            <div className="metric-item">
-              <b>99.998%</b>
-              <small>Reliability Uptime</small>
-            </div>
-            <div className="metric-divider" />
-            <div className="metric-item">
-              <b>100%</b>
-              <small>Deterministic Rollbacks</small>
-            </div>
+            <a href="#playground" className="button-secondary button-lg text-xs font-bold">
+              <span>⚡</span> Try Interactive Lab
+            </a>
           </div>
         </section>
 
-        {/* INTERACTIVE WORKFLOW NODE STUDIO CANVAS */}
-        <section className="workflow-studio-section">
-          <div className="studio-container">
-            <div className="workflow-studio-header">
-              <div className="workflow-title-group">
-                <span className="studio-pill">INTERACTIVE WORKFLOW GRAPH</span>
-                <h3>{blueprints[selectedBlueprint].title}</h3>
-              </div>
-              <div className="workflow-actions-group">
-                <button 
-                  className={`run-flow-btn ${isRunning ? "running" : ""}`}
-                  onClick={handleTestRun}
-                  disabled={isRunning}
-                >
-                  <span className="btn-icon">⚡</span>
-                  {isRunning ? "Simulating Flow..." : "Test Run Workflow"}
-                </button>
-              </div>
+        {/* Interactive Multi-Agent Playground */}
+        <section id="playground" className="p-6 sm:p-8 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-2xl space-y-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-[var(--border-soft)] pb-4">
+            <div>
+              <span className="text-[10px] font-extrabold uppercase tracking-widest text-[var(--accent)]">Live In-Browser Lab</span>
+              <h2 className="text-lg font-black mt-0.5">Autonomous Agent Execution Simulator</h2>
             </div>
 
-            {/* Visual Node Graph Canvas */}
-            <div className="visual-node-canvas">
-              {/* Node 1: Trigger */}
-              <div 
-                className={`flow-node node-trigger ${activeStep === 1 ? "active-step" : ""}`}
-                onClick={() => setActiveStep(1)}
-              >
-                <div className="node-badge">STEP 01: TRIGGER</div>
-                <div className="node-content">
-                  <div className="node-icon trigger-icon">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-                  </div>
-                  <div>
-                    <h4>Event Webhook</h4>
-                    <p>{blueprints[selectedBlueprint].trigger}</p>
-                  </div>
-                </div>
-                <div className="node-status-chip">
-                  <span className="status-dot green" />
-                  <span>Listening</span>
-                </div>
-              </div>
-
-              {/* Node Connector 1 */}
-              <div className={`flow-connector ${activeStep >= 2 ? "active-pulse" : ""}`}>
-                <div className="connector-line" />
-                <div className="energy-pulse" />
-              </div>
-
-              {/* Node 2: AI Reasoning */}
-              <div 
-                className={`flow-node node-ai ${activeStep === 2 ? "active-step" : ""}`}
-                onClick={() => setActiveStep(2)}
-              >
-                <div className="node-badge ai-badge">STEP 02: AI AGENT REASONING</div>
-                <div className="node-content">
-                  <div className="node-icon ai-icon">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m12 3 1.3 3.7L17 8l-3.7 1.3L12 13l-1.3-3.7L7 8l3.7-1.3L12 3Z"/><path d="m19 14 .7 2.3L22 17l-2.3.7L19 20l-.7-2.3L16 17l2.3-.7L19 14Z"/></svg>
-                  </div>
-                  <div>
-                    <h4>Astra Intelligence</h4>
-                    <p>{blueprints[selectedBlueprint].aiReasoning}</p>
-                  </div>
-                </div>
-                <div className="node-status-chip">
-                  <span className="status-dot purple" />
-                  <span>Multi-Model (Claude 3.7 + GPT-4o)</span>
-                </div>
-              </div>
-
-              {/* Node Connector 2 */}
-              <div className={`flow-connector ${activeStep >= 3 ? "active-pulse" : ""}`}>
-                <div className="connector-line" />
-                <div className="energy-pulse" />
-              </div>
-
-              {/* Node 3: Branch Decision */}
-              <div 
-                className={`flow-node node-branch ${activeStep === 3 ? "active-step" : ""}`}
-                onClick={() => setActiveStep(3)}
-              >
-                <div className="node-badge">STEP 03: GUARDRAIL & BRANCH</div>
-                <div className="node-content">
-                  <div className="node-icon branch-icon">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><path d="M6 9v12m0-6h9m3-6v9"/></svg>
-                  </div>
-                  <div>
-                    <h4>Policy Check & Route</h4>
-                    <p>Validate RBAC permissions and evaluate contract tier conditional threshold.</p>
-                  </div>
-                </div>
-                <div className="node-status-chip">
-                  <span className="status-dot cyan" />
-                  <span>Deterministic Guardrail</span>
-                </div>
-              </div>
-
-              {/* Node Connector 3 */}
-              <div className={`flow-connector ${activeStep >= 4 ? "active-pulse" : ""}`}>
-                <div className="connector-line" />
-                <div className="energy-pulse" />
-              </div>
-
-              {/* Node 4: Action */}
-              <div 
-                className={`flow-node node-action ${activeStep === 4 ? "active-step" : ""}`}
-                onClick={() => setActiveStep(4)}
-              >
-                <div className="node-badge action-badge">STEP 04: MULTI-SYSTEM SYNC</div>
-                <div className="node-content">
-                  <div className="node-icon action-icon">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                  </div>
-                  <div>
-                    <h4>Execute & Notify</h4>
-                    <p>{blueprints[selectedBlueprint].action}</p>
-                  </div>
-                </div>
-                <div className="node-status-chip">
-                  <span className="status-dot green" />
-                  <span>200 OK Delivered</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Bottom Console Log Stream */}
-            <div className="workflow-console">
-              <div className="console-header">
-                <div className="console-title">
-                  <span className="terminal-dot red" />
-                  <span className="terminal-dot yellow" />
-                  <span className="terminal-dot green" />
-                  <span>Real-time Telemetry & Execution Log</span>
-                </div>
-                <small className="console-meta">Worker pool: active · Memory isolation: 100%</small>
-              </div>
-
-              <div className="console-body">
-                {logs.map((log) => (
-                  <div key={log.id} className={`console-line line-${log.type}`}>
-                    <span className="log-time">[{log.time}]</span>
-                    <span className="log-type">{log.type.toUpperCase()}</span>
-                    <span className="log-msg">{log.msg}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* BLUEPRINT GALLERY SECTION */}
-        <section className="automation-blueprints-section">
-          <div className="section-pill-tag">PROVEN TEMPLATES</div>
-          <h2 className="section-title">Pre-built automation blueprints</h2>
-          <p className="section-subtitle">Deploy ready-to-run enterprise workflows in a single click.</p>
-
-          <div className="blueprint-tabs">
-            {(Object.keys(blueprints) as Array<keyof typeof blueprints>).map((key) => (
+            {/* Model Selector */}
+            <div className="flex items-center gap-1.5 p-1 rounded-xl bg-[var(--surface-soft)] border border-[var(--border)] text-xs font-bold">
               <button
-                key={key}
-                className={`blueprint-tab-btn ${selectedBlueprint === key ? "active" : ""}`}
-                onClick={() => setSelectedBlueprint(key)}
+                onClick={() => setSelectedModel("claude")}
+                className={`px-3 py-1 rounded-lg transition-all ${
+                  selectedModel === "claude" ? "bg-purple-600 text-white shadow-sm" : "text-[var(--muted)] hover:text-[var(--text)]"
+                }`}
               >
-                {blueprints[key].title}
+                Claude 3.7 Sonnet
               </button>
+              <button
+                onClick={() => setSelectedModel("deepseek")}
+                className={`px-3 py-1 rounded-lg transition-all ${
+                  selectedModel === "deepseek" ? "bg-purple-600 text-white shadow-sm" : "text-[var(--muted)] hover:text-[var(--text)]"
+                }`}
+              >
+                DeepSeek R1
+              </button>
+              <button
+                onClick={() => setSelectedModel("gpt4")}
+                className={`px-3 py-1 rounded-lg transition-all ${
+                  selectedModel === "gpt4" ? "bg-purple-600 text-white shadow-sm" : "text-[var(--muted)] hover:text-[var(--text)]"
+                }`}
+              >
+                GPT-4o
+              </button>
+            </div>
+          </div>
+
+          {/* Prompt & Trigger */}
+          <div className="space-y-3">
+            <label className="block text-xs font-bold text-[var(--muted)]">Agent Objective / Prompt</label>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={promptQuery}
+                onChange={(e) => setPromptQuery(e.target.value)}
+                className="flex-1 p-3 rounded-xl bg-[var(--surface-soft)] border border-[var(--border)] text-xs font-medium focus:ring-2 focus:ring-[var(--accent)]"
+                placeholder="Enter an agent goal..."
+              />
+              <button
+                onClick={handleRunAgent}
+                disabled={isRunning}
+                className="button px-6 text-xs font-bold shrink-0"
+              >
+                {isRunning ? "Running Agent..." : "Execute Simulation ▶"}
+              </button>
+            </div>
+          </div>
+
+          {/* Step Pipeline Visualization */}
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
+            {[
+              { num: 1, title: "1. Intent Parsing", desc: "Structured Zod Schema" },
+              { num: 2, title: "2. Vector Search", desc: "Pinecone Hybrid RAG" },
+              { num: 3, title: "3. Multi-Agent Loop", desc: "LangGraph Cyclic State" },
+              { num: 4, title: "4. Sandbox Verification", desc: "Docker Isolated Runner" },
+            ].map((step) => {
+              const isActive = activeStep === step.num;
+              const isDone = activeStep > step.num;
+              return (
+                <div
+                  key={step.num}
+                  className={`p-3.5 rounded-2xl border transition-all ${
+                    isActive
+                      ? "bg-purple-500/20 border-purple-500 shadow-md scale-105"
+                      : isDone
+                      ? "bg-emerald-500/10 border-emerald-500/40 text-emerald-400"
+                      : "bg-[var(--surface-soft)] border-[var(--border)] text-[var(--muted)]"
+                  }`}
+                >
+                  <div className="flex justify-between items-center text-[10px] font-mono font-bold mb-1">
+                    <span>STEP {step.num}</span>
+                    <span>{isDone ? "✓ DONE" : isActive ? "ACTIVE" : "QUEUED"}</span>
+                  </div>
+                  <h4 className="text-xs font-bold text-[var(--text)]">{step.title}</h4>
+                  <p className="text-[10px] text-[var(--muted)] mt-0.5">{step.desc}</p>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Live Stream Terminal Output */}
+          <div className="p-4 rounded-2xl bg-[#0b0914] text-emerald-400 font-mono text-xs border border-purple-500/20 space-y-1 shadow-inner">
+            <div className="flex justify-between text-[10px] text-gray-500 border-b border-gray-800 pb-2 mb-2">
+              <span>AGENT STATE LOG STREAM</span>
+              <span>Model: {selectedModel.toUpperCase()} • RAG Index: 142k chunks</span>
+            </div>
+            {simulatedStream.map((line, i) => (
+              <div key={i} className="animate-fade-in">{line}</div>
             ))}
           </div>
-
-          <div className="blueprint-showcase-card">
-            <div className="blueprint-card-left">
-              <span className="badge-pill">PRODUCTION BLUEPRINT</span>
-              <h3>{blueprints[selectedBlueprint].title}</h3>
-              <p className="blueprint-desc">{blueprints[selectedBlueprint].aiReasoning}</p>
-              
-              <div className="blueprint-impact-badge">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="m18 15-6-6-6 6"/></svg>
-                <span>{blueprints[selectedBlueprint].impact}</span>
-              </div>
-
-              <div className="blueprint-actions">
-                <Link to="/signup" className="product-primary-btn">
-                  Use this blueprint
-                </Link>
-                <button onClick={handleTestRun} className="product-secondary-btn">
-                  Simulate in canvas
-                </button>
-              </div>
-            </div>
-
-            <div className="blueprint-card-right">
-              <div className="flow-breakdown-box">
-                <div className="flow-step-item">
-                  <span className="step-num">01</span>
-                  <div>
-                    <b>Incoming Event:</b>
-                    <p>{blueprints[selectedBlueprint].trigger}</p>
-                  </div>
-                </div>
-                <div className="flow-step-item">
-                  <span className="step-num">02</span>
-                  <div>
-                    <b>Autonomous Action:</b>
-                    <p>{blueprints[selectedBlueprint].action}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </section>
 
-        {/* SAFETY & ENTERPRISE CONTROLS */}
-        <section className="automation-safety-section">
-          <div className="section-pill-tag">ENTERPRISE SAFETY MESH</div>
-          <h2 className="section-title">Built with strict deterministic guardrails</h2>
-          <p className="section-subtitle">Autonomous power without the risk of uncontrolled hallucinations.</p>
+        {/* Masterclass Syllabus Overview */}
+        <section className="space-y-6">
+          <div className="text-center max-w-2xl mx-auto space-y-2">
+            <span className="text-[11px] font-extrabold uppercase tracking-wider text-[var(--accent)]">Curriculum Breakdown</span>
+            <h2 className="text-2xl sm:text-3xl font-black">What You Will Master in This Track</h2>
+          </div>
 
-          <div className="pillars-grid">
-            <div className="pillar-card">
-              <div className="pillar-icon bg-violet">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg>
-              </div>
-              <h3>Human-in-the-Loop Intercepts</h3>
-              <p>Configure sensitive actions to pause for instant human review in Slack, Microsoft Teams, or email with one-click approval buttons.</p>
-              <ul className="pillar-checklist">
-                <li><span>✓</span> Interactive interactive slack cards</li>
-                <li><span>✓</span> Custom financial threshold pauses</li>
-                <li><span>✓</span> Timeout & escalation fail-safes</li>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] space-y-3">
+              <span className="text-2xl">🧠</span>
+              <h3 className="text-base font-extrabold">1. Agent Architectures & LangGraph</h3>
+              <p className="text-xs text-[var(--muted)] leading-relaxed">
+                Build cyclic, stateful multi-agent graphs with conditional routing, human-in-the-loop checkpoints, and memory persistence.
+              </p>
+              <ul className="text-xs space-y-1 text-[var(--muted)] pt-2 border-t border-[var(--border-soft)]">
+                <li>✓ Multi-agent supervisor patterns</li>
+                <li>✓ Tool invocation with strict JSON schemas</li>
+                <li>✓ Time-travel graph debugging</li>
               </ul>
             </div>
 
-            <div className="pillar-card">
-              <div className="pillar-icon bg-cyan">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 21h5v-5"/></svg>
-              </div>
-              <h3>Deterministic State Rollbacks</h3>
-              <p>If any downstream third-party API returns an error, Astra automatically triggers compensating transactions to prevent partial writes.</p>
-              <ul className="pillar-checklist">
-                <li><span>✓</span> ACID-compliant distributed sagas</li>
-                <li><span>✓</span> Automated webhook retry backoff</li>
-                <li><span>✓</span> Dead letter queue telemetry</li>
+            <div className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] space-y-3">
+              <span className="text-2xl">🔍</span>
+              <h3 className="text-base font-extrabold">2. Advanced Hybrid Vector RAG</h3>
+              <p className="text-xs text-[var(--muted)] leading-relaxed">
+                Combine dense vector embeddings with BM25 keyword matching and cross-encoder re-ranking for ultra-precise retrieval.
+              </p>
+              <ul className="text-xs space-y-1 text-[var(--muted)] pt-2 border-t border-[var(--border-soft)]">
+                <li>✓ Pinecone, Qdrant & pgvector</li>
+                <li>✓ Reciprocal rank fusion (RRF)</li>
+                <li>✓ Semantic chunking & metadata filtering</li>
               </ul>
             </div>
 
-            <div className="pillar-card">
-              <div className="pillar-icon bg-emerald">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-              </div>
-              <h3>Isolated Sandboxed Execution</h3>
-              <p>Every automation executes inside an isolated ephemeral microVM with encrypted memory and zero retention of sensitive customer prompts.</p>
-              <ul className="pillar-checklist">
-                <li><span>✓</span> Ephemeral firewalled sandboxes</li>
-                <li><span>✓</span> Zero model training on customer data</li>
-                <li><span>✓</span> SOC 2 Type II audit logging</li>
+            <div className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] space-y-3">
+              <span className="text-2xl">🛡️</span>
+              <h3 className="text-base font-extrabold">3. Evaluation, Sandboxing & Safety</h3>
+              <p className="text-xs text-[var(--muted)] leading-relaxed">
+                Run generated code safely in isolated containers, automate regression test suites with RAGAS, and prevent prompt injection.
+              </p>
+              <ul className="text-xs space-y-1 text-[var(--muted)] pt-2 border-t border-[var(--border-soft)]">
+                <li>✓ Ephemeral Docker sandboxes</li>
+                <li>✓ Automated RAGAS evaluation metrics</li>
+                <li>✓ Zero-leak guardrails</li>
               </ul>
             </div>
           </div>
         </section>
 
-        {/* BOTTOM CTA */}
-        <section className="product-cta-banner">
-          <div className="cta-banner-content">
-            <h2>Ready to automate your most critical business flows?</h2>
-            <p>Deploy your first self-driving workflow in less than 5 minutes.</p>
-            <div className="banner-actions">
-              <Link to="/signup" className="product-primary-btn">
-                Start building for free
-              </Link>
-              <Link to="/talk-to-sales" className="product-secondary-btn">
-                Talk to an automation architect
-              </Link>
-            </div>
+        {/* Lead Instructor */}
+        <section className="p-6 sm:p-8 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-xl flex flex-col sm:flex-row items-center gap-6">
+          <div className="w-20 h-20 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-600 text-white font-black text-2xl flex items-center justify-center shrink-0 shadow-lg">
+            AV
+          </div>
+          <div className="space-y-1 text-center sm:text-left">
+            <span className="text-[10px] font-extrabold uppercase tracking-widest text-[var(--accent)]">Lead Instructor</span>
+            <h3 className="text-lg font-black">Dr. Aris Vance</h3>
+            <p className="text-xs text-[var(--muted)]">Lead AI Researcher at Astra Labs • Former Anthropic Research Contributor</p>
+            <p className="text-xs text-[var(--muted)] mt-2">
+              "My mission is to help engineers transition from prompt tinkering to architecting robust, autonomous systems that operate reliably in production."
+            </p>
           </div>
         </section>
       </main>

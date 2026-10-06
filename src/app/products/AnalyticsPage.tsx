@@ -1,373 +1,196 @@
-import { useState, useMemo } from "react";
-import { Link } from "react-router";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router";
 import { SiteFooter, SiteNav } from "../../App";
 import { useTheme } from "../theme";
+import { useCourses } from "../context/CourseContext";
 
 export default function AnalyticsPage() {
   const { dark } = useTheme();
-  const [timeRange, setTimeRange] = useState<"24h" | "7d" | "30d" | "1y">("30d");
-  const [activeTab, setActiveTab] = useState<"revenue" | "retention" | "queries">("revenue");
-  const [eventVolume, setEventVolume] = useState<number>(5); // in millions
-  const [liveStreamActive, setLiveStreamActive] = useState(true);
+  const navigate = useNavigate();
+  const { enrollInCourse, isEnrolled } = useCourses();
 
-  // Live Simulated Stream
-  const liveEvents = useMemo(() => [
-    { id: 1, time: "Just now", text: "Enterprise expansion logged: +$36,000 ARR", client: "Stripe EU", status: "success" },
-    { id: 2, time: "4s ago", text: "Cohort retention analysis rendered in 11ms", client: "FinTech Hub", status: "fast" },
-    { id: 3, time: "18s ago", text: "Anomaly detection: +42% signups in APAC", client: "Astra Radar", status: "ai" },
-    { id: 4, time: "42s ago", text: "Cross-db query federated (Snowflake + Postgres)", client: "Data Mesh", status: "success" },
-  ], []);
+  const [activeTab, setActiveTab] = useState<"rsc" | "streaming" | "edgeDb">("rsc");
+  const [streamProgress, setStreamProgress] = useState(100);
+  const [isSimulating, setIsSimulating] = useState(false);
 
-  // Time-range multiplier
-  const mult = timeRange === "24h" ? 0.08 : timeRange === "7d" ? 0.28 : timeRange === "30d" ? 1 : 11.4;
+  const enrolled = isEnrolled("fullstack-react-nextjs");
 
-  const mrrValue = (842.5 * mult).toFixed(1);
-  const eventsTracked = (eventVolume * (timeRange === "24h" ? 0.05 : timeRange === "7d" ? 0.25 : 1)).toFixed(1);
-  const hoursSaved = Math.round(eventVolume * 4.2);
-  const costSavings = Math.round(eventVolume * 3850);
+  const handleSimulateStream = () => {
+    setIsSimulating(true);
+    setStreamProgress(10);
+    setTimeout(() => setStreamProgress(45), 300);
+    setTimeout(() => setStreamProgress(80), 700);
+    setTimeout(() => {
+      setStreamProgress(100);
+      setIsSimulating(false);
+    }, 1100);
+  };
 
   return (
-    <div className={`subpage app analytics-product-page ${dark ? "dark" : ""}`}>
-      <div className="subpage-noise" />
+    <div className={`subpage app ${dark ? "dark" : ""} min-h-screen flex flex-col bg-[var(--bg)] text-[var(--text)]`}>
       <SiteNav />
 
-      <main className="product-page-main">
-        {/* HERO SECTION */}
-        <section className="product-hero">
-          <div className="product-hero-badge">
-            <span className="badge-dot" />
-            <span>Astra Analytics Engine 3.4</span>
-            <span className="badge-pill">Sub-second Latency</span>
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-28 space-y-16">
+        {/* Domain Hero */}
+        <section className="text-center max-w-3xl mx-auto space-y-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider bg-sky-500/10 text-sky-400 border border-sky-500/30">
+            <span>⚡</span> Full-Stack Web & Systems Track
           </div>
-
-          <h1 className="product-hero-title">
-            Turn raw telemetry into <br />
-            <em className="gradient-text-analytics">unfair operational clarity.</em>
+          <h1 className="text-3xl sm:text-5xl font-black tracking-tight">
+            Master Distributed Web Architecture: <br />
+            <em className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-indigo-400 to-purple-400">
+              React 19, Server Components & Edge DBs
+            </em>
           </h1>
-
-          <p className="product-hero-subtitle">
-            Unify behavioral events, financial metrics, and customer signals into one interactive, 
-            blazing-fast intelligence hub. Answer critical business questions in milliseconds.
+          <p className="text-sm text-[var(--muted)] leading-relaxed">
+            Build ultra-fast, distributed web platforms with React 19 Actions, zero-bundle Server Components, progressive streaming SSR, optimistic UI mutations, and edge PostgreSQL.
           </p>
 
-          <div className="product-hero-actions">
-            <Link to="/signup" className="product-primary-btn">
-              Start 14-day free trial
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </Link>
-            <Link to="/talk-to-sales" className="product-secondary-btn">
-              Book personalized demo
-            </Link>
+          <div className="flex flex-wrap justify-center gap-4 pt-2">
+            <button
+              onClick={() => {
+                enrollInCourse("fullstack-react-nextjs");
+                navigate("/learn/fullstack-react-nextjs");
+              }}
+              className="button button-lg text-xs font-extrabold shadow-xl hover:scale-105 transition-transform"
+            >
+              {enrolled ? "Resume Full-Stack Classroom →" : "Enroll in Full-Stack Masterclass Free →"}
+            </button>
+            <a href="#playground" className="button-secondary button-lg text-xs font-bold">
+              <span>⚡</span> Try Interactive Architecture Lab
+            </a>
+          </div>
+        </section>
+
+        {/* Interactive Architecture Lab */}
+        <section id="playground" className="p-6 sm:p-8 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-2xl space-y-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-[var(--border-soft)] pb-4">
+            <div>
+              <span className="text-[10px] font-extrabold uppercase tracking-widest text-sky-400">Interactive Architecture Playground</span>
+              <h2 className="text-lg font-black mt-0.5">React 19 Server Components vs Client Hydration</h2>
+            </div>
+
+            <div className="flex items-center gap-1.5 p-1 rounded-xl bg-[var(--surface-soft)] border border-[var(--border)] text-xs font-bold">
+              <button
+                onClick={() => setActiveTab("rsc")}
+                className={`px-3 py-1 rounded-lg transition-all ${
+                  activeTab === "rsc" ? "bg-sky-600 text-white shadow-sm" : "text-[var(--muted)] hover:text-[var(--text)]"
+                }`}
+              >
+                RSC Server Boundary
+              </button>
+              <button
+                onClick={() => setActiveTab("streaming")}
+                className={`px-3 py-1 rounded-lg transition-all ${
+                  activeTab === "streaming" ? "bg-sky-600 text-white shadow-sm" : "text-[var(--muted)] hover:text-[var(--text)]"
+                }`}
+              >
+                Suspense Streaming SSR
+              </button>
+              <button
+                onClick={() => setActiveTab("edgeDb")}
+                className={`px-3 py-1 rounded-lg transition-all ${
+                  activeTab === "edgeDb" ? "bg-sky-600 text-white shadow-sm" : "text-[var(--muted)] hover:text-[var(--text)]"
+                }`}
+              >
+                Optimistic UI Updates
+              </button>
+            </div>
           </div>
 
-          {/* Quick proof stats banner */}
-          <div className="hero-metrics-bar">
-            <div className="metric-item">
-              <b>12ms</b>
-              <small>p99 Query Latency</small>
+          {/* Interactive Visualizer Canvas */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+            <div className="space-y-4">
+              <h3 className="text-sm font-extrabold">
+                {activeTab === "rsc"
+                  ? "Zero-Bundle-Size Server Execution"
+                  : activeTab === "streaming"
+                  ? "Progressive HTML Chunk Streaming"
+                  : "Instant Optimistic State Mutations"}
+              </h3>
+              <p className="text-xs text-[var(--muted)] leading-relaxed">
+                {activeTab === "rsc"
+                  ? "Server Components execute exclusively on Node/Edge runtimes. Heavy parsing dependencies like Markdown and Shiki add exactly 0 KB to the client bundle."
+                  : activeTab === "streaming"
+                  ? "Stream critical UI shells in 12ms while slow asynchronous database queries stream into <Suspense /> fallbacks seamlessly."
+                  : "React 19 useOptimistic gives instant user gratification while backend mutations synchronize asynchronously in the background."}
+              </p>
+
+              <div className="grid grid-cols-2 gap-3 pt-2">
+                <div className="p-3 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border)]">
+                  <span className="text-[10px] uppercase font-bold text-[var(--muted)]">Client Bundle Delta</span>
+                  <p className="text-base font-black text-emerald-400">0 KB added</p>
+                </div>
+                <div className="p-3 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border)]">
+                  <span className="text-[10px] uppercase font-bold text-[var(--muted)]">p99 Hydration Time</span>
+                  <p className="text-base font-black text-sky-400">8.4 ms</p>
+                </div>
+              </div>
+
+              <button
+                onClick={handleSimulateStream}
+                disabled={isSimulating}
+                className="button button-sm text-xs font-bold flex items-center gap-1.5"
+              >
+                <span>{isSimulating ? "Streaming..." : "▶️ Trigger Live Stream Test"}</span>
+              </button>
             </div>
-            <div className="metric-divider" />
-            <div className="metric-item">
-              <b>142.8%</b>
-              <small>Net Revenue Retention</small>
-            </div>
-            <div className="metric-divider" />
-            <div className="metric-item">
-              <b>10B+</b>
-              <small>Monthly Events Ingested</small>
-            </div>
-            <div className="metric-divider" />
-            <div className="metric-item">
-              <b>Zero</b>
-              <small>Data Engineering Overhead</small>
+
+            {/* Code & Terminal Sandbox */}
+            <div className="rounded-2xl bg-[#080710] border border-sky-500/20 p-4 font-mono text-xs text-sky-200 space-y-2 shadow-inner">
+              <div className="flex justify-between text-[10px] text-gray-400 border-b border-gray-800 pb-2">
+                <span>src/app/courses/CourseShell.tsx</span>
+                <span>React 19 RSC • Stream: {streamProgress}%</span>
+              </div>
+              <pre className="text-[11px] leading-relaxed overflow-x-auto text-sky-300">
+{`// Direct Server Component DB Query
+export async function CourseShell({ id }: { id: string }) {
+  const course = await db.query(
+    "SELECT * FROM masterclasses WHERE id = $1", 
+    [id]
+  );
+
+  return (
+    <Suspense fallback={<SkeletonLoader />}>
+      <InteractiveClassroom data={course} />
+    </Suspense>
+  );
+}`}
+              </pre>
             </div>
           </div>
         </section>
 
-        {/* INTERACTIVE DASHBOARD STUDIO */}
-        <section className="analytics-studio-section">
-          <div className="studio-container">
-            {/* Top Toolbar */}
-            <div className="studio-toolbar">
-              <div className="studio-tabs">
-                <button 
-                  className={`studio-tab ${activeTab === "revenue" ? "active" : ""}`}
-                  onClick={() => setActiveTab("revenue")}
-                >
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 19V9m6 10V5m6 14v-7m4 7H2"/></svg>
-                  Revenue Velocity
-                </button>
-                <button 
-                  className={`studio-tab ${activeTab === "retention" ? "active" : ""}`}
-                  onClick={() => setActiveTab("retention")}
-                >
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="9"/><path d="M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>
-                  Retention Cohorts
-                </button>
-                <button 
-                  className={`studio-tab ${activeTab === "queries" ? "active" : ""}`}
-                  onClick={() => setActiveTab("queries")}
-                >
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m13 2-8 11h7l-1 9 8-12h-7l1-8Z"/></svg>
-                  Query Profiler
-                </button>
-              </div>
-
-              <div className="studio-controls">
-                <div className="timerange-picker">
-                  {(["24h", "7d", "30d", "1y"] as const).map((range) => (
-                    <button
-                      key={range}
-                      className={`range-btn ${timeRange === range ? "selected" : ""}`}
-                      onClick={() => setTimeRange(range)}
-                    >
-                      {range.toUpperCase()}
-                    </button>
-                  ))}
-                </div>
-                <button 
-                  className={`live-toggle ${liveStreamActive ? "streaming" : ""}`}
-                  onClick={() => setLiveStreamActive(!liveStreamActive)}
-                  title="Toggle live telemetry stream"
-                >
-                  <span className="live-indicator" />
-                  {liveStreamActive ? "LIVE" : "PAUSED"}
-                </button>
-              </div>
-            </div>
-
-            {/* Main Interactive Studio Grid */}
-            <div className="studio-grid">
-              {/* Left Main Chart Area */}
-              <div className="studio-chart-panel">
-                <div className="chart-header">
-                  <div>
-                    <span className="chart-eyebrow">
-                      {activeTab === "revenue" ? "ANNUALIZED RUN-RATE VELOCITY" : activeTab === "retention" ? "NET EXPANSION COHORTS" : "GLOBAL DISTRIBUTED CACHE HIT RATE"}
-                    </span>
-                    <div className="chart-val-row">
-                      <h3>{activeTab === "revenue" ? `$${mrrValue}k` : activeTab === "retention" ? "142.8%" : "99.94%"}</h3>
-                      <span className="trend-badge positive">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="m18 15-6-6-6 6"/></svg>
-                        +24.6% vs previous period
-                      </span>
-                    </div>
-                  </div>
-                  <div className="chart-legend">
-                    <span><i className="dot primary" /> Enterprise Tier</span>
-                    <span><i className="dot secondary" /> Growth Tier</span>
-                  </div>
-                </div>
-
-                {/* SVG Visual Graph */}
-                <div className="dynamic-chart-canvas">
-                  <svg viewBox="0 0 700 240" className="analytics-svg" preserveAspectRatio="none">
-                    <defs>
-                      <linearGradient id="analyticsGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#7c3aed" stopOpacity="0.45" />
-                        <stop offset="100%" stopColor="#7c3aed" stopOpacity="0.0" />
-                      </linearGradient>
-                      <linearGradient id="secondaryGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.35" />
-                        <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.0" />
-                      </linearGradient>
-                    </defs>
-
-                    {/* Grid lines */}
-                    <line x1="0" y1="40" x2="700" y2="40" stroke="currentColor" strokeOpacity="0.08" strokeDasharray="4 4" />
-                    <line x1="0" y1="100" x2="700" y2="100" stroke="currentColor" strokeOpacity="0.08" strokeDasharray="4 4" />
-                    <line x1="0" y1="160" x2="700" y2="160" stroke="currentColor" strokeOpacity="0.08" strokeDasharray="4 4" />
-                    <line x1="0" y1="220" x2="700" y2="220" stroke="currentColor" strokeOpacity="0.12" />
-
-                    {/* Secondary Curve */}
-                    <path
-                      d="M0,170 Q120,150 220,130 T440,95 T600,60 T700,45 L700,220 L0,220 Z"
-                      fill="url(#secondaryGrad)"
-                    />
-                    <path
-                      d="M0,170 Q120,150 220,130 T440,95 T600,60 T700,45"
-                      fill="none"
-                      stroke="#06b6d4"
-                      strokeWidth="2.5"
-                    />
-
-                    {/* Primary Curve */}
-                    <path
-                      d="M0,195 Q140,175 260,115 T480,70 T620,35 T700,20 L700,220 L0,220 Z"
-                      fill="url(#analyticsGrad)"
-                    />
-                    <path
-                      d="M0,195 Q140,175 260,115 T480,70 T620,35 T700,20"
-                      fill="none"
-                      stroke="#8b5cf6"
-                      strokeWidth="3.2"
-                    />
-
-                    {/* Glowing highlight markers */}
-                    <circle cx="260" cy="115" r="5" fill="#8b5cf6" stroke="#fff" strokeWidth="2" />
-                    <circle cx="480" cy="70" r="5" fill="#8b5cf6" stroke="#fff" strokeWidth="2" />
-                    <circle cx="700" cy="20" r="6" fill="#a855f7" stroke="#fff" strokeWidth="2.5" />
-                  </svg>
-                </div>
-
-                {/* Bottom X-axis labels */}
-                <div className="chart-x-axis">
-                  <span>W1 (Kickoff)</span>
-                  <span>W2</span>
-                  <span>W3 (Expansion)</span>
-                  <span>W4</span>
-                  <span>Current Moment</span>
-                </div>
-              </div>
-
-              {/* Right Live Stream Sidebar */}
-              <div className="studio-stream-sidebar">
-                <div className="stream-header">
-                  <span className="pulse-beacon" />
-                  <h4>Live Signal Stream</h4>
-                  <small>{liveEvents.length} events/sec</small>
-                </div>
-
-                <div className="stream-list">
-                  {liveEvents.map((item) => (
-                    <div key={item.id} className={`stream-card status-${item.status}`}>
-                      <div className="stream-card-top">
-                        <span className="stream-client">{item.client}</span>
-                        <span className="stream-time">{item.time}</span>
-                      </div>
-                      <p className="stream-text">{item.text}</p>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="ai-callout-card">
-                  <div className="ai-callout-header">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m12 3 1.3 3.7L17 8l-3.7 1.3L12 13l-1.3-3.7L7 8l3.7-1.3L12 3Z"/></svg>
-                    <b>Astra Radar Insight</b>
-                  </div>
-                  <p>Revenue growth is accelerating fastest in EMEA (+48% QoQ). Suggest creating dedicated European caching shard.</p>
-                </div>
-              </div>
-            </div>
+        {/* Masterclass Modules Breakdown */}
+        <section className="space-y-6">
+          <div className="text-center max-w-2xl mx-auto space-y-2">
+            <span className="text-[11px] font-extrabold uppercase tracking-wider text-sky-400">Curriculum Roadmap</span>
+            <h2 className="text-2xl sm:text-3xl font-black">Core Pillars of Modern Web Architecture</h2>
           </div>
-        </section>
 
-        {/* 3 DEEP ARCHITECTURAL PILLARS */}
-        <section className="analytics-pillars-section">
-          <div className="section-pill-tag">ENGINEERED FOR EXTREME SCALE</div>
-          <h2 className="section-title">Why high-growth teams switch to Astra Analytics</h2>
-          <p className="section-subtitle">Say goodbye to brittle ETL pipelines and endless SQL queries.</p>
-
-          <div className="pillars-grid">
-            <div className="pillar-card">
-              <div className="pillar-icon bg-violet">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m13 2-8 11h7l-1 9 8-12h-7l1-8Z"/></svg>
-              </div>
-              <h3>Sub-second Distributed Queries</h3>
-              <p>Execute complex cohort analysis, multi-touch attribution, and predictive modeling over billions of records with guaranteed sub-second response times.</p>
-              <ul className="pillar-checklist">
-                <li><span>✓</span> Columnar real-time memory store</li>
-                <li><span>✓</span> Automated distributed cache indexing</li>
-                <li><span>✓</span> Zero lock contention on writes</li>
-              </ul>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] space-y-3">
+              <span className="text-2xl">⚛️</span>
+              <h3 className="text-base font-extrabold">1. React 19 Core & RSCs</h3>
+              <p className="text-xs text-[var(--muted)] leading-relaxed">
+                Master useActionState, useOptimistic, Form Server Actions, and architectural boundaries between server and client components.
+              </p>
             </div>
 
-            <div className="pillar-card">
-              <div className="pillar-icon bg-cyan">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/><circle cx="12" cy="12" r="9"/></svg>
-              </div>
-              <h3>Unified Semantic Layer</h3>
-              <p>Define business metrics once in plain language or YAML. Astra guarantees that "Active Customer" or "Churn Risk" means the exact same thing across all apps.</p>
-              <ul className="pillar-checklist">
-                <li><span>✓</span> Code-defined semantic models</li>
-                <li><span>✓</span> Bi-directional sync to BI and CRM</li>
-                <li><span>✓</span> Automated metric drift prevention</li>
-              </ul>
+            <div className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] space-y-3">
+              <span className="text-2xl">🌐</span>
+              <h3 className="text-base font-extrabold">2. Next.js 15 & Turborepo</h3>
+              <p className="text-xs text-[var(--muted)] leading-relaxed">
+                Architect high-performance monorepos, static & dynamic route caching strategies, parallel routes, and intercepted modals.
+              </p>
             </div>
 
-            <div className="pillar-card">
-              <div className="pillar-icon bg-emerald">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m12 3 1.3 3.7L17 8l-3.7 1.3L12 13l-1.3-3.7L7 8l3.7-1.3L12 3Z"/><path d="m19 14 .7 2.3L22 17l-2.3.7L19 20l-.7-2.3L16 17l2.3-.7L19 14Z"/></svg>
-              </div>
-              <h3>Autonomous Anomaly Radar</h3>
-              <p>Our machine learning model analyzes thousands of micro-cohorts every minute, proactively flagging revenue risks and expansion opportunities before humans notice.</p>
-              <ul className="pillar-checklist">
-                <li><span>✓</span> Natural language root cause summaries</li>
-                <li><span>✓</span> Automated Slack & webhook alerts</li>
-                <li><span>✓</span> Noise-cancelling anomaly filter</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* INTERACTIVE ROI & CAPACITY CALCULATOR */}
-        <section className="analytics-calc-section">
-          <div className="calc-card">
-            <div className="calc-left">
-              <span className="badge-pill">INTERACTIVE ESTIMATOR</span>
-              <h2>Calculate your team's velocity gain</h2>
-              <p>See how much engineering time and compute cost Astra saves compared to building custom data pipelines.</p>
-
-              <div className="slider-container">
-                <div className="slider-label-row">
-                  <span>Monthly Ingested Events</span>
-                  <b>{eventVolume} Million events/mo</b>
-                </div>
-                <input
-                  type="range"
-                  min="1"
-                  max="50"
-                  step="1"
-                  value={eventVolume}
-                  onChange={(e) => setEventVolume(Number(e.target.value))}
-                  className="calc-range-slider"
-                />
-                <div className="slider-ticks">
-                  <span>1M</span>
-                  <span>10M</span>
-                  <span>25M</span>
-                  <span>50M+</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="calc-right">
-              <div className="calc-result-box">
-                <span className="result-label">ESTIMATED ANNUAL CLOUD SAVINGS</span>
-                <b className="result-value">${costSavings.toLocaleString()}</b>
-                <p className="result-sub">Calculated against traditional warehouse query fees</p>
-              </div>
-
-              <div className="calc-result-grid">
-                <div className="mini-res">
-                  <small>Eng Hours Saved / mo</small>
-                  <b>{hoursSaved} hrs</b>
-                </div>
-                <div className="mini-res">
-                  <small>Query Speedup Factor</small>
-                  <b>38× faster</b>
-                </div>
-              </div>
-
-              <Link to="/signup" className="calc-cta-btn">
-                Claim your velocity gains <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* BOTTOM CTA BANNER */}
-        <section className="product-cta-banner">
-          <div className="cta-banner-content">
-            <h2>Ready to see your business with extreme clarity?</h2>
-            <p>Deploy Astra Analytics in under 10 minutes. No credit card required.</p>
-            <div className="banner-actions">
-              <Link to="/signup" className="product-primary-btn">
-                Start free 14-day trial
-              </Link>
-              <Link to="/talk-to-sales" className="product-secondary-btn">
-                Schedule engineer walkthrough
-              </Link>
+            <div className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] space-y-3">
+              <span className="text-2xl">💾</span>
+              <h3 className="text-base font-extrabold">3. Edge DBs & Distributed State</h3>
+              <p className="text-xs text-[var(--muted)] leading-relaxed">
+                Connect Neon serverless Postgres, Prisma/Drizzle ORM, multi-region Redis caching, and real-time WebSocket state synchronization.
+              </p>
             </div>
           </div>
         </section>

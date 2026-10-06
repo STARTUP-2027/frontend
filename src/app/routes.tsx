@@ -12,9 +12,18 @@ import EnterpriseSolutionPage from "./solutions/EnterpriseSolutionPage";
 import StartupsSolutionPage from "./solutions/StartupsSolutionPage";
 import GrowingTeamsSolutionPage from "./solutions/GrowingTeamsSolutionPage";
 import PricingPage from "./PricingPage";
+import CoursesCatalogPage from "./courses/CoursesCatalogPage";
+import StudentDashboardPage from "./dashboard/StudentDashboardPage";
+import AdminCreatorHub from "./admin/AdminCreatorHub";
+import CoursePlayerPage from "./learn/CoursePlayerPage";
 
 export const router = createBrowserRouter([
   { path: "/", Component: LandingPage },
+  { path: "/dashboard", Component: StudentDashboardPage },
+  { path: "/admin", Component: AdminCreatorHub },
+  { path: "/creator", Component: AdminCreatorHub },
+  { path: "/courses", Component: CoursesCatalogPage },
+  { path: "/learn/:courseId", Component: CoursePlayerPage },
   { path: "/signin", element: <AuthPage mode="signin" /> },
   { path: "/signup", element: <AuthPage mode="signup" /> },
   { path: "/talk-to-sales", Component: SalesPage },
@@ -22,6 +31,10 @@ export const router = createBrowserRouter([
   { path: "/product/ai-automations", Component: AIAutomationsPage },
   { path: "/product/integrations", Component: IntegrationsPage },
   { path: "/product/security", Component: SecurityPage },
+  { path: "/courses/ai", Component: AIAutomationsPage },
+  { path: "/courses/fullstack", Component: AnalyticsPage },
+  { path: "/courses/security", Component: SecurityPage },
+  { path: "/courses/devops", Component: IntegrationsPage },
   { path: "/product/:slug", Component: DetailPage },
   { path: "/solutions/sales", Component: SalesSolutionPage },
   { path: "/solutions/operations", Component: OperationsSolutionPage },
@@ -34,6 +47,3 @@ export const router = createBrowserRouter([
   { path: "/pricing", Component: PricingPage },
   { path: "*", Component: LandingPage },
 ]);
-
-
-

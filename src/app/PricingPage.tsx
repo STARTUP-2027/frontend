@@ -11,52 +11,49 @@ export default function PricingPage() {
 
   const pricingPlans = [
     {
-      name: "Starter",
+      name: "Starter Pass",
       icon: "bolt" as const,
-      copy: "For fast-moving small teams building their first connected workspace.",
+      copy: "For self-paced developers starting their tech and AI journey.",
       monthly: 19,
       features: [
-        "5 team workspace seats",
-        "10 autonomous AI workflows",
-        "Core real-time telemetry",
-        "50+ native SaaS integrations",
-        "Community & email support",
-        "30-day data retention",
+        "Access to 10 foundational courses",
+        "Interactive in-browser code sandboxes",
+        "Community Discord access",
+        "Course completion certificates",
+        "Standard support",
       ],
-      cta: "Start 14-day free trial",
+      cta: "Start free learning",
       popular: false,
     },
     {
-      name: "Pro",
+      name: "Pro All-Access",
       icon: "sparkles" as const,
-      copy: "For ambitious high-growth teams ready to scale their operating system.",
+      copy: "For ambitious engineers advancing to Senior, Staff, and AI roles.",
       monthly: 49,
       features: [
-        "Unlimited team workspace seats",
-        "Unlimited autonomous AI workflows",
-        "Sub-second distributed analytics",
-        "150+ native integrations & webhooks",
-        "Priority 24/7 support (1hr SLA)",
-        "Automated root-cause anomaly radar",
-        "1-year audit & data retention",
+        "Unlimited access to all 50+ masterclasses",
+        "Advanced Agentic AI & Rust projects",
+        "Verified industry certificates (LinkedIn shareable)",
+        "Direct mentor feedback & code reviews",
+        "Private GitHub starter repositories",
+        "Interactive AI debugging assistant in classroom",
       ],
-      cta: "Start 14-day free trial",
+      cta: "Get Pro All-Access",
       popular: true,
     },
     {
-      name: "Enterprise",
+      name: "Team & Enterprise",
       icon: "globe" as const,
-      copy: "For organizations that demand custom governance, security, and partnership.",
+      copy: "For engineering orgs and companies scaling technical excellence.",
       monthly: 99,
       customText: "Custom",
       features: [
-        "Everything in Pro without limits",
-        "SAML 2.0 & Okta SCIM Directory Sync",
-        "Dedicated Named Solutions Architect",
-        "Customer-Managed KMS Keys (BYOK)",
-        "Financially-backed 99.999% SLA",
-        "Isolated Single-Tenant VPC option",
-        "Unlimited immutable audit logs",
+        "Everything in Pro All-Access",
+        "Custom internal Course Creator Studio",
+        "Team skill analytics & progress reports",
+        "SSO & corporate invoicing",
+        "Dedicated curriculum advisor & custom tracks",
+        "Private workshops & live Q&A sessions",
       ],
       cta: "Talk to sales",
       popular: false,
@@ -106,18 +103,18 @@ export default function PricingPage() {
         <section className="pricing-hero">
           <div className="product-hero-badge">
             <span className="badge-dot" />
-            <span>SIMPLE, TRANSPARENT PRICING</span>
-            <span className="badge-pill">14-Day Free Trial</span>
+            <span>ASTRA ACADEMY MEMBERSHIP</span>
+            <span className="badge-pill">Free Starter Tier</span>
           </div>
 
           <h1 className="product-hero-title">
-            Invest in momentum. <br />
-            <em className="gradient-text-analytics">Scale without limits.</em>
+            Invest in your engineering skills. <br />
+            <em className="gradient-text-analytics">Master the future of Tech & AI.</em>
           </h1>
 
           <p className="product-hero-subtitle">
-            Start small on our 14-day free trial. No credit card required. 
-            Upgrade when your team is ready to accelerate.
+            Start learning with in-browser sandboxes and interactive masterclasses. 
+            Upgrade to Pro All-Access or Team Licensing whenever you're ready.
           </p>
 
           {/* BILLING TOGGLE (Monthly / Annually) */}
