@@ -62,6 +62,211 @@ const courseTabs = [
   { id: "devops", label: "Cloud & Kubernetes", icon: "grid" as IconName },
 ];
 
+const domainShowcaseData: Record<
+  string,
+  {
+    id: string;
+    label: string;
+    icon: IconName;
+    pill: string;
+    title: string;
+    description: string;
+    points: string[];
+    ctaLabel: string;
+    categoryQuery: string;
+    roadmapTitle: string;
+    statsText: string;
+    techTags: string[];
+    modules: Array<{
+      title: string;
+      duration: string;
+      tag: string;
+      tagClass: string;
+    }>;
+  }
+> = {
+  ai: {
+    id: "ai",
+    label: "AI & Machine Learning",
+    icon: "sparkles",
+    pill: "AGENTIC AI & RAG ARCHITECTURE",
+    title: "Build autonomous multi-agent swarms with LangGraph & Vector Stores.",
+    description:
+      "Master multi-agent orchestration, stateful graph evaluation, tool execution, and hybrid BM25 + dense embedding retrieval systems.",
+    points: [
+      "Production-grade multi-agent cyclic loops & memory checkpoints",
+      "Hybrid RAG with Qdrant, Milvus & semantic reranking",
+      "Automated benchmark evaluation & prompt optimization",
+    ],
+    ctaLabel: "Browse AI & ML Masterclasses",
+    categoryQuery: "ai",
+    roadmapTitle: "Agentic AI Engineering Roadmap",
+    statsText: "4 Masterclasses • 2,400+ Active Engineers",
+    techTags: ["LangGraph", "Python 3.12", "Qdrant", "Claude 3.7", "FastAPI"],
+    modules: [
+      {
+        title: "1. Vector Embedding Pipelines & Dense Search",
+        duration: "4.5 Hours",
+        tag: "Included",
+        tagClass: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30",
+      },
+      {
+        title: "2. Multi-Agent Swarms with LangGraph & Tool Calling",
+        duration: "6.0 Hours",
+        tag: "Interactive Lab",
+        tagClass: "bg-purple-500/10 text-purple-400 border-purple-500/30",
+      },
+      {
+        title: "3. Production RAG Benchmarking & Evaluators",
+        duration: "5.5 Hours",
+        tag: "Hands-on",
+        tagClass: "bg-indigo-500/10 text-indigo-400 border-indigo-500/30",
+      },
+      {
+        title: "4. Capstone: Autonomous Code Synthesis Engine",
+        duration: "8.0 Hours",
+        tag: "Verified Certificate",
+        tagClass: "bg-amber-500/10 text-amber-400 border-amber-500/30",
+      },
+    ],
+  },
+  fullstack: {
+    id: "fullstack",
+    label: "Full-Stack Web & Systems",
+    icon: "code",
+    pill: "REACT 19 & DISTRIBUTED SYSTEMS",
+    title: "Ship zero-bundle React 19 apps with edge streaming & microservices.",
+    description:
+      "Master Server Components, optimistic mutations, distributed PostgreSQL sharding, and edge hydration for ultra-fast web platforms.",
+    points: [
+      "React 19 Server Actions & Suspense streaming architecture",
+      "High-throughput edge caching with Cloudflare Workers",
+      "Distributed database sharding & real-time WebSocket sync",
+    ],
+    ctaLabel: "Browse Full-Stack Masterclasses",
+    categoryQuery: "fullstack",
+    roadmapTitle: "Full-Stack Systems Roadmap",
+    statsText: "6 Masterclasses • 3,800+ Active Engineers",
+    techTags: ["React 19", "Next.js 15", "PostgreSQL", "Redis", "TypeScript"],
+    modules: [
+      {
+        title: "1. Modern React 19 Architecture & RSC Internals",
+        duration: "5.0 Hours",
+        tag: "Included",
+        tagClass: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30",
+      },
+      {
+        title: "2. Edge Streaming & Real-time WebSocket Hubs",
+        duration: "6.5 Hours",
+        tag: "Interactive Lab",
+        tagClass: "bg-purple-500/10 text-purple-400 border-purple-500/30",
+      },
+      {
+        title: "3. Distributed Database Indexing & Caching Shards",
+        duration: "4.5 Hours",
+        tag: "Hands-on",
+        tagClass: "bg-indigo-500/10 text-indigo-400 border-indigo-500/30",
+      },
+      {
+        title: "4. Capstone: Real-time Multi-tenant SaaS Engine",
+        duration: "9.0 Hours",
+        tag: "Verified Certificate",
+        tagClass: "bg-amber-500/10 text-amber-400 border-amber-500/30",
+      },
+    ],
+  },
+  security: {
+    id: "security",
+    label: "Zero Trust Cybersecurity",
+    icon: "lock",
+    pill: "ZERO TRUST & RUST SYSTEMS",
+    title: "Architect memory-safe microservices with Rust and cryptographic guards.",
+    description:
+      "Build bulletproof enterprise security layers with compile-time memory safety, mTLS token handshakes, and automated vulnerability scanning.",
+    points: [
+      "Memory-safe asynchronous microservices with Rust & Tokio",
+      "mTLS & cryptographic RS256 token verification guards",
+      "Automated AST vulnerability auditing & invariant testing",
+    ],
+    ctaLabel: "Browse Cybersecurity Masterclasses",
+    categoryQuery: "security",
+    roadmapTitle: "Zero-Trust Security Roadmap",
+    statsText: "4 Masterclasses • 1,900+ Active Engineers",
+    techTags: ["Rust 2024", "Tokio", "Ring Crypto", "mTLS", "Linux eBPF"],
+    modules: [
+      {
+        title: "1. Rust Systems Programming & Memory Safety",
+        duration: "6.0 Hours",
+        tag: "Included",
+        tagClass: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30",
+      },
+      {
+        title: "2. Zero-Trust Identity & mTLS Authentication",
+        duration: "5.5 Hours",
+        tag: "Interactive Lab",
+        tagClass: "bg-purple-500/10 text-purple-400 border-purple-500/30",
+      },
+      {
+        title: "3. Cryptographic Token Guards & Tenant Isolation",
+        duration: "4.5 Hours",
+        tag: "Hands-on",
+        tagClass: "bg-indigo-500/10 text-indigo-400 border-indigo-500/30",
+      },
+      {
+        title: "4. Capstone: Production Zero-Trust Security Gateway",
+        duration: "7.5 Hours",
+        tag: "Verified Certificate",
+        tagClass: "bg-amber-500/10 text-amber-400 border-amber-500/30",
+      },
+    ],
+  },
+  devops: {
+    id: "devops",
+    label: "Cloud & Kubernetes",
+    icon: "grid",
+    pill: "KUBERNETES & CLOUD GITOPS",
+    title: "Automate multi-cluster cloud deployments with GitOps & ArgoCD.",
+    description:
+      "Deploy, scale, and orchestrate production Kubernetes clusters with infrastructure as code, automated zero-downtime rollouts, and observability.",
+    points: [
+      "GitOps pipelines with ArgoCD & declarative Kubernetes Helm",
+      "Infrastructure as Code with Terraform & AWS multi-region",
+      "Distributed OpenTelemetry tracing & Prometheus monitoring",
+    ],
+    ctaLabel: "Browse Cloud & DevOps Masterclasses",
+    categoryQuery: "devops",
+    roadmapTitle: "Cloud & Kubernetes Roadmap",
+    statsText: "5 Masterclasses • 2,100+ Active Engineers",
+    techTags: ["Kubernetes", "Docker", "Terraform", "ArgoCD", "AWS", "Helm"],
+    modules: [
+      {
+        title: "1. Containerization & Multi-Stage Docker Builds",
+        duration: "4.0 Hours",
+        tag: "Included",
+        tagClass: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30",
+      },
+      {
+        title: "2. Kubernetes Cluster Orchestration & Ingress Routing",
+        duration: "7.0 Hours",
+        tag: "Interactive Lab",
+        tagClass: "bg-purple-500/10 text-purple-400 border-purple-500/30",
+      },
+      {
+        title: "3. ArgoCD GitOps Continuous Delivery Pipelines",
+        duration: "5.0 Hours",
+        tag: "Hands-on",
+        tagClass: "bg-indigo-500/10 text-indigo-400 border-indigo-500/30",
+      },
+      {
+        title: "4. Capstone: High-Availability Cloud Infrastructure",
+        duration: "8.5 Hours",
+        tag: "Verified Certificate",
+        tagClass: "bg-amber-500/10 text-amber-400 border-amber-500/30",
+      },
+    ],
+  },
+};
+
 const testimonials = [
   { quote: "Astra Academy is the gold standard for engineering masterclasses. The live sandbox exercises and RAG architecture modules helped our team build production agents in 2 weeks.", name: "Aris Vance", role: "Staff AI Researcher at Anthropic Alumni", initials: "AV", company: "ANTHROPIC" },
   { quote: "The hands-on curriculum is miles ahead of generic video courses. I went from junior full-stack to leading systems architecture within 9 months.", name: "Jordan Bell", role: "Principal Engineer at Arc Cloud", initials: "JB", company: "ARC SYSTEMS" },
@@ -104,10 +309,10 @@ export function SiteNav() {
                 <div className="mega-menu">
                   <div className="mega-main">
                     <span className="mega-label">Explore Domains</span>
-                    <Link to="/product/ai-automations"><i><Icon name="sparkles" /></i><span><b>AI & Machine Learning</b><small>Autonomous Agents, RAG & LLMs</small></span></Link>
-                    <Link to="/product/analytics"><i><Icon name="code" /></i><span><b>Full-Stack & Systems</b><small>React 19, Next.js & Distributed DBs</small></span></Link>
-                    <Link to="/product/security"><i><Icon name="lock" /></i><span><b>Cybersecurity & Zero Trust</b><small>Offensive Security & Rust Systems</small></span></Link>
-                    <Link to="/product/integrations"><i><Icon name="grid" /></i><span><b>DevOps & Cloud</b><small>Kubernetes, Docker & GitOps</small></span></Link>
+                    <Link to="/courses?category=ai"><i><Icon name="sparkles" /></i><span><b>AI & Machine Learning</b><small>Autonomous Agents, RAG & LLMs</small></span></Link>
+                    <Link to="/courses?category=fullstack"><i><Icon name="code" /></i><span><b>Full-Stack & Systems</b><small>React 19, Next.js & Distributed DBs</small></span></Link>
+                    <Link to="/courses?category=security"><i><Icon name="lock" /></i><span><b>Cybersecurity & Zero Trust</b><small>Offensive Security & Rust Systems</small></span></Link>
+                    <Link to="/courses?category=devops"><i><Icon name="grid" /></i><span><b>DevOps & Cloud</b><small>Kubernetes, Docker & GitOps</small></span></Link>
                   </div>
                   <div className="mega-aside">
                     <span className="mega-label">Featured Masterclass</span>
@@ -115,7 +320,7 @@ export function SiteNav() {
                       <span><Icon name="sparkles" /></span>
                       <b>AI Agents & Multi-Agent Graphs 2026</b>
                       <p>Master LangGraph, vector search, and tool execution.</p>
-                      <Link to="/courses">Explore Catalog <Icon name="arrow" size={14} /></Link>
+                      <Link to="/courses?category=ai">Explore Catalog <Icon name="arrow" size={14} /></Link>
                     </div>
                   </div>
                 </div>
@@ -126,15 +331,15 @@ export function SiteNav() {
                 <div className="mega-menu solutions-menu">
                   <div className="mega-main">
                     <span className="mega-label">By Career Goal</span>
-                    <Link to="/solutions/sales"><i><Icon name="bolt" /></i><span><b>Zero to Job-Ready</b><small>Structured career transition</small></span></Link>
-                    <Link to="/solutions/product-engineering"><i><Icon name="code" /></i><span><b>Senior & Staff Engineer</b><small>Deep architectural mastery</small></span></Link>
-                    <Link to="/solutions/enterprise"><i><Icon name="globe" /></i><span><b>Team Upskilling</b><small>Engineering org training</small></span></Link>
-                    <Link to="/solutions/startups"><i><Icon name="chart" /></i><span><b>Founder & Builders</b><small>Build and ship full-stack MVPs</small></span></Link>
+                    <Link to="/courses?level=Beginner"><i><Icon name="bolt" /></i><span><b>Zero to Job-Ready</b><small>Structured career transition</small></span></Link>
+                    <Link to="/courses?level=Advanced"><i><Icon name="code" /></i><span><b>Senior & Staff Engineer</b><small>Deep architectural mastery</small></span></Link>
+                    <Link to="/courses?level=Intermediate"><i><Icon name="globe" /></i><span><b>Intermediate Skillup</b><small>Systems & architectural patterns</small></span></Link>
+                    <Link to="/courses"><i><Icon name="chart" /></i><span><b>Full Masterclasses</b><small>All 50+ interactive courses</small></span></Link>
                   </div>
                   <div className="mega-links">
                     <span className="mega-label">Specializations</span>
-                    <Link to="/courses">AI Engineering <Icon name="arrow" size={14} /></Link>
-                    <Link to="/courses">Cloud & Microservices <Icon name="arrow" size={14} /></Link>
+                    <Link to="/courses?category=ai">AI Engineering <Icon name="arrow" size={14} /></Link>
+                    <Link to="/courses?category=devops">Cloud & Microservices <Icon name="arrow" size={14} /></Link>
                     <Link to="/pricing">All-Access Pass <Icon name="arrow" size={14} /></Link>
                   </div>
                 </div>
@@ -265,18 +470,18 @@ export function SiteFooter() {
         <div className="footer-links">
           <div>
             <b>Course Domains</b>
-            <Link to="/product/ai-automations">AI & Agentic Systems</Link>
-            <Link to="/product/analytics">React 19 & Next.js</Link>
-            <Link to="/product/security">Rust Systems & Security</Link>
-            <Link to="/product/integrations">Kubernetes & DevOps</Link>
+            <Link to="/courses?category=ai">AI & Agentic Systems</Link>
+            <Link to="/courses?category=fullstack">React 19 & Next.js</Link>
+            <Link to="/courses?category=security">Rust Systems & Security</Link>
+            <Link to="/courses?category=devops">Kubernetes & DevOps</Link>
             <Link to="/courses">Full Course Catalog</Link>
           </div>
           <div>
             <b>Learning Tracks</b>
-            <Link to="/solutions/sales">Zero to Job-Ready</Link>
-            <Link to="/solutions/product-engineering">Senior Engineer Mastery</Link>
-            <Link to="/solutions/enterprise">Team Upskilling</Link>
-            <Link to="/solutions/startups">Founder & Builders</Link>
+            <Link to="/courses?level=Beginner">Zero to Job-Ready</Link>
+            <Link to="/courses?level=Advanced">Senior Engineer Mastery</Link>
+            <Link to="/courses?level=Intermediate">Intermediate Tracks</Link>
+            <Link to="/courses">Masterclass Library</Link>
             <Link to="/pricing">All-Access Pass</Link>
           </div>
           <div>
@@ -285,14 +490,14 @@ export function SiteFooter() {
             <Link to="/admin">Course Creator Studio</Link>
             <Link to="/signin">Sign In (Demo Accounts)</Link>
             <Link to="/signup">Create Account</Link>
-            <Link to="/talk-to-sales">Enterprise Training</Link>
+            <Link to="/pricing">Membership Plans</Link>
           </div>
           <div>
-            <b>Community</b>
-            <Link to="/customers">Alumni Stories</Link>
-            <Link to="/courses">Certifications</Link>
-            <Link to="/product/security">Trust & Quality</Link>
+            <b>Certifications & Info</b>
+            <Link to="/courses">Verified Certificates</Link>
+            <Link to="/courses">Interactive Sandboxes</Link>
             <Link to="/pricing">Pricing & FAQ</Link>
+            <Link to="/signup">Enroll Free</Link>
           </div>
         </div>
         <div className="newsletter">
@@ -420,71 +625,202 @@ export default function App() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-4 max-w-7xl mx-auto">
             {courses.slice(0, 4).map((c) => (
-              <div
+              <article
                 key={c.id}
-                className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] hover:border-[var(--accent)] shadow-xl transition-all flex flex-col justify-between space-y-4"
+                className="group relative rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] hover:border-[var(--accent)] shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col justify-between overflow-hidden text-left"
               >
-                <div className="space-y-3">
+                <div>
+                  {/* Top Gradient Banner */}
                   <div
-                    className="h-24 rounded-2xl p-3 flex flex-col justify-between text-white shadow-inner"
-                    style={{ background: c.bannerGradient }}
+                    className="relative h-32 p-3.5 flex flex-col justify-between text-white overflow-hidden"
+                    style={{ background: c.bannerGradient || "linear-gradient(135deg, #7c3aed 0%, #4338ca 100%)" }}
                   >
-                    <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-black/40 w-fit">
-                      {c.categoryLabel}
-                    </span>
-                    <span className="text-base font-black">{c.price === 0 ? "FREE" : `$${c.price}`}</span>
+                    <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:12px_12px] pointer-events-none" />
+                    
+                    <div className="relative z-10 flex items-center justify-between">
+                      <span className="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-black/40 backdrop-blur-md border border-white/20">
+                        {c.categoryLabel}
+                      </span>
+                      {c.bestseller && (
+                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-amber-400 text-black">
+                          ★ BESTSELLER
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="relative z-10 flex items-end justify-between">
+                      <span className="text-lg font-black">{c.price === 0 ? "FREE" : `$${c.price}`}</span>
+                      <span className="text-[10px] text-white/80 font-mono">⏱ {c.duration}</span>
+                    </div>
                   </div>
 
-                  <h3 className="text-sm font-extrabold leading-tight">{c.title}</h3>
-                  <p className="text-xs text-[var(--muted)] line-clamp-2">{c.tagline}</p>
+                  {/* Body Content */}
+                  <div className="p-4 space-y-3">
+                    <div className="flex items-center justify-between text-[10px] text-[var(--muted)] font-semibold">
+                      <span className="flex items-center gap-1">
+                        <span className="w-1.5 h-1.5 rounded-full bg-purple-400 inline-block" />
+                        {c.level}
+                      </span>
+                      <span className="text-amber-400 font-bold">★ {c.rating}</span>
+                    </div>
+
+                    <h3 className="text-sm font-extrabold text-[var(--text)] group-hover:text-[var(--accent)] transition-colors line-clamp-1 leading-snug">
+                      {c.title}
+                    </h3>
+                    <p className="text-xs text-[var(--muted)] line-clamp-2 leading-relaxed">
+                      {c.tagline}
+                    </p>
+
+                    <div className="flex flex-wrap gap-1 pt-1">
+                      {c.skills.slice(0, 2).map((skill) => (
+                        <span
+                          key={skill}
+                          className="px-2 py-0.5 rounded-md bg-[var(--surface-soft)] border border-[var(--border-soft)] text-[9px] font-medium text-[var(--text)]"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                      {c.skills.length > 2 && (
+                        <span className="text-[9px] text-[var(--muted)] self-center font-semibold">
+                          +{c.skills.length - 2}
+                        </span>
+                      )}
+                    </div>
+                  </div>
                 </div>
 
-                <div className="pt-3 border-t border-[var(--border-soft)] flex items-center justify-between">
-                  <span className="text-xs text-[var(--muted)]">⏱️ {c.duration}</span>
-                  <button onClick={() => navigate(`/learn/${c.id}`)} className="button button-sm text-xs">
-                    View Course →
+                {/* Footer Action */}
+                <div className="p-4 pt-2.5 border-t border-[var(--border-soft)] bg-[var(--surface-soft)]/30 flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <div className="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 font-bold text-[9px] flex items-center justify-center shrink-0">
+                      {c.instructor.avatar}
+                    </div>
+                    <span className="text-[11px] font-semibold text-[var(--text)] truncate max-w-[80px]">
+                      {c.instructor.name}
+                    </span>
+                  </div>
+
+                  <button
+                    onClick={() => navigate(`/learn/${c.id}`)}
+                    className="button button-sm text-[11px] py-1 px-2.5 font-bold shrink-0"
+                  >
+                    View →
                   </button>
                 </div>
-              </div>
+              </article>
             ))}
           </div>
         </section>
 
         {/* Interactive Domain Showcase */}
         <section className="section showcase" id="solutions">
-          <SectionHeader eyebrow="Domain Specializations" title={<>Deep dive into <span className="gradient-text">cutting-edge tech.</span></>} copy="Select a specialization to see hands-on curriculum breakdowns and sandbox projects." />
+          <SectionHeader
+            eyebrow="Domain Specializations"
+            title={<>Deep dive into <span className="gradient-text">cutting-edge tech.</span></>}
+            copy="Select a specialization to see hands-on curriculum breakdowns, module roadmaps, and sandbox projects."
+          />
           <div className="tabs" role="tablist">
-            {courseTabs.map((tab) => <button key={tab.id} className={activeTab === tab.id ? "active" : ""} onClick={() => setActiveTab(tab.id)}><Icon name={tab.icon} /> {tab.label}</button>)}
+            {courseTabs.map((tab) => (
+              <button
+                key={tab.id}
+                className={activeTab === tab.id ? "active" : ""}
+                onClick={() => setActiveTab(tab.id)}
+              >
+                <Icon name={tab.icon} /> {tab.label}
+              </button>
+            ))}
           </div>
-          <div className="showcase-shell">
-            <div className="showcase-top"><span>{courseTabs.find((tab) => tab.id === activeTab)?.label} Track</span><small>Syllabus Preview</small></div>
-            <div className="showcase-content" key={activeTab}>
-              <div className="showcase-copy">
-                <Pill>{activeTab === "ai" ? "AGENTIC AI & RAG" : activeTab === "fullstack" ? "REACT 19 & NEXT.JS" : activeTab === "security" ? "ZERO TRUST & RUST" : "KUBERNETES GITOPS"}</Pill>
-                <h3>{activeTab === "ai" ? "Build autonomous multi-agent swarms with LangGraph." : activeTab === "fullstack" ? "Ship zero-bundle-size RSCs with edge streaming." : activeTab === "security" ? "Architect memory-safe microservices with Rust." : "Automate multi-cluster cloud deployments with ArgoCD."}</h3>
-                <p>Complete real-world engineering challenges, submit code for automated test evaluation, and receive personalized feedback.</p>
-                <ul><li><Icon name="check" /> Live interactive code execution</li><li><Icon name="check" /> Production-ready architectural blueprints</li><li><Icon name="check" /> Verified completion certificate</li></ul>
-                <button onClick={() => navigate("/courses")} className="inline-link">Browse {activeTab} Masterclasses <Icon name="arrow" /></button>
-              </div>
-              <div className="showcase-dashboard p-6 bg-[var(--surface)] rounded-2xl border border-[var(--border)]">
-                <h4 className="text-xs font-bold uppercase text-[var(--accent)] mb-3">Module Roadmap</h4>
-                <div className="space-y-2.5 text-xs">
-                  <div className="p-3 rounded-xl bg-[var(--surface-soft)] border border-[var(--border-soft)] flex justify-between items-center">
-                    <span>1. Foundations & Architecture</span>
-                    <span className="text-emerald-400 font-bold text-[10px]">Included</span>
+
+          {(() => {
+            const domain = domainShowcaseData[activeTab] || domainShowcaseData.ai;
+            return (
+              <div className="showcase-shell">
+                <div className="showcase-top">
+                  <span className="font-bold">{domain.label} Masterclass Track</span>
+                  <small className="font-bold flex items-center gap-1">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block animate-pulse" />
+                    Interactive Syllabus & Sandbox
+                  </small>
+                </div>
+
+                <div className="showcase-content" key={activeTab}>
+                  {/* Left Column: Domain Details & Bullet Points */}
+                  <div className="showcase-copy">
+                    <Pill>
+                      <Icon name={domain.icon} size={13} /> {domain.pill}
+                    </Pill>
+                    <h3>{domain.title}</h3>
+                    <p>{domain.description}</p>
+                    <ul>
+                      {domain.points.map((point, idx) => (
+                        <li key={idx}>
+                          <Icon name="check" /> {point}
+                        </li>
+                      ))}
+                    </ul>
+                    <button
+                      onClick={() => navigate(`/courses?category=${domain.categoryQuery}`)}
+                      className="inline-link mt-2"
+                    >
+                      {domain.ctaLabel} <Icon name="arrow" />
+                    </button>
                   </div>
-                  <div className="p-3 rounded-xl bg-[var(--surface-soft)] border border-[var(--border-soft)] flex justify-between items-center">
-                    <span>2. Production Sandbox Lab</span>
-                    <span className="text-purple-400 font-bold text-[10px]">Hands-on</span>
-                  </div>
-                  <div className="p-3 rounded-xl bg-[var(--surface-soft)] border border-[var(--border-soft)] flex justify-between items-center">
-                    <span>3. Capstone Project & Certification</span>
-                    <span className="text-indigo-400 font-bold text-[10px]">Verified</span>
+
+                  {/* Right Column: Dynamic Module Roadmap & Tech Stack */}
+                  <div className="showcase-dashboard flex flex-col justify-between space-y-4">
+                    <div>
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-4 pb-2 border-b border-[var(--border-soft)]">
+                        <h4 className="text-xs font-black uppercase text-[var(--accent)] tracking-wider">
+                          {domain.roadmapTitle}
+                        </h4>
+                        <span className="text-[11px] font-semibold text-[var(--muted)]">
+                          {domain.statsText}
+                        </span>
+                      </div>
+
+                      <div className="space-y-2.5">
+                        {domain.modules.map((mod, idx) => (
+                          <div
+                            key={idx}
+                            className="p-3 rounded-xl bg-[var(--surface)] border border-[var(--border-soft)] hover:border-[var(--accent)] transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs"
+                          >
+                            <span className="font-bold text-[var(--text)]">
+                              {mod.title}
+                            </span>
+                            <div className="flex items-center gap-2 shrink-0 self-end sm:self-auto">
+                              <span className="text-[10px] text-[var(--muted)] font-mono">
+                                ⏱ {mod.duration}
+                              </span>
+                              <span
+                                className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${mod.tagClass}`}
+                              >
+                                {mod.tag}
+                              </span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Tech Stack Badges */}
+                    <div className="pt-3 border-t border-[var(--border-soft)] flex flex-wrap items-center gap-1.5">
+                      <span className="text-[10px] text-[var(--muted)] font-bold uppercase mr-1">
+                        Core Tech:
+                      </span>
+                      {domain.techTags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-2.5 py-0.5 rounded-lg bg-[var(--surface)] border border-[var(--border-soft)] text-[10px] font-mono text-[var(--text)] shadow-xs"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+            );
+          })()}
         </section>
 
         {/* Testimonials */}
