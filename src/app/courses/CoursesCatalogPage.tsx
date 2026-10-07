@@ -86,7 +86,7 @@ export default function CoursesCatalogPage() {
       <SiteNav />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-28 space-y-10">
-        
+
         {/* HERO SECTION */}
         <section className="text-center max-w-4xl mx-auto space-y-4 pt-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider bg-purple-500/10 text-purple-400 border border-purple-500/30 backdrop-blur-md">
@@ -114,10 +114,10 @@ export default function CoursesCatalogPage() {
 
         {/* SEARCH & FILTERS HUB */}
         <section className="p-4 sm:p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-xl space-y-4 backdrop-blur-xl relative">
-          
+
           {/* Top Row: Search Input + Difficulty + Sort By */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 items-center">
-            
+
             {/* Search Input (Takes 6 cols on large) */}
             <div className="lg:col-span-6 relative">
               <div className="absolute left-3.5 top-3.5 text-[var(--muted)] pointer-events-none">
@@ -193,18 +193,16 @@ export default function CoursesCatalogPage() {
                   <button
                     key={cat.id}
                     onClick={() => setSelectedCategory(cat.id)}
-                    className={`shrink-0 px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
-                      isSelected
+                    className={`shrink-0 px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${isSelected
                         ? "bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg shadow-purple-500/25 border border-purple-400/40"
                         : "bg-[var(--surface-soft)] text-[var(--muted)] hover:text-[var(--text)] hover:bg-[var(--surface)] border border-[var(--border-soft)]"
-                    }`}
+                      }`}
                   >
                     <Icon name={cat.icon} size={14} />
                     <span>{cat.label}</span>
                     <span
-                      className={`text-[10px] px-1.5 py-0.5 rounded-full font-extrabold ${
-                        isSelected ? "bg-white/20 text-white" : "bg-[var(--surface)] text-[var(--muted)]"
-                      }`}
+                      className={`text-[10px] px-1.5 py-0.5 rounded-full font-extrabold ${isSelected ? "bg-white/20 text-white" : "bg-[var(--surface)] text-[var(--muted)]"
+                        }`}
                     >
                       {count}
                     </span>
@@ -276,7 +274,7 @@ export default function CoursesCatalogPage() {
                     >
                       {/* Background Pattern / Code Geometry Watermark */}
                       <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
-                      
+
                       {/* Top Badges Row */}
                       <div className="relative z-10 flex items-center justify-between gap-2">
                         <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 shadow-sm">
@@ -320,7 +318,7 @@ export default function CoursesCatalogPage() {
 
                     {/* Course Card Body */}
                     <div className="p-5 space-y-4">
-                      
+
                       {/* Meta Information Bar */}
                       <div className="flex items-center justify-between text-[11px] text-[var(--muted)] font-semibold border-b border-[var(--border-soft)] pb-3">
                         <span className="flex items-center gap-1">
@@ -328,13 +326,12 @@ export default function CoursesCatalogPage() {
                         </span>
                         <span className="flex items-center gap-1.5">
                           <span
-                            className={`w-2 h-2 rounded-full inline-block ${
-                              c.level === "Beginner"
+                            className={`w-2 h-2 rounded-full inline-block ${c.level === "Beginner"
                                 ? "bg-emerald-400"
                                 : c.level === "Intermediate"
-                                ? "bg-amber-400"
-                                : "bg-rose-400"
-                            }`}
+                                  ? "bg-amber-400"
+                                  : "bg-rose-400"
+                              }`}
                           />
                           {c.level}
                         </span>
@@ -407,7 +404,7 @@ export default function CoursesCatalogPage() {
 
                   {/* Card Footer: Instructor Profile & CTA */}
                   <div className="p-5 pt-3 border-t border-[var(--border-soft)] bg-[var(--surface-soft)]/40 flex items-center justify-between gap-3">
-                    
+
                     {/* Instructor Info */}
                     <div className="flex items-center gap-2.5 min-w-0">
                       <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-600 text-white font-extrabold text-xs flex items-center justify-center shrink-0 shadow-sm">
