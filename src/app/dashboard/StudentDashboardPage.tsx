@@ -104,6 +104,61 @@ export default function StudentDashboardPage() {
           </button>
         </div>
 
+        {/* Interactive Student Hub Quick Navigation Strip */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <Link
+            to="/contests"
+            className="p-4 rounded-2xl bg-[var(--surface)] border border-[var(--border-soft)] hover:border-amber-400/50 transition-all flex items-center gap-3 group shadow-sm"
+          >
+            <span className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
+              ⚡
+            </span>
+            <div>
+              <h4 className="text-xs font-extrabold group-hover:text-amber-400 transition-colors">Contest Arena</h4>
+              <p className="text-[10px] text-[var(--muted)]">Daily & 1v1 Duels</p>
+            </div>
+          </Link>
+
+          <Link
+            to="/sandbox"
+            className="p-4 rounded-2xl bg-[var(--surface)] border border-[var(--border-soft)] hover:border-purple-400/50 transition-all flex items-center gap-3 group shadow-sm"
+          >
+            <span className="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
+              💻
+            </span>
+            <div>
+              <h4 className="text-xs font-extrabold group-hover:text-purple-400 transition-colors">Code Sandbox</h4>
+              <p className="text-[10px] text-[var(--muted)]">Multi-Lang Runner</p>
+            </div>
+          </Link>
+
+          <Link
+            to="/notes"
+            className="p-4 rounded-2xl bg-[var(--surface)] border border-[var(--border-soft)] hover:border-indigo-400/50 transition-all flex items-center gap-3 group shadow-sm"
+          >
+            <span className="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
+              📑
+            </span>
+            <div>
+              <h4 className="text-xs font-extrabold group-hover:text-indigo-400 transition-colors">Notes & Bookmarks</h4>
+              <p className="text-[10px] text-[var(--muted)]">Snippets & Cards</p>
+            </div>
+          </Link>
+
+          <Link
+            to="/verify"
+            className="p-4 rounded-2xl bg-[var(--surface)] border border-[var(--border-soft)] hover:border-emerald-400/50 transition-all flex items-center gap-3 group shadow-sm"
+          >
+            <span className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
+              🏆
+            </span>
+            <div>
+              <h4 className="text-xs font-extrabold group-hover:text-emerald-400 transition-colors">Credentials Hub</h4>
+              <p className="text-[10px] text-[var(--muted)]">Public Verification</p>
+            </div>
+          </Link>
+        </div>
+
         {/* Continue Learning Active Hero Card */}
         {primaryResumeCourse && (
           <div className="p-6 sm:p-8 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-xl relative overflow-hidden">
@@ -318,9 +373,34 @@ export default function StudentDashboardPage() {
               <span>Issue Date: {selectedCert.issueDate}</span>
               <span className="font-mono text-amber-400 font-bold">{selectedCert.credentialId}</span>
             </div>
-            <button onClick={() => setSelectedCert(null)} className="button button-sm text-xs">
-              Close Certificate
-            </button>
+            <div className="flex flex-wrap gap-2.5 justify-center pt-2">
+              <Link
+                to={`/verify/${selectedCert.credentialId}`}
+                onClick={() => setSelectedCert(null)}
+                className="button button-sm text-xs font-bold flex items-center gap-1.5"
+              >
+                <span>🌐</span> Public Verification Page
+              </Link>
+              <button
+                onClick={() => {
+                  const name = encodeURIComponent(selectedCert.courseTitle);
+                  const orgName = encodeURIComponent("Astra Academy");
+                  const certUrl = encodeURIComponent(`${window.location.origin}/verify/${selectedCert.credentialId}`);
+                  const certId = encodeURIComponent(selectedCert.credentialId);
+                  const linkedinUrl = `https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name=${name}&organizationName=${orgName}&certUrl=${certUrl}&certId=${certId}&issueYear=2026&issueMonth=10`;
+                  window.open(linkedinUrl, "_blank");
+                }}
+                className="px-4 py-2 rounded-xl text-xs font-bold bg-[#0a66c2] text-white hover:bg-[#084e96] flex items-center gap-1.5"
+              >
+                <span>🔗</span> Add to LinkedIn
+              </button>
+              <button
+                onClick={() => setSelectedCert(null)}
+                className="px-4 py-2 rounded-xl text-xs font-bold border border-gray-700 bg-gray-800 text-gray-300 hover:bg-gray-700"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       )}

@@ -43,6 +43,7 @@ export interface Course {
   featured?: boolean;
   bestseller?: boolean;
   bannerGradient: string;
+  thumbnailUrl?: string;
   instructor: {
     name: string;
     role: string;
@@ -60,6 +61,29 @@ export interface Certificate {
   studentName: string;
   issueDate: string;
   credentialId: string;
+  skills?: string[];
+  instructorName?: string;
+}
+
+export interface BookmarkNote {
+  id: string;
+  courseId: string;
+  courseTitle: string;
+  lessonId: string;
+  lessonTitle: string;
+  snippet?: string;
+  noteText: string;
+  tags?: string[];
+  createdAt: string;
+}
+
+export interface Flashcard {
+  id: string;
+  courseId?: string;
+  category: string;
+  front: string;
+  back: string;
+  mastered?: boolean;
 }
 
 export interface CourseContextType {
@@ -67,6 +91,8 @@ export interface CourseContextType {
   enrolledCourseIds: string[];
   completedLessonIds: string[];
   certificates: Certificate[];
+  bookmarks: BookmarkNote[];
+  flashcards: Flashcard[];
   getCourseById: (idOrSlug: string) => Course | undefined;
   enrollInCourse: (courseId: string) => void;
   unenrollFromCourse: (courseId: string) => void;
@@ -78,6 +104,11 @@ export interface CourseContextType {
   updateCourse: (courseId: string, updated: Partial<Course>) => void;
   deleteCourse: (courseId: string) => void;
   claimCertificate: (courseId: string) => Certificate;
+  addBookmark: (bookmark: Omit<BookmarkNote, "id" | "createdAt">) => void;
+  removeBookmark: (id: string) => void;
+  isBookmarked: (lessonId: string) => boolean;
+  toggleFlashcardMastered: (id: string) => void;
+  addFlashcard: (card: Omit<Flashcard, "id">) => void;
 }
 
 const INITIAL_COURSES: Course[] = [
@@ -550,6 +581,80 @@ export function CourseProvider({ children }: { children: ReactNode }) {
         studentName: user ? user.name : "Alex Morgan",
         issueDate: "October 02, 2026",
         credentialId: "ASTRA-CERT-8849-2026",
+        skills: ["React 19", "Server Components", "Next.js 15", "Edge Streaming", "PostgreSQL"],
+        instructorName: "Elena Rostova",
+      }
+    ];
+  });
+
+  const [bookmarks, setBookmarks] = useState<BookmarkNote[]>(() => {
+    const saved = localStorage.getItem("astra_bookmarks");
+    if (saved) {
+      try { return JSON.parse(saved); } catch { return []; }
+    }
+    return [
+      {
+        id: "bm-1",
+        courseId: "ai-agents-masterclass",
+        courseTitle: "Autonomous AI Agents & LLM Systems",
+        lessonId: "ai-1-1",
+        lessonTitle: "Introduction to Agentic Architectures vs Traditional LLM Calls",
+        noteText: "Key concept: Autonomous Agent cycle operates in Perception -> Planning -> Tool Dispatch -> Reflection loop.",
+        snippet: `// Agent State Graph Loop\nconst workflow = new StateGraph(AgentState)\n  .addNode("agent", callModel)\n  .addNode("tools", toolExecutor)\n  .addEdge("tools", "agent");`,
+        tags: ["Architecture", "LangGraph", "AI"],
+        createdAt: "Oct 5, 2026",
+      },
+      {
+        id: "bm-2",
+        courseId: "fullstack-react-nextjs",
+        courseTitle: "Full-Stack Web Architecture: React 19 & Next.js",
+        lessonId: "fs-1-1",
+        lessonTitle: "React 19 Server Components Architecture & Actions",
+        noteText: "Server Actions eliminate manual API handlers and provide zero-bundle RPC invocation directly with optimistic UI updates.",
+        snippet: `"use server";\nexport async function updateProfile(formData: FormData) {\n  const user = await db.user.update({...});\n  revalidatePath("/dashboard");\n}`,
+        tags: ["React 19", "Server Actions", "Full-Stack"],
+        createdAt: "Oct 6, 2026",
+      }
+    ];
+  });
+
+  const [flashcards, setFlashcards] = useState<Flashcard[]>(() => {
+    const saved = localStorage.getItem("astra_flashcards");
+    if (saved) {
+      try { return JSON.parse(saved); } catch { return []; }
+    }
+    return [
+      {
+        id: "fc-1",
+        courseId: "ai-agents-masterclass",
+        category: "AI & LangGraph",
+        front: "What is the primary difference between a Cyclic Agent Graph and a DAG?",
+        back: "A Cyclic Graph allows self-reflection, error retries, and multi-step tool execution loops until the objective is satisfied, unlike one-way DAGs.",
+        mastered: false,
+      },
+      {
+        id: "fc-2",
+        courseId: "fullstack-react-nextjs",
+        category: "React 19",
+        front: "What is the role of useActionState in React 19?",
+        back: "It manages the pending status, returned state, and form action dispatch for asynchronous server actions without manual useState booleans.",
+        mastered: true,
+      },
+      {
+        id: "fc-3",
+        courseId: "zero-trust-rust-security",
+        category: "Rust & Security",
+        front: "Why does Rust eliminate Use-After-Free vulnerabilities?",
+        back: "Compile-time borrow checker and affine type system guarantee single ownership and automatic memory deallocation without a garbage collector.",
+        mastered: false,
+      },
+      {
+        id: "fc-4",
+        courseId: "devops-k8s-gitops",
+        category: "DevOps & Cloud",
+        front: "What is GitOps reconciliation in ArgoCD?",
+        back: "Continuous loop comparing the desired Git declaration state against the live Kubernetes cluster state, automatically correcting drift.",
+        mastered: false,
       }
     ];
   });
@@ -570,6 +675,14 @@ export function CourseProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     localStorage.setItem("astra_certificates", JSON.stringify(certificates));
   }, [certificates]);
+
+  useEffect(() => {
+    localStorage.setItem("astra_bookmarks", JSON.stringify(bookmarks));
+  }, [bookmarks]);
+
+  useEffect(() => {
+    localStorage.setItem("astra_flashcards", JSON.stringify(flashcards));
+  }, [flashcards]);
 
   const getCourseById = (idOrSlug: string) => {
     return courses.find((c) => c.id === idOrSlug || c.slug === idOrSlug);
@@ -659,10 +772,44 @@ export function CourseProvider({ children }: { children: ReactNode }) {
       studentName: user ? user.name : "Alex Morgan",
       issueDate: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
       credentialId: `ASTRA-CERT-${Math.floor(1000 + Math.random() * 9000)}-2026`,
+      skills: course ? course.skills : ["Systems Architecture", "Advanced Computing"],
+      instructorName: course ? course.instructor.name : "Dr. Sarah Chen",
     };
 
     setCertificates((prev) => [newCert, ...prev]);
     return newCert;
+  };
+
+  const addBookmark = (bookmark: Omit<BookmarkNote, "id" | "createdAt">) => {
+    const newBm: BookmarkNote = {
+      ...bookmark,
+      id: `bm-${Date.now()}`,
+      createdAt: new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
+    };
+    setBookmarks((prev) => [newBm, ...prev]);
+  };
+
+  const removeBookmark = (id: string) => {
+    setBookmarks((prev) => prev.filter((b) => b.id !== id));
+  };
+
+  const isBookmarked = (lessonId: string) => {
+    return bookmarks.some((b) => b.lessonId === lessonId);
+  };
+
+  const toggleFlashcardMastered = (id: string) => {
+    setFlashcards((prev) =>
+      prev.map((fc) => (fc.id === id ? { ...fc, mastered: !fc.mastered } : fc))
+    );
+  };
+
+  const addFlashcard = (card: Omit<Flashcard, "id">) => {
+    const newFc: Flashcard = {
+      ...card,
+      id: `fc-${Date.now()}`,
+      mastered: false,
+    };
+    setFlashcards((prev) => [newFc, ...prev]);
   };
 
   return (
@@ -672,6 +819,8 @@ export function CourseProvider({ children }: { children: ReactNode }) {
         enrolledCourseIds,
         completedLessonIds,
         certificates,
+        bookmarks,
+        flashcards,
         getCourseById,
         enrollInCourse,
         unenrollFromCourse,
@@ -683,6 +832,11 @@ export function CourseProvider({ children }: { children: ReactNode }) {
         updateCourse,
         deleteCourse,
         claimCertificate,
+        addBookmark,
+        removeBookmark,
+        isBookmarked,
+        toggleFlashcardMastered,
+        addFlashcard,
       }}
     >
       {children}

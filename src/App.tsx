@@ -327,38 +327,48 @@ export function SiteNav() {
               </div>
 
               <div className="nav-item">
-                <button className="nav-trigger">Learning Tracks <Icon name="chevron" size={14} /></button>
+                <button className="nav-trigger">Interactive Hubs <Icon name="chevron" size={14} /></button>
                 <div className="mega-menu solutions-menu">
                   <div className="mega-main">
-                    <span className="mega-label">By Career Goal</span>
-                    <Link to="/courses?level=Beginner"><i><Icon name="bolt" /></i><span><b>Zero to Job-Ready</b><small>Structured career transition</small></span></Link>
-                    <Link to="/courses?level=Advanced"><i><Icon name="code" /></i><span><b>Senior & Staff Engineer</b><small>Deep architectural mastery</small></span></Link>
-                    <Link to="/courses?level=Intermediate"><i><Icon name="globe" /></i><span><b>Intermediate Skillup</b><small>Systems & architectural patterns</small></span></Link>
-                    <Link to="/courses"><i><Icon name="chart" /></i><span><b>Full Masterclasses</b><small>All 50+ interactive courses</small></span></Link>
+                    <span className="mega-label">Hands-on Practice</span>
+                    <Link to="/contests"><i><Icon name="bolt" /></i><span><b>Contest Arena & Daily Quizzes</b><small>Timed challenges & 1v1 Battle Mode</small></span></Link>
+                    <Link to="/sandbox"><i><Icon name="code" /></i><span><b>Code Sandbox</b><small>Multi-lang compiler (TS, Python, Rust, SQL, Go)</small></span></Link>
+                    <Link to="/verify"><i><Icon name="check" /></i><span><b>Credential Verification</b><small>Public verified certificates & LinkedIn badge</small></span></Link>
+                    <Link to="/courses"><i><Icon name="chart" /></i><span><b>Full Catalog</b><small>All 50+ interactive courses</small></span></Link>
                   </div>
                   <div className="mega-links">
-                    <span className="mega-label">Specializations</span>
-                    <Link to="/courses?category=ai">AI Engineering <Icon name="arrow" size={14} /></Link>
-                    <Link to="/courses?category=devops">Cloud & Microservices <Icon name="arrow" size={14} /></Link>
+                    <span className="mega-label">Highlights</span>
+                    <Link to="/contests">Weekly Speed Hackathon <Icon name="arrow" size={14} /></Link>
+                    <Link to="/sandbox">Cloud Code Runner <Icon name="arrow" size={14} /></Link>
                     <Link to="/pricing">All-Access Pass <Icon name="arrow" size={14} /></Link>
                   </div>
                 </div>
               </div>
 
-              <Link to="/courses">Course Catalog</Link>
+              <Link to="/courses">Courses</Link>
+              <Link to="/contests" className="flex items-center gap-1">
+                <span>⚡</span> Arena
+              </Link>
+              <Link to="/sandbox" className="flex items-center gap-1">
+                <span>💻</span> Sandbox
+              </Link>
               <Link to="/pricing">Pricing</Link>
             </>
           ) : user?.role === "admin" ? (
             <>
               <Link to="/admin" className="font-bold text-[var(--accent)]">🛠️ Creator Studio</Link>
-              <Link to="/courses">Course Catalog</Link>
+              <Link to="/contests">⚡ Arena</Link>
+              <Link to="/sandbox">💻 Sandbox</Link>
+              <Link to="/courses">Catalog</Link>
               <Link to="/dashboard">Student View</Link>
             </>
           ) : (
             <>
               <Link to="/dashboard" className="font-bold text-[var(--accent)]">🎓 My Learning</Link>
-              <Link to="/courses">Browse Catalog</Link>
-              <Link to="/pricing">Upgrade Plan</Link>
+              <Link to="/contests">⚡ Arena</Link>
+              <Link to="/sandbox">💻 Sandbox</Link>
+              <Link to="/notes">📑 Notes</Link>
+              <Link to="/courses">Catalog</Link>
             </>
           )}
         </div>
@@ -401,24 +411,35 @@ export function SiteNav() {
                     </span>
                   </div>
 
+                  <Link to="/dashboard" onClick={() => setProfileOpen(false)} className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold">
+                    <span>🎓</span> My Learning Dashboard
+                  </Link>
+                  <Link to="/notes" onClick={() => setProfileOpen(false)} className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold">
+                    <span>📑</span> Saved Notes & Flashcards
+                  </Link>
+                  <Link to="/contests" onClick={() => setProfileOpen(false)} className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold">
+                    <span>⚡</span> Contest Arena & Quizzes
+                  </Link>
+                  <Link to="/sandbox" onClick={() => setProfileOpen(false)} className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold">
+                    <span>💻</span> Code Sandbox
+                  </Link>
+                  <Link to="/verify" onClick={() => setProfileOpen(false)} className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold">
+                    <span>🏆</span> Verified Credentials
+                  </Link>
+
                   {user?.role === "admin" ? (
                     <>
-                      <Link to="/admin" onClick={() => setProfileOpen(false)} className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold">
-                        <span>✨</span> Course Creator Studio
+                      <Link to="/admin" onClick={() => setProfileOpen(false)} className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold text-purple-400">
+                        <span>✨</span> Creator Studio & Editor
                       </Link>
-                      <button onClick={() => { switchRole("student"); setProfileOpen(false); navigate("/dashboard"); }} className="w-full text-left flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] text-purple-400 font-semibold">
+                      <button onClick={() => { switchRole("student"); setProfileOpen(false); navigate("/dashboard"); }} className="w-full text-left flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] text-[var(--muted)] font-semibold">
                         <span>🎓</span> Switch to Student View
                       </button>
                     </>
                   ) : (
-                    <>
-                      <Link to="/dashboard" onClick={() => setProfileOpen(false)} className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold">
-                        <span>🎓</span> My Learning Dashboard
-                      </Link>
-                      <button onClick={() => { switchRole("admin"); setProfileOpen(false); navigate("/admin"); }} className="w-full text-left flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] text-purple-400 font-semibold">
-                        <span>👑</span> Switch to Admin Creator View
-                      </button>
-                    </>
+                    <button onClick={() => { switchRole("admin"); setProfileOpen(false); navigate("/admin"); }} className="w-full text-left flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] text-purple-400 font-semibold">
+                      <span>👑</span> Switch to Admin Creator View
+                    </button>
                   )}
 
                   <div className="pt-2 border-t border-[var(--border-soft)]">
@@ -460,79 +481,201 @@ export function SiteFooter() {
   };
 
   return (
-    <footer className="site-footer">
-      <div className="footer-top">
-        <div className="footer-brand">
-          <Link to="/"><Logo /></Link>
-          <p>The interactive tech academy for engineers<br />building the future of AI & software.</p>
-          <span className="status"><i /> 50+ Live Interactive Masterclasses</span>
-        </div>
-        <div className="footer-links">
-          <div>
-            <b>Course Domains</b>
-            <Link to="/courses?category=ai">AI & Agentic Systems</Link>
-            <Link to="/courses?category=fullstack">React 19 & Next.js</Link>
-            <Link to="/courses?category=security">Rust Systems & Security</Link>
-            <Link to="/courses?category=devops">Kubernetes & DevOps</Link>
-            <Link to="/courses">Full Course Catalog</Link>
-          </div>
-          <div>
-            <b>Learning Tracks</b>
-            <Link to="/courses?level=Beginner">Zero to Job-Ready</Link>
-            <Link to="/courses?level=Advanced">Senior Engineer Mastery</Link>
-            <Link to="/courses?level=Intermediate">Intermediate Tracks</Link>
-            <Link to="/courses">Masterclass Library</Link>
-            <Link to="/pricing">All-Access Pass</Link>
-          </div>
-          <div>
-            <b>Platform Hub</b>
-            <Link to="/dashboard">Student Dashboard</Link>
-            <Link to="/admin">Course Creator Studio</Link>
-            <Link to="/signin">Sign In (Demo Accounts)</Link>
-            <Link to="/signup">Create Account</Link>
-            <Link to="/pricing">Membership Plans</Link>
-          </div>
-          <div>
-            <b>Certifications & Info</b>
-            <Link to="/courses">Verified Certificates</Link>
-            <Link to="/courses">Interactive Sandboxes</Link>
-            <Link to="/pricing">Pricing & FAQ</Link>
-            <Link to="/signup">Enroll Free</Link>
-          </div>
-        </div>
-        <div className="newsletter">
-          <b>Stay ahead in Tech & AI.</b>
-          <p>Weekly architecture breakdowns & tutorials.<br />Zero spam, ever.</p>
-          {subscribed ? (
-            <div className="newsletter-success">
-              <span>✓ You're subscribed! Welcome to Astra Academy.</span>
+    <footer className="mt-20 border-t border-[var(--border-soft)] bg-gradient-to-b from-[var(--surface)] to-[var(--bg)] text-[var(--text)] transition-colors relative overflow-hidden">
+      {/* Subtle Glow backdrop effect */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-32 bg-gradient-to-b from-purple-500/10 to-transparent blur-3xl pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-16 pb-12 space-y-12 relative z-10">
+        {/* Top Tier: Live Metrics Banner & Newsletter */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 p-8 rounded-3xl bg-[var(--surface)]/70 border border-[var(--border-soft)] backdrop-blur-md shadow-xl">
+          {/* Brand & Live Platform Status */}
+          <div className="lg:col-span-6 space-y-4">
+            <Link to="/" aria-label="Astra Academy home"><Logo /></Link>
+            <p className="text-xs text-[var(--muted)] leading-relaxed max-w-md">
+              The premier interactive engineering academy for autonomous AI systems, distributed full-stack architecture, zero-trust security, and cloud infrastructure.
+            </p>
+
+            {/* Live Operational Status Indicator */}
+            <div className="flex flex-wrap items-center gap-3 pt-2 text-[11px] font-semibold text-[var(--muted)]">
+              <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block animate-pulse" />
+                All Systems Operational
+              </span>
+              <span>•</span>
+              <span className="font-mono">99.99% Cloud Uptime</span>
+              <span>•</span>
+              <span>150k+ Active Engineers</span>
             </div>
-          ) : (
-            <form onSubmit={handleSubscribe}>
-              <input 
-                type="email" 
-                placeholder="you@company.com" 
-                aria-label="Newsletter email" 
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required 
-              />
-              <button aria-label="Subscribe"><Icon name="arrow" /></button>
-            </form>
-          )}
-          <small>By subscribing, you agree to our <Link to="/product/security">Privacy Policy</Link>.</small>
+          </div>
+
+          {/* Newsletter Subscribe Box */}
+          <div className="lg:col-span-6 flex flex-col justify-center space-y-3">
+            <div className="flex items-center justify-between">
+              <h4 className="text-sm font-black tracking-tight text-[var(--text)] flex items-center gap-2">
+                <span>📬</span> Stay Ahead in AI & Systems Engineering
+              </h4>
+              <span className="text-[10px] uppercase font-bold text-[var(--accent)]">Weekly Brief</span>
+            </div>
+            <p className="text-xs text-[var(--muted)]">
+              In-depth architecture breakdowns, AST deep dives, and early hackathon invites. Zero spam.
+            </p>
+
+            {subscribed ? (
+              <div className="p-3 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 text-xs font-bold flex items-center gap-2 animate-fade-in">
+                <span>✓</span> You're on the list! Check your inbox for our latest RAG system design guide.
+              </div>
+            ) : (
+              <form onSubmit={handleSubscribe} className="flex gap-2">
+                <input
+                  type="email"
+                  placeholder="name@company.com"
+                  aria-label="Newsletter email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="flex-1 p-3 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border)] text-xs text-[var(--text)] focus:ring-2 focus:ring-[var(--accent)]"
+                />
+                <button type="submit" className="button py-3 px-6 text-xs font-black shadow-md shrink-0">
+                  Subscribe →
+                </button>
+              </form>
+            )}
+          </div>
         </div>
-      </div>
-      <div className="footer-bottom">
-        <span>© 2026 Astra Academy, Inc. All rights reserved.</span>
-        <div className="socials">
-          <a href="https://twitter.com" target="_blank" rel="noreferrer" aria-label="X (Twitter)">𝕏</a>
-          <a href="https://linkedin.com" target="_blank" rel="noreferrer" aria-label="LinkedIn">in</a>
-          <a href="https://github.com" target="_blank" rel="noreferrer" aria-label="GitHub">⌘</a>
+
+        {/* Middle Tier: 5 Category Columns */}
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 text-xs">
+          {/* Column 1: Course Domains */}
+          <div className="space-y-3">
+            <h5 className="font-extrabold uppercase tracking-wider text-[var(--accent)] text-[11px]">
+              Course Domains
+            </h5>
+            <ul className="space-y-2 text-[var(--muted)]">
+              <li><Link to="/courses?category=ai" className="hover:text-[var(--text)] transition-colors">Autonomous AI & RAG</Link></li>
+              <li><Link to="/courses?category=fullstack" className="hover:text-[var(--text)] transition-colors">React 19 & Next.js</Link></li>
+              <li><Link to="/courses?category=security" className="hover:text-[var(--text)] transition-colors">Rust Systems & Security</Link></li>
+              <li><Link to="/courses?category=devops" className="hover:text-[var(--text)] transition-colors">Kubernetes & DevOps</Link></li>
+              <li><Link to="/courses" className="hover:text-[var(--text)] transition-colors font-bold text-[var(--text)]">Full Course Catalog →</Link></li>
+            </ul>
+          </div>
+
+          {/* Column 2: Interactive Hubs */}
+          <div className="space-y-3">
+            <h5 className="font-extrabold uppercase tracking-wider text-amber-400 text-[11px]">
+              Interactive Hubs
+            </h5>
+            <ul className="space-y-2 text-[var(--muted)]">
+              <li><Link to="/contests" className="hover:text-[var(--text)] transition-colors flex items-center gap-1.5"><span>⚡</span> Contest Arena</Link></li>
+              <li><Link to="/contests" className="hover:text-[var(--text)] transition-colors flex items-center gap-1.5"><span>⚔️</span> 1v1 Battle Duels</Link></li>
+              <li><Link to="/sandbox" className="hover:text-[var(--text)] transition-colors flex items-center gap-1.5"><span>💻</span> Code Sandbox (5 Langs)</Link></li>
+              <li><Link to="/notes" className="hover:text-[var(--text)] transition-colors flex items-center gap-1.5"><span>📑</span> Notes & Flashcards</Link></li>
+              <li><Link to="/verify" className="hover:text-[var(--text)] transition-colors flex items-center gap-1.5"><span>🏆</span> Credential Hub</Link></li>
+            </ul>
+          </div>
+
+          {/* Column 3: Learning Tracks */}
+          <div className="space-y-3">
+            <h5 className="font-extrabold uppercase tracking-wider text-purple-400 text-[11px]">
+              Learning Tracks
+            </h5>
+            <ul className="space-y-2 text-[var(--muted)]">
+              <li><Link to="/courses?level=Beginner" className="hover:text-[var(--text)] transition-colors">Zero to Job-Ready</Link></li>
+              <li><Link to="/courses?level=Advanced" className="hover:text-[var(--text)] transition-colors">Staff & Principal Architect</Link></li>
+              <li><Link to="/contests" className="hover:text-[var(--text)] transition-colors">Weekly Speed Hackathons</Link></li>
+              <li><Link to="/pricing" className="hover:text-[var(--text)] transition-colors">All-Access Pass</Link></li>
+              <li><Link to="/verify" className="hover:text-[var(--text)] transition-colors">Verified Credentials</Link></li>
+            </ul>
+          </div>
+
+          {/* Column 4: Platform & Creator */}
+          <div className="space-y-3">
+            <h5 className="font-extrabold uppercase tracking-wider text-indigo-400 text-[11px]">
+              Platform & Creator
+            </h5>
+            <ul className="space-y-2 text-[var(--muted)]">
+              <li><Link to="/admin" className="hover:text-[var(--text)] transition-colors">Course Creator Studio</Link></li>
+              <li><Link to="/dashboard" className="hover:text-[var(--text)] transition-colors">Student Dashboard</Link></li>
+              <li><Link to="/signin" className="hover:text-[var(--text)] transition-colors">Sign In (Demo Accounts)</Link></li>
+              <li><Link to="/signup" className="hover:text-[var(--text)] transition-colors">Create Free Account</Link></li>
+              <li><Link to="/pricing" className="hover:text-[var(--text)] transition-colors">Enterprise Pricing</Link></li>
+            </ul>
+          </div>
+
+          {/* Column 5: Trust & Compliance */}
+          <div className="space-y-3">
+            <h5 className="font-extrabold uppercase tracking-wider text-emerald-400 text-[11px]">
+              Trust & Enterprise
+            </h5>
+            <div className="space-y-2 text-[10px] text-[var(--muted)]">
+              <span className="block px-2.5 py-1 rounded-md bg-[var(--surface-soft)] font-mono text-[var(--text)]">
+                🛡️ SOC-2 Type II Certified
+              </span>
+              <span className="block px-2.5 py-1 rounded-md bg-[var(--surface-soft)] font-mono text-[var(--text)]">
+                🔒 ISO 27001 Compliant
+              </span>
+              <span className="block px-2.5 py-1 rounded-md bg-[var(--surface-soft)] font-mono text-[var(--text)]">
+                ⚡ React 19 & LangGraph
+              </span>
+              <p className="text-[10px] pt-1">Enterprise SSO & Corporate Billing ready.</p>
+            </div>
+          </div>
         </div>
-        <button className="footer-theme" onClick={() => setDark(!dark)}>
-          <Icon name={dark ? "moon" : "sun"} /> {dark ? "Dark mode" : "Light mode"} <Icon name="chevron" size={14} />
-        </button>
+
+        {/* Bottom Tier: Copyright, Socials, Theme Switcher */}
+        <div className="pt-8 border-t border-[var(--border-soft)] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[var(--muted)]">
+          <div>
+            <span>© 2026 Astra Academy, Inc. All rights reserved. Master engineering at scale.</span>
+          </div>
+
+          {/* Social Links */}
+          <div className="flex items-center gap-3">
+            <a
+              href="https://twitter.com"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="X (Twitter)"
+              className="w-8 h-8 rounded-full bg-[var(--surface-soft)] border border-[var(--border-soft)] hover:border-[var(--accent)] hover:text-[var(--text)] flex items-center justify-center font-bold transition-all hover:scale-110"
+            >
+              𝕏
+            </a>
+            <a
+              href="https://linkedin.com"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="LinkedIn"
+              className="w-8 h-8 rounded-full bg-[var(--surface-soft)] border border-[var(--border-soft)] hover:border-[var(--accent)] hover:text-[var(--text)] flex items-center justify-center font-bold transition-all hover:scale-110"
+            >
+              in
+            </a>
+            <a
+              href="https://github.com"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="GitHub"
+              className="w-8 h-8 rounded-full bg-[var(--surface-soft)] border border-[var(--border-soft)] hover:border-[var(--accent)] hover:text-[var(--text)] flex items-center justify-center font-bold transition-all hover:scale-110"
+            >
+              ⌘
+            </a>
+            <a
+              href="https://discord.com"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Discord"
+              className="w-8 h-8 rounded-full bg-[var(--surface-soft)] border border-[var(--border-soft)] hover:border-[var(--accent)] hover:text-[var(--text)] flex items-center justify-center font-bold transition-all hover:scale-110"
+            >
+              💬
+            </a>
+          </div>
+
+          {/* Theme Selector Pill */}
+          <button
+            onClick={() => setDark(!dark)}
+            className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--surface-soft)] border border-[var(--border-soft)] hover:border-[var(--accent)] text-xs font-bold text-[var(--text)] transition-all"
+          >
+            <Icon name={dark ? "moon" : "sun"} size={13} />
+            <span>{dark ? "Dark Mode" : "Light Mode"}</span>
+          </button>
+        </div>
       </div>
     </footer>
   );

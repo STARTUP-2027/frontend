@@ -9,7 +9,18 @@ export default function CoursePlayerPage() {
   const navigate = useNavigate();
   const { dark, setDark } = useTheme();
   const { user } = useAuth();
-  const { getCourseById, isLessonCompleted, completeLesson, getCourseProgress, isEnrolled, enrollInCourse } = useCourses();
+  const { 
+    getCourseById, 
+    isLessonCompleted, 
+    completeLesson, 
+    getCourseProgress, 
+    isEnrolled, 
+    enrollInCourse,
+    isBookmarked,
+    addBookmark,
+    removeBookmark,
+    bookmarks
+  } = useCourses();
 
   const course = getCourseById(courseId || "");
 
@@ -173,7 +184,37 @@ export default function CoursePlayerPage() {
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 flex-wrap">
+              <button
+                onClick={() => {
+                  if (activeLesson) {
+                    if (isBookmarked(activeLesson.id)) {
+                      const existing = bookmarks.find((b) => b.lessonId === activeLesson.id);
+                      if (existing) removeBookmark(existing.id);
+                    } else {
+                      addBookmark({
+                        courseId: course.id,
+                        courseTitle: course.title,
+                        lessonId: activeLesson.id,
+                        lessonTitle: activeLesson.title,
+                        noteText: activeLesson.summary,
+                        snippet: activeLesson.codeSnippet,
+                        tags: [course.category, "Lesson Note"]
+                      });
+                    }
+                  }
+                }}
+                className={`px-3.5 py-2.5 rounded-xl font-bold text-xs border transition-all flex items-center gap-1.5 ${
+                  activeLesson && isBookmarked(activeLesson.id)
+                    ? "bg-amber-500/20 text-amber-400 border-amber-500/30"
+                    : "bg-[var(--surface-soft)] border-[var(--border)] text-[var(--muted)] hover:text-[var(--text)]"
+                }`}
+                title="Save lesson note & code snippet to your Notes Hub"
+              >
+                <span>{activeLesson && isBookmarked(activeLesson.id) ? "★" : "☆"}</span>
+                <span>{activeLesson && isBookmarked(activeLesson.id) ? "Bookmarked" : "Bookmark Lesson"}</span>
+              </button>
+
               <button
                 onClick={handleCompleteCurrentLesson}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs transition-all ${
@@ -406,8 +447,11 @@ export default function CoursePlayerPage() {
               </div>
             </div>
             <div className="flex gap-3 justify-center">
-              <button onClick={() => setShowCertModal(false)} className="button button-sm text-xs">
-                View My Dashboard
+              <Link to="/verify" onClick={() => setShowCertModal(false)} className="button button-sm text-xs flex items-center gap-1.5">
+                <span>🏆</span> Verify & Share Credential
+              </Link>
+              <button onClick={() => setShowCertModal(false)} className="px-4 py-2 rounded-xl text-xs font-bold border border-[var(--border)] bg-[var(--surface-soft)]">
+                Close
               </button>
             </div>
           </div>

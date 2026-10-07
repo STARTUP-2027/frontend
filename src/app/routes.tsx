@@ -6,12 +6,23 @@ import CoursesCatalogPage from "./courses/CoursesCatalogPage";
 import StudentDashboardPage from "./dashboard/StudentDashboardPage";
 import AdminCreatorHub from "./admin/AdminCreatorHub";
 import CoursePlayerPage from "./learn/CoursePlayerPage";
+import ContestArenaPage from "./contests/ContestArenaPage";
+import CodeSandboxPage from "./sandbox/CodeSandboxPage";
+import CertificateVerifyPage from "./verify/CertificateVerifyPage";
+import StudentNotesHubPage from "./notes/StudentNotesHubPage";
 
 export const router = createBrowserRouter([
   { path: "/", Component: LandingPage },
   { path: "/courses", Component: CoursesCatalogPage },
   { path: "/learn/:courseId", Component: CoursePlayerPage },
   { path: "/dashboard", Component: StudentDashboardPage },
+  { path: "/dashboard/notes", Component: StudentNotesHubPage },
+  { path: "/notes", Component: StudentNotesHubPage },
+  { path: "/contests", Component: ContestArenaPage },
+  { path: "/playground", Component: ContestArenaPage },
+  { path: "/sandbox", Component: CodeSandboxPage },
+  { path: "/verify", Component: CertificateVerifyPage },
+  { path: "/verify/:credentialId", Component: CertificateVerifyPage },
   { path: "/admin", Component: AdminCreatorHub },
   { path: "/creator", Component: AdminCreatorHub },
   { path: "/pricing", Component: PricingPage },
