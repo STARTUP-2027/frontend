@@ -1,9 +1,11 @@
 import { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router";
-import { useCourses, type Course, type Module, type Lesson } from "../context/CourseContext";
+import { useCourses, type Course, type Module, type Lesson, type HierarchyItem } from "../context/CourseContext";
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../theme";
 import { SiteNav, SiteFooter } from "../../App";
+import InfiniteHierarchyEditor from "./InfiniteHierarchyEditor";
+import AdminHackathonStudio from "./AdminHackathonStudio";
 
 const GRADIENT_PRESETS = [
   { id: "neon", name: "Vibrant Neon", gradient: "linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #3b82f6 100%)" },
@@ -22,7 +24,8 @@ export default function AdminCreatorHub() {
   const navigate = useNavigate();
   const { courses, createCourse, updateCourse, deleteCourse } = useCourses();
 
-  const [activeTab, setActiveTab] = useState<"courses" | "create" | "analytics">("create");
+  const [activeTab, setActiveTab] = useState<"courses" | "create" | "hackathons" | "analytics">("create");
+  const [curriculumViewMode, setCurriculumViewMode] = useState<"infinite" | "linear">("infinite");
   const [searchQuery, setSearchQuery] = useState("");
   const [publishSuccess, setPublishSuccess] = useState<string | null>(null);
 
@@ -75,6 +78,81 @@ export default function AdminCreatorHub() {
             correctIndex: 0,
             explanation: "gRPC leverages binary proto encoding and HTTP/2 bi-directional streaming for maximum network efficiency."
           }
+        }
+      ]
+    }
+  ]);
+
+  // Infinite Hierarchy Tree State (Recursive submodules & multi-quizzes)
+  const [hierarchyItems, setHierarchyItems] = useState<HierarchyItem[]>([
+    {
+      id: "mod-1",
+      title: "Module 1: High-Performance Serialization with Protocol Buffers",
+      type: "module",
+      duration: "3.5 Hours",
+      summary: "Understand HTTP/2 multiplexing, proto3 syntax, and code generation.",
+      quizzes: [
+        {
+          id: "q-1",
+          question: "Why is gRPC faster than traditional REST JSON?",
+          options: [
+            "It uses HTTP/2 multiplexing and compact binary serialization",
+            "It only works on local computers",
+            "It does not use network sockets",
+            "It eliminates all database queries"
+          ],
+          correctIndex: 0,
+          explanation: "gRPC leverages binary proto encoding and HTTP/2 bi-directional streaming for maximum network efficiency.",
+          points: 50
+        }
+      ],
+      children: [
+        {
+          id: "sub-1-1",
+          title: "Submodule 1.1: Binary Encoding & Protobuf Buffer Internals",
+          type: "submodule",
+          duration: "25 min",
+          summary: "Varint encoding, zig-zag signed integers, and memory alignment.",
+          quizzes: [
+            {
+              id: "q-1-1",
+              question: "How does Protobuf encode small integers efficiently?",
+              options: [
+                "Using Variable-length Quantity (Varint) 7-bit payload bytes",
+                "Converting all numbers to 64-bit strings",
+                "Encrypting with AES-GCM",
+                "Base64 padding"
+              ],
+              correctIndex: 0,
+              explanation: "Varints use the most significant bit (MSB) as a continuation marker, allowing values < 128 to take just 1 byte.",
+              points: 50
+            }
+          ],
+          children: [
+            {
+              id: "sub-1-1-1",
+              title: "Submodule 1.1.1: Zero-Copy Deserialization Benchmarks",
+              type: "submodule",
+              duration: "20 min",
+              summary: "Measuring CPU cache locality and zero-allocation string parsing.",
+              quizzes: [
+                {
+                  id: "q-1-1-1",
+                  question: "Which Rust feature enables zero-copy buffer slicing?",
+                  options: [
+                    "Byte slices (&[u8]) with lifetime borrowing",
+                    "Cloning strings on every read",
+                    "Global mutex locks",
+                    "Dynamic pointer casting without validation"
+                  ],
+                  correctIndex: 0,
+                  explanation: "Rust's borrow checker enables safe zero-copy &[u8] referencing directly into received network buffer memory.",
+                  points: 50
+                }
+              ],
+              children: []
+            }
+          ]
         }
       ]
     }
@@ -366,6 +444,16 @@ export default function AdminCreatorHub() {
             <span className="text-sm">📚</span> Manage Catalog ({courses.length})
           </button>
           <button
+            onClick={() => setActiveTab("hackathons")}
+            className={`pb-3 px-4 text-xs font-bold transition-all border-b-2 flex items-center gap-2 ${
+              activeTab === "hackathons"
+                ? "border-[var(--accent)] text-[var(--accent)]"
+                : "border-transparent text-[var(--muted)] hover:text-[var(--text)]"
+            }`}
+          >
+            <span className="text-sm">🏆</span> Hackathons & Test Cases
+          </button>
+          <button
             onClick={() => setActiveTab("analytics")}
             className={`pb-3 px-4 text-xs font-bold transition-all border-b-2 flex items-center gap-2 ${
               activeTab === "analytics"
@@ -608,232 +696,176 @@ export default function AdminCreatorHub() {
                 </div>
               </div>
 
-              {/* Step 3: Interactive Curriculum & Quiz Builder */}
+              {/* Step 3: Interactive Curriculum & Quiz Builder (Infinite Hierarchy) */}
               <div className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] space-y-6 shadow-sm">
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[var(--border-soft)] pb-4">
                   <div>
                     <h3 className="text-sm font-extrabold uppercase tracking-wider text-[var(--accent)] flex items-center gap-2">
-                      <span>3️⃣</span> Interactive Curriculum & Quiz Builder
+                      <span>3️⃣</span> Infinite Hierarchy Curriculum & Multi-Quiz Studio
                     </h3>
                     <p className="text-[11px] text-[var(--muted)]">
-                      {modules.length} Modules • {modules.reduce((acc, m) => acc + m.lessons.length, 0)} Total Lessons
+                      Create unlimited nested submodules (Module → Submodule → Sub-submodule...) with multiple quizzes per topic.
                     </p>
                   </div>
-                  <button
-                    type="button"
-                    onClick={handleAddModule}
-                    className="px-3.5 py-2 rounded-xl text-xs font-bold bg-[var(--surface-soft)] border border-[var(--border)] hover:border-[var(--accent)] flex items-center gap-1.5 shadow-sm"
-                  >
-                    <span>➕</span> Add Module
-                  </button>
+
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setCurriculumViewMode(curriculumViewMode === "infinite" ? "linear" : "infinite")}
+                      className="px-3 py-1.5 rounded-xl text-xs font-bold bg-[var(--surface-soft)] border border-[var(--border)] hover:border-[var(--accent)] flex items-center gap-1.5 shadow-sm"
+                    >
+                      <span>{curriculumViewMode === "infinite" ? "📋 Switch to Linear List" : "🌳 Switch to Infinite Tree"}</span>
+                    </button>
+                    {curriculumViewMode === "linear" && (
+                      <button
+                        type="button"
+                        onClick={handleAddModule}
+                        className="px-3 py-1.5 rounded-xl text-xs font-bold bg-purple-600 hover:bg-purple-700 text-white flex items-center gap-1 shadow-sm"
+                      >
+                        <span>➕ Add Module</span>
+                      </button>
+                    )}
+                  </div>
                 </div>
 
-                <div className="space-y-6">
-                  {modules.map((mod, modIdx) => (
-                    <div key={mod.id} className="p-5 rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] space-y-4">
-                      <div className="flex items-center justify-between gap-3">
-                        <div className="flex items-center gap-3 flex-1">
-                          <span className="w-7 h-7 rounded-full bg-[var(--accent)] text-white text-xs font-bold flex items-center justify-center shrink-0">
-                            {modIdx + 1}
-                          </span>
-                          <input
-                            type="text"
-                            value={mod.title}
-                            onChange={(e) => {
-                              const updated = [...modules];
-                              updated[modIdx].title = e.target.value;
-                              setModules(updated);
-                            }}
-                            className="flex-1 p-2.5 rounded-xl bg-[var(--surface)] border border-[var(--border)] text-xs font-bold"
-                            placeholder="Module Title"
-                          />
-                        </div>
-                        <button
-                          type="button"
-                          onClick={() => handleRemoveModule(modIdx)}
-                          className="text-xs text-rose-500 hover:text-rose-400 p-1 font-bold"
-                          title="Delete Module"
-                        >
-                          ✕
-                        </button>
-                      </div>
-
-                      {/* Lessons in this module */}
-                      <div className="space-y-4 pl-4 sm:pl-8 border-l-2 border-[var(--border-soft)]">
-                        {mod.lessons.map((lesson, lesIdx) => (
-                          <div key={lesson.id} className="p-4 rounded-xl bg-[var(--surface)] border border-[var(--border-soft)] space-y-3 text-xs shadow-xs">
-                            <div className="flex items-center justify-between gap-2">
-                              <span className="text-[10px] font-extrabold text-[var(--muted)] uppercase tracking-wider">
-                                Lesson {modIdx + 1}.{lesIdx + 1}
-                              </span>
-                              <div className="flex items-center gap-2">
-                                <select
-                                  value={lesson.type}
-                                  onChange={(e) => {
-                                    const updated = [...modules];
-                                    updated[modIdx].lessons[lesIdx].type = e.target.value as any;
-                                    setModules(updated);
-                                  }}
-                                  className="p-1 rounded-md bg-[var(--surface-soft)] border border-[var(--border)] text-[10px] font-bold"
-                                >
-                                  <option value="video">🎥 Video & Notes</option>
-                                  <option value="code">💻 Code Sandbox</option>
-                                  <option value="quiz">📝 Quiz Assessment</option>
-                                </select>
-                                <button
-                                  type="button"
-                                  onClick={() => handleRemoveLesson(modIdx, lesIdx)}
-                                  className="text-rose-500 hover:text-rose-400 text-xs font-bold p-1"
-                                  title="Delete Lesson"
-                                >
-                                  ✕
-                                </button>
-                              </div>
-                            </div>
-
+                {curriculumViewMode === "infinite" ? (
+                  <InfiniteHierarchyEditor
+                    items={hierarchyItems}
+                    onChange={(newItems) => {
+                      setHierarchyItems(newItems);
+                    }}
+                  />
+                ) : (
+                  <div className="space-y-6">
+                    {modules.map((mod, modIdx) => (
+                      <div key={mod.id} className="p-5 rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] space-y-4">
+                        <div className="flex items-center justify-between gap-3">
+                          <div className="flex items-center gap-3 flex-1">
+                            <span className="w-7 h-7 rounded-full bg-[var(--accent)] text-white text-xs font-bold flex items-center justify-center shrink-0">
+                              {modIdx + 1}
+                            </span>
                             <input
                               type="text"
-                              value={lesson.title}
+                              value={mod.title}
                               onChange={(e) => {
                                 const updated = [...modules];
-                                updated[modIdx].lessons[lesIdx].title = e.target.value;
+                                updated[modIdx].title = e.target.value;
                                 setModules(updated);
                               }}
-                              className="w-full p-2.5 rounded-lg bg-[var(--surface-soft)] border border-[var(--border)] text-xs font-semibold"
-                              placeholder="Lesson Title"
+                              className="flex-1 p-2.5 rounded-xl bg-[var(--surface)] border border-[var(--border)] text-xs font-bold"
+                              placeholder="Module Title"
                             />
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveModule(modIdx)}
+                            className="text-xs text-rose-500 hover:text-rose-400 p-1 font-bold"
+                            title="Delete Module"
+                          >
+                            ✕
+                          </button>
+                        </div>
 
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                              <input
-                                type="text"
-                                value={lesson.videoUrl || ""}
-                                onChange={(e) => {
-                                  const updated = [...modules];
-                                  updated[modIdx].lessons[lesIdx].videoUrl = e.target.value;
-                                  setModules(updated);
-                                }}
-                                className="p-2 rounded-lg bg-[var(--surface-soft)] border border-[var(--border)] text-[11px]"
-                                placeholder="Video Embed URL (YouTube/MP4)"
-                              />
-                              <input
-                                type="text"
-                                value={lesson.duration}
-                                onChange={(e) => {
-                                  const updated = [...modules];
-                                  updated[modIdx].lessons[lesIdx].duration = e.target.value;
-                                  setModules(updated);
-                                }}
-                                className="p-2 rounded-lg bg-[var(--surface-soft)] border border-[var(--border)] text-[11px]"
-                                placeholder="Duration (e.g. 24 min)"
-                              />
-                            </div>
-
-                            {/* Summary & Markdown Notes */}
-                            <div className="space-y-1.5">
-                              <label className="text-[10px] font-bold text-[var(--muted)]">Lesson Summary</label>
-                              <input
-                                type="text"
-                                value={lesson.summary}
-                                onChange={(e) => {
-                                  const updated = [...modules];
-                                  updated[modIdx].lessons[lesIdx].summary = e.target.value;
-                                  setModules(updated);
-                                }}
-                                className="w-full p-2 rounded-lg bg-[var(--surface-soft)] border border-[var(--border)] text-[11px]"
-                                placeholder="Quick key takeaways for students"
-                              />
-                            </div>
-
-                            {/* Code Snippet Editor */}
-                            <div className="space-y-1.5">
-                              <label className="text-[10px] font-bold text-[var(--muted)]">Starter Code Snippet (Sandbox)</label>
-                              <textarea
-                                rows={3}
-                                value={lesson.codeSnippet || ""}
-                                onChange={(e) => {
-                                  const updated = [...modules];
-                                  updated[modIdx].lessons[lesIdx].codeSnippet = e.target.value;
-                                  setModules(updated);
-                                }}
-                                className="w-full p-2.5 rounded-lg bg-[#0e0c15] text-[#93c5fd] font-mono text-[11px] border border-[var(--border)]"
-                                placeholder="// Code starter..."
-                              />
-                            </div>
-
-                            {/* Quiz Question & Options */}
-                            <div className="p-3 rounded-lg bg-[var(--surface-soft)] border border-[var(--border-soft)] space-y-2">
-                              <span className="text-[10px] font-extrabold uppercase text-[var(--accent)]">Quiz Question & Answer Key</span>
-                              <input
-                                type="text"
-                                value={lesson.quiz?.question || ""}
-                                onChange={(e) => {
-                                  const updated = [...modules];
-                                  if (!updated[modIdx].lessons[lesIdx].quiz) {
-                                    updated[modIdx].lessons[lesIdx].quiz = { question: "", options: ["Option A", "Option B"], correctIndex: 0, explanation: "" };
-                                  }
-                                  updated[modIdx].lessons[lesIdx].quiz!.question = e.target.value;
-                                  setModules(updated);
-                                }}
-                                className="w-full p-2 rounded-lg bg-[var(--surface)] border border-[var(--border)] text-[11px]"
-                                placeholder="Quiz question (e.g. Why is gRPC faster than REST?)"
-                              />
-
-                              {lesson.quiz && (
-                                <div className="space-y-1.5">
-                                  <label className="text-[10px] font-bold text-[var(--muted)]">Options (Radio marks correct choice)</label>
-                                  {lesson.quiz.options.map((opt, optIdx) => (
-                                    <div key={optIdx} className="flex items-center gap-2">
-                                      <input
-                                        type="radio"
-                                        name={`quiz-${modIdx}-${lesIdx}`}
-                                        checked={lesson.quiz?.correctIndex === optIdx}
-                                        onChange={() => {
-                                          const updated = [...modules];
-                                          updated[modIdx].lessons[lesIdx].quiz!.correctIndex = optIdx;
-                                          setModules(updated);
-                                        }}
-                                        className="accent-[var(--accent)]"
-                                      />
-                                      <input
-                                        type="text"
-                                        value={opt}
-                                        onChange={(e) => {
-                                          const updated = [...modules];
-                                          updated[modIdx].lessons[lesIdx].quiz!.options[optIdx] = e.target.value;
-                                          setModules(updated);
-                                        }}
-                                        className="flex-1 p-1.5 rounded-md bg-[var(--surface)] border border-[var(--border)] text-[11px]"
-                                      />
-                                    </div>
-                                  ))}
-                                  <input
-                                    type="text"
-                                    value={lesson.quiz.explanation}
+                        {/* Lessons in this module */}
+                        <div className="space-y-4 pl-4 sm:pl-8 border-l-2 border-[var(--border-soft)]">
+                          {mod.lessons.map((lesson, lesIdx) => (
+                            <div key={lesson.id} className="p-4 rounded-xl bg-[var(--surface)] border border-[var(--border-soft)] space-y-3 text-xs shadow-xs">
+                              <div className="flex items-center justify-between gap-2">
+                                <span className="text-[10px] font-extrabold text-[var(--muted)] uppercase tracking-wider">
+                                  Lesson {modIdx + 1}.{lesIdx + 1}
+                                </span>
+                                <div className="flex items-center gap-2">
+                                  <select
+                                    value={lesson.type}
                                     onChange={(e) => {
                                       const updated = [...modules];
-                                      updated[modIdx].lessons[lesIdx].quiz!.explanation = e.target.value;
+                                      updated[modIdx].lessons[lesIdx].type = e.target.value as any;
                                       setModules(updated);
                                     }}
-                                    className="w-full p-2 rounded-lg bg-[var(--surface)] border border-[var(--border)] text-[11px]"
-                                    placeholder="Answer explanation for students"
-                                  />
+                                    className="p-1 rounded-md bg-[var(--surface-soft)] border border-[var(--border)] text-[10px] font-bold"
+                                  >
+                                    <option value="video">🎥 Video & Notes</option>
+                                    <option value="code">💻 Code Sandbox</option>
+                                    <option value="quiz">📝 Quiz Assessment</option>
+                                  </select>
+                                  <button
+                                    type="button"
+                                    onClick={() => handleRemoveLesson(modIdx, lesIdx)}
+                                    className="text-rose-500 hover:text-rose-400 text-xs font-bold p-1"
+                                    title="Delete Lesson"
+                                  >
+                                    ✕
+                                  </button>
                                 </div>
-                              )}
-                            </div>
-                          </div>
-                        ))}
+                              </div>
 
-                        <button
-                          type="button"
-                          onClick={() => handleAddLesson(modIdx)}
-                          className="text-xs font-bold text-[var(--accent)] hover:underline flex items-center gap-1 mt-2"
-                        >
-                          ➕ Add Lesson to Module {modIdx + 1}
-                        </button>
+                              <input
+                                type="text"
+                                value={lesson.title}
+                                onChange={(e) => {
+                                  const updated = [...modules];
+                                  updated[modIdx].lessons[lesIdx].title = e.target.value;
+                                  setModules(updated);
+                                }}
+                                className="w-full p-2.5 rounded-lg bg-[var(--surface-soft)] border border-[var(--border)] text-xs font-semibold"
+                                placeholder="Lesson Title"
+                              />
+
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                <input
+                                  type="text"
+                                  value={lesson.videoUrl || ""}
+                                  onChange={(e) => {
+                                    const updated = [...modules];
+                                    updated[modIdx].lessons[lesIdx].videoUrl = e.target.value;
+                                    setModules(updated);
+                                  }}
+                                  className="p-2 rounded-lg bg-[var(--surface-soft)] border border-[var(--border)] text-[11px]"
+                                  placeholder="Video Embed URL (YouTube/MP4)"
+                                />
+                                <input
+                                  type="text"
+                                  value={lesson.duration}
+                                  onChange={(e) => {
+                                    const updated = [...modules];
+                                    updated[modIdx].lessons[lesIdx].duration = e.target.value;
+                                    setModules(updated);
+                                  }}
+                                  className="p-2 rounded-lg bg-[var(--surface-soft)] border border-[var(--border)] text-[11px]"
+                                  placeholder="Duration (e.g. 24 min)"
+                                />
+                              </div>
+
+                              {/* Summary */}
+                              <div className="space-y-1.5">
+                                <label className="text-[10px] font-bold text-[var(--muted)]">Lesson Summary</label>
+                                <input
+                                  type="text"
+                                  value={lesson.summary}
+                                  onChange={(e) => {
+                                    const updated = [...modules];
+                                    updated[modIdx].lessons[lesIdx].summary = e.target.value;
+                                    setModules(updated);
+                                  }}
+                                  className="w-full p-2 rounded-lg bg-[var(--surface-soft)] border border-[var(--border)] text-[11px]"
+                                  placeholder="Quick key takeaways for students"
+                                />
+                              </div>
+                            </div>
+                          ))}
+
+                          <button
+                            type="button"
+                            onClick={() => handleAddLesson(modIdx)}
+                            className="text-xs font-bold text-[var(--accent)] hover:underline flex items-center gap-1 mt-2"
+                          >
+                            ➕ Add Lesson to Module {modIdx + 1}
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
               <div className="flex justify-end gap-4 pt-2">
@@ -1053,7 +1085,12 @@ export default function AdminCreatorHub() {
           </div>
         )}
 
-        {/* TAB 3: Analytics */}
+        {/* TAB 3: Hackathon & Test Case Creator Studio */}
+        {activeTab === "hackathons" && (
+          <AdminHackathonStudio />
+        )}
+
+        {/* TAB 4: Analytics */}
         {activeTab === "analytics" && (
           <div className="space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

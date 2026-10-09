@@ -1,21 +1,72 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
 import { useAuth } from "./AuthContext";
 
+export interface QuizQuestion {
+  id: string;
+  question: string;
+  options: string[];
+  correctIndex: number;
+  explanation: string;
+  points?: number;
+}
+
+export interface CourseResource {
+  id: string;
+  name: string;
+  type: "pdf" | "code" | "cheat-sheet" | "doc" | "diagram";
+  url?: string;
+  size?: string;
+  description?: string;
+}
+
+export interface ChapterTimestamp {
+  time: string;
+  seconds: number;
+  label: string;
+}
+
+export interface HierarchyItem {
+  id: string;
+  title: string;
+  type: "module" | "submodule" | "lesson" | "video" | "reading" | "lab" | "quiz" | "exercise";
+  duration?: string;
+  summary?: string;
+  notes?: string;
+  videoUrl?: string;
+  transcript?: string;
+  timestamps?: ChapterTimestamp[];
+  codeSnippet?: string;
+  labObjective?: string;
+  expectedOutput?: string;
+  quizzes?: QuizQuestion[];
+  resources?: CourseResource[];
+  flashcards?: Array<{ front: string; back: string }>;
+  children?: HierarchyItem[];
+}
+
 export interface Lesson {
   id: string;
   title: string;
   duration: string;
-  type: "video" | "code" | "quiz";
+  type: "video" | "code" | "quiz" | "reading" | "lab";
   videoUrl?: string;
+  transcript?: string;
+  timestamps?: ChapterTimestamp[];
   summary: string;
   notes: string;
   codeSnippet?: string;
+  labObjective?: string;
+  expectedOutput?: string;
   quiz?: {
     question: string;
     options: string[];
     correctIndex: number;
     explanation: string;
   };
+  quizzes?: QuizQuestion[];
+  resources?: CourseResource[];
+  flashcards?: Array<{ front: string; back: string }>;
+  children?: HierarchyItem[];
 }
 
 export interface Module {
@@ -23,6 +74,7 @@ export interface Module {
   title: string;
   duration: string;
   lessons: Lesson[];
+  submodules?: HierarchyItem[];
 }
 
 export interface Course {
@@ -532,6 +584,219 @@ resource "aws_eks_cluster" "primary" {
         ]
       }
     ]
+  },
+  {
+    id: "python-foundations-ai",
+    slug: "python-foundations-ai",
+    title: "Python 3.12 Core & Data Structures for AI Engineers",
+    tagline: "Master clean Python, asynchronous I/O, generators, and core algorithms from scratch",
+    description: "Start your engineering journey with Python 3.12, type hinting, object-oriented patterns, async coroutines, and foundational algorithms needed for AI pipelines.",
+    category: "ai",
+    categoryLabel: "AI & Machine Learning",
+    level: "Beginner",
+    duration: "14 Hours",
+    lessonsCount: 18,
+    studentsCount: 6420,
+    rating: 4.88,
+    reviewsCount: 1120,
+    price: 0, // Free course
+    featured: true,
+    bannerGradient: "linear-gradient(135deg, #06b6d4 0%, #0284c7 100%)",
+    instructor: {
+      name: "Sophia Zhang",
+      role: "AI Curriculum Lead",
+      avatar: "SZ",
+      company: "Astra Academy",
+    },
+    skills: ["Python 3.12", "Type Hinting", "AsyncIO", "Data Structures", "NumPy Basics"],
+    modules: [
+      {
+        id: "py-mod-1",
+        title: "Module 1: Modern Python 3.12 & Type System",
+        duration: "3.5 Hours",
+        lessons: [
+          {
+            id: "py-1-1",
+            title: "Type Annotations, Generics & Structural Pattern Matching",
+            duration: "25 min",
+            type: "video",
+            summary: "Write robust Python using static type checkers and match statements.",
+            notes: "# Python 3.12 Type Annotations\nLearn to write robust Python with Pydantic and type hints.",
+            codeSnippet: "def process_batch[T](items: list[T]) -> list[T]:\n    return items"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "frontend-typescript-css",
+    slug: "frontend-typescript-css",
+    title: "Design Systems & High-Velocity UI with Modern TypeScript",
+    tagline: "Build accessible, fluid component libraries with Tailwind CSS v4 and Framer Motion",
+    description: "Master modern frontend engineering: accessible compound components, design tokens, micro-animations, theme managers, and zero-runtime CSS.",
+    category: "fullstack",
+    categoryLabel: "Full-Stack Engineering",
+    level: "Beginner",
+    duration: "16 Hours",
+    lessonsCount: 20,
+    studentsCount: 4210,
+    rating: 4.86,
+    reviewsCount: 650,
+    price: 49,
+    bestseller: true,
+    bannerGradient: "linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%)",
+    instructor: {
+      name: "Liam O'Connor",
+      role: "Design Technologist",
+      avatar: "LO",
+      company: "PixelCraft",
+    },
+    skills: ["TypeScript", "Tailwind CSS v4", "Component Design", "Accessibility (a11y)", "Design Systems"],
+    modules: [
+      {
+        id: "ui-mod-1",
+        title: "Module 1: Design Tokens & Fluid CSS",
+        duration: "4 Hours",
+        lessons: [
+          {
+            id: "ui-1-1",
+            title: "Atomic Tokens & CSS Variables Architecture",
+            duration: "30 min",
+            type: "video",
+            summary: "Structure CSS custom properties for instant dark/light theme shifts.",
+            notes: "# Modern Design Tokens\nImplement dynamic tokens for seamless light and dark mode switches.",
+            codeSnippet: ":root { --brand-hue: 260; --accent: hsl(var(--brand-hue) 90% 60%); }"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "distributed-go-kafka",
+    slug: "distributed-go-kafka",
+    title: "Distributed Event-Driven Architecture with Go & Apache Kafka",
+    tagline: "Design resilient, million-event-per-second streaming data pipelines and microservices",
+    description: "Architect mission-critical distributed systems. Learn event sourcing, CQRS patterns, partition balancing, dead-letter queues, and high-concurrency Go worker pools.",
+    category: "fullstack",
+    categoryLabel: "Full-Stack & Systems",
+    level: "Advanced",
+    duration: "32 Hours",
+    lessonsCount: 36,
+    studentsCount: 2150,
+    rating: 4.96,
+    reviewsCount: 390,
+    price: 119,
+    featured: true,
+    bannerGradient: "linear-gradient(135deg, #6366f1 0%, #4338ca 100%)",
+    instructor: {
+      name: "Kaito Takahashi",
+      role: "Staff Infrastructure Architect",
+      avatar: "KT",
+      company: "HyperScale",
+    },
+    skills: ["Go (Golang)", "Apache Kafka", "Event Sourcing", "CQRS", "Distributed Consensus", "gRPC"],
+    modules: [
+      {
+        id: "go-mod-1",
+        title: "Module 1: Kafka Partitioning & Go Consumer Groups",
+        duration: "6 Hours",
+        lessons: [
+          {
+            id: "go-1-1",
+            title: "Zero-Data-Loss Consumer Group Rebalancing",
+            duration: "35 min",
+            type: "video",
+            summary: "Handle graceful partition rebalances and committed offsets in Go.",
+            notes: "# Kafka Consumer Groups in Go\nMaintain exact-once and at-least-once message processing semantics.",
+            codeSnippet: "package main\nimport \"github.com/segmentio/kafka-go\"\n// Consumer implementation"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "web3-solidity-security",
+    slug: "web3-solidity-security",
+    title: "Smart Contract Security & Applied Cryptography in Solidity",
+    tagline: "Audit EVM smart contracts, prevent reentrancy, and construct cryptographic zero-knowledge proofs",
+    description: "Deep dive into EVM bytecode, gas optimization, reentrancy attacks, flash loan defense, multi-signature vaults, and zero-knowledge SNARK verifiers.",
+    category: "security",
+    categoryLabel: "Cybersecurity & Web3",
+    level: "Intermediate",
+    duration: "19 Hours",
+    lessonsCount: 22,
+    studentsCount: 1890,
+    rating: 4.81,
+    reviewsCount: 280,
+    price: 89,
+    bannerGradient: "linear-gradient(135deg, #14b8a6 0%, #0f766e 100%)",
+    instructor: {
+      name: "Dr. Maya Patel",
+      role: "Protocol Security Auditor",
+      avatar: "MP",
+      company: "ShieldSec",
+    },
+    skills: ["Solidity", "Smart Contract Auditing", "EVM Bytecode", "Gas Optimization", "Zero-Knowledge Proofs"],
+    modules: [
+      {
+        id: "sec-mod-1",
+        title: "Module 1: Reentrancy & Access Control Vulnerabilities",
+        duration: "4.5 Hours",
+        lessons: [
+          {
+            id: "sec-1-1",
+            title: "Checks-Effects-Interactions Pattern & ReentrancyGuard",
+            duration: "28 min",
+            type: "video",
+            summary: "Eliminate reentrancy exploits using reentrancy guards and state ordering.",
+            notes: "# Smart Contract Defense\nAlways update state variables before triggering external calls.",
+            codeSnippet: "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\ncontract Vault { ... }"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "sre-ebpf-observability",
+    slug: "sre-ebpf-observability",
+    title: "Kernel-Level Observability & SRE with eBPF and Prometheus",
+    tagline: "Inspect Linux kernel network packets, trace system calls, and debug latency at line rate",
+    description: "Master modern SRE and Linux kernel instrumentation using eBPF programs, Cilium service mesh, OpenTelemetry distributed tracing, and Prometheus alerting.",
+    category: "devops",
+    categoryLabel: "DevOps & Cloud",
+    level: "Advanced",
+    duration: "25 Hours",
+    lessonsCount: 28,
+    studentsCount: 1740,
+    rating: 4.93,
+    reviewsCount: 310,
+    price: 95,
+    bannerGradient: "linear-gradient(135deg, #f97316 0%, #c2410c 100%)",
+    instructor: {
+      name: "Marcus Brody",
+      role: "Principal Reliability Engineer",
+      avatar: "MB",
+      company: "KernelOps",
+    },
+    skills: ["eBPF", "Linux Kernel", "Prometheus", "OpenTelemetry", "Cilium", "Distributed Tracing"],
+    modules: [
+      {
+        id: "ebpf-mod-1",
+        title: "Module 1: eBPF Architecture & XDP Packet Filters",
+        duration: "5 Hours",
+        lessons: [
+          {
+            id: "ebpf-1-1",
+            title: "Writing In-Kernel XDP Filters for DDoS Mitigation",
+            duration: "32 min",
+            type: "video",
+            summary: "Drop malicious network packets at the network driver layer before kernel allocation.",
+            notes: "# In-Kernel eBPF Filtering\neBPF runs verified sandboxed bytecode inside the Linux kernel.",
+            codeSnippet: "SEC(\"xdp\") int xdp_filter(struct xdp_md *ctx) { return XDP_PASS; }"
+          }
+        ]
+      }
+    ]
   }
 ];
 
@@ -544,7 +809,19 @@ export function CourseProvider({ children }: { children: ReactNode }) {
     const saved = localStorage.getItem("astra_courses_db");
     if (saved) {
       try {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length >= INITIAL_COURSES.length) {
+          return parsed;
+        }
+        // Merge missing initial courses with any user-created courses
+        const existingIds = new Set(parsed.map((c: Course) => c.id));
+        const merged = [...parsed];
+        INITIAL_COURSES.forEach((c) => {
+          if (!existingIds.has(c.id)) {
+            merged.push(c);
+          }
+        });
+        return merged;
       } catch {
         return INITIAL_COURSES;
       }

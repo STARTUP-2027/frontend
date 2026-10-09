@@ -481,11 +481,11 @@ export function SiteFooter() {
   };
 
   return (
-    <footer className="mt-20 border-t border-[var(--border-soft)] bg-gradient-to-b from-[var(--surface)] to-[var(--bg)] text-[var(--text)] transition-colors relative overflow-hidden">
+    <footer className="mt-8 sm:mt-10 border-t border-[var(--border-soft)] bg-gradient-to-b from-[var(--surface)] to-[var(--bg)] text-[var(--text)] transition-colors relative overflow-hidden">
       {/* Subtle Glow backdrop effect */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-32 bg-gradient-to-b from-purple-500/10 to-transparent blur-3xl pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-24 bg-gradient-to-b from-purple-500/10 to-transparent blur-3xl pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-16 pb-12 space-y-12 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-10 pb-10 space-y-8 relative z-10">
         {/* Top Tier: Live Metrics Banner & Newsletter */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 p-8 rounded-3xl bg-[var(--surface)]/70 border border-[var(--border-soft)] backdrop-blur-md shadow-xl">
           {/* Brand & Live Platform Status */}
