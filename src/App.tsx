@@ -289,7 +289,6 @@ export function Logo() {
 }
 
 export function SiteNav() {
-  const { dark, setDark } = useTheme();
   const { user, isLoggedIn, logout, switchRole } = useAuth();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -375,14 +374,8 @@ export function SiteNav() {
 
         {/* Navigation Actions */}
         <div className="nav-actions">
-          <button className="theme-toggle" onClick={() => setDark(!dark)} aria-label={`Switch to ${dark ? "light" : "dark"} mode`}>
-            <span className={!dark ? "selected" : ""}><Icon name="sun" size={15} /></span>
-            <span className={dark ? "selected" : ""}><Icon name="moon" size={15} /></span>
-          </button>
-
           {!isLoggedIn ? (
             <>
-              <button className="text-button" onClick={() => navigate("/signin")}>Sign in</button>
               <button className="button button-sm" onClick={() => navigate("/signup")}>Enroll Free <Icon name="arrow" size={15} /></button>
             </>
           ) : (
