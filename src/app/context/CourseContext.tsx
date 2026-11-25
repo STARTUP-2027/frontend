@@ -1,21 +1,72 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
 import { useAuth } from "./AuthContext";
 
+export interface QuizQuestion {
+  id: string;
+  question: string;
+  options: string[];
+  correctIndex: number;
+  explanation: string;
+  points?: number;
+}
+
+export interface CourseResource {
+  id: string;
+  name: string;
+  type: "pdf" | "code" | "cheat-sheet" | "doc" | "diagram";
+  url?: string;
+  size?: string;
+  description?: string;
+}
+
+export interface ChapterTimestamp {
+  time: string;
+  seconds: number;
+  label: string;
+}
+
+export interface HierarchyItem {
+  id: string;
+  title: string;
+  type: "module" | "submodule" | "lesson" | "video" | "reading" | "lab" | "quiz" | "exercise";
+  duration?: string;
+  summary?: string;
+  notes?: string;
+  videoUrl?: string;
+  transcript?: string;
+  timestamps?: ChapterTimestamp[];
+  codeSnippet?: string;
+  labObjective?: string;
+  expectedOutput?: string;
+  quizzes?: QuizQuestion[];
+  resources?: CourseResource[];
+  flashcards?: Array<{ front: string; back: string }>;
+  children?: HierarchyItem[];
+}
+
 export interface Lesson {
   id: string;
   title: string;
   duration: string;
-  type: "video" | "code" | "quiz";
+  type: "video" | "code" | "quiz" | "reading" | "lab";
   videoUrl?: string;
+  transcript?: string;
+  timestamps?: ChapterTimestamp[];
   summary: string;
   notes: string;
   codeSnippet?: string;
+  labObjective?: string;
+  expectedOutput?: string;
   quiz?: {
     question: string;
     options: string[];
     correctIndex: number;
     explanation: string;
   };
+  quizzes?: QuizQuestion[];
+  resources?: CourseResource[];
+  flashcards?: Array<{ front: string; back: string }>;
+  children?: HierarchyItem[];
 }
 
 export interface Module {
@@ -23,6 +74,7 @@ export interface Module {
   title: string;
   duration: string;
   lessons: Lesson[];
+  submodules?: HierarchyItem[];
 }
 
 export interface Course {
@@ -43,6 +95,7 @@ export interface Course {
   featured?: boolean;
   bestseller?: boolean;
   bannerGradient: string;
+  thumbnailUrl?: string;
   instructor: {
     name: string;
     role: string;
@@ -60,6 +113,29 @@ export interface Certificate {
   studentName: string;
   issueDate: string;
   credentialId: string;
+  skills?: string[];
+  instructorName?: string;
+}
+
+export interface BookmarkNote {
+  id: string;
+  courseId: string;
+  courseTitle: string;
+  lessonId: string;
+  lessonTitle: string;
+  snippet?: string;
+  noteText: string;
+  tags?: string[];
+  createdAt: string;
+}
+
+export interface Flashcard {
+  id: string;
+  courseId?: string;
+  category: string;
+  front: string;
+  back: string;
+  mastered?: boolean;
 }
 
 export interface CourseContextType {
@@ -67,6 +143,8 @@ export interface CourseContextType {
   enrolledCourseIds: string[];
   completedLessonIds: string[];
   certificates: Certificate[];
+  bookmarks: BookmarkNote[];
+  flashcards: Flashcard[];
   getCourseById: (idOrSlug: string) => Course | undefined;
   enrollInCourse: (courseId: string) => void;
   unenrollFromCourse: (courseId: string) => void;
@@ -78,6 +156,11 @@ export interface CourseContextType {
   updateCourse: (courseId: string, updated: Partial<Course>) => void;
   deleteCourse: (courseId: string) => void;
   claimCertificate: (courseId: string) => Certificate;
+  addBookmark: (bookmark: Omit<BookmarkNote, "id" | "createdAt">) => void;
+  removeBookmark: (id: string) => void;
+  isBookmarked: (lessonId: string) => boolean;
+  toggleFlashcardMastered: (id: string) => void;
+  addFlashcard: (card: Omit<Flashcard, "id">) => void;
 }
 
 const INITIAL_COURSES: Course[] = [
@@ -95,9 +178,10 @@ const INITIAL_COURSES: Course[] = [
     studentsCount: 3840,
     rating: 4.95,
     reviewsCount: 720,
-    price: 89,
+    price: 0,
     featured: true,
     bestseller: true,
+    thumbnailUrl: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80",
     bannerGradient: "linear-gradient(135deg, #7c3aed 0%, #4338ca 100%)",
     instructor: {
       name: "Dr. Aris Vance",
@@ -294,8 +378,9 @@ console.log("Schema compiled. Ready for strict OpenAI Function Calling!");`
     studentsCount: 5120,
     rating: 4.92,
     reviewsCount: 980,
-    price: 79,
+    price: 0,
     featured: true,
+    thumbnailUrl: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80",
     bannerGradient: "linear-gradient(135deg, #0284c7 0%, #0369a1 100%)",
     instructor: {
       name: "Jordan Bell",
@@ -399,7 +484,8 @@ export function LikeButton({ likes, onLike }: { likes: number; onLike: () => Pro
     studentsCount: 2940,
     rating: 4.97,
     reviewsCount: 510,
-    price: 99,
+    price: 0,
+    thumbnailUrl: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80",
     bannerGradient: "linear-gradient(135deg, #10b981 0%, #047857 100%)",
     instructor: {
       name: "Marcus Sterling",
@@ -463,7 +549,8 @@ println!("{}", process_security_event("EVT-9042", 0.94));`
     studentsCount: 3180,
     rating: 4.89,
     reviewsCount: 440,
-    price: 69,
+    price: 0,
+    thumbnailUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80",
     bannerGradient: "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)",
     instructor: {
       name: "Elena Rostova",
@@ -501,6 +588,224 @@ resource "aws_eks_cluster" "primary" {
         ]
       }
     ]
+  },
+  {
+    id: "python-foundations-ai",
+    slug: "python-foundations-ai",
+    title: "Python 3.12 Core & Data Structures for AI Engineers",
+    tagline: "Master clean Python, asynchronous I/O, generators, and core algorithms from scratch",
+    description: "Start your engineering journey with Python 3.12, type hinting, object-oriented patterns, async coroutines, and foundational algorithms needed for AI pipelines.",
+    category: "ai",
+    categoryLabel: "AI & Machine Learning",
+    level: "Beginner",
+    duration: "14 Hours",
+    lessonsCount: 18,
+    studentsCount: 6420,
+    rating: 4.88,
+    reviewsCount: 1120,
+    price: 0, // Free course
+    featured: true,
+    thumbnailUrl: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=800&q=80",
+    bannerGradient: "linear-gradient(135deg, #06b6d4 0%, #0284c7 100%)",
+    instructor: {
+      name: "Sophia Zhang",
+      role: "AI Curriculum Lead",
+      avatar: "SZ",
+      company: "Astra Academy",
+    },
+    skills: ["Python 3.12", "Type Hinting", "AsyncIO", "Data Structures", "NumPy Basics"],
+    modules: [
+      {
+        id: "py-mod-1",
+        title: "Module 1: Modern Python 3.12 & Type System",
+        duration: "3.5 Hours",
+        lessons: [
+          {
+            id: "py-1-1",
+            title: "Type Annotations, Generics & Structural Pattern Matching",
+            duration: "25 min",
+            type: "video",
+            summary: "Write robust Python using static type checkers and match statements.",
+            notes: "# Python 3.12 Type Annotations\nLearn to write robust Python with Pydantic and type hints.",
+            codeSnippet: "def process_batch[T](items: list[T]) -> list[T]:\n    return items"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "frontend-typescript-css",
+    slug: "frontend-typescript-css",
+    title: "Design Systems & High-Velocity UI with Modern TypeScript",
+    tagline: "Build accessible, fluid component libraries with Tailwind CSS v4 and Framer Motion",
+    description: "Master modern frontend engineering: accessible compound components, design tokens, micro-animations, theme managers, and zero-runtime CSS.",
+    category: "fullstack",
+    categoryLabel: "Full-Stack Engineering",
+    level: "Beginner",
+    duration: "16 Hours",
+    lessonsCount: 20,
+    studentsCount: 4210,
+    rating: 4.86,
+    reviewsCount: 650,
+    price: 0,
+    bestseller: true,
+    thumbnailUrl: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80",
+    bannerGradient: "linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%)",
+    instructor: {
+      name: "Liam O'Connor",
+      role: "Design Technologist",
+      avatar: "LO",
+      company: "PixelCraft",
+    },
+    skills: ["TypeScript", "Tailwind CSS v4", "Component Design", "Accessibility (a11y)", "Design Systems"],
+    modules: [
+      {
+        id: "ui-mod-1",
+        title: "Module 1: Design Tokens & Fluid CSS",
+        duration: "4 Hours",
+        lessons: [
+          {
+            id: "ui-1-1",
+            title: "Atomic Tokens & CSS Variables Architecture",
+            duration: "30 min",
+            type: "video",
+            summary: "Structure CSS custom properties for instant dark/light theme shifts.",
+            notes: "# Modern Design Tokens\nImplement dynamic tokens for seamless light and dark mode switches.",
+            codeSnippet: ":root { --brand-hue: 260; --accent: hsl(var(--brand-hue) 90% 60%); }"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "distributed-go-kafka",
+    slug: "distributed-go-kafka",
+    title: "Distributed Event-Driven Architecture with Go & Apache Kafka",
+    tagline: "Design resilient, million-event-per-second streaming data pipelines and microservices",
+    description: "Architect mission-critical distributed systems. Learn event sourcing, CQRS patterns, partition balancing, dead-letter queues, and high-concurrency Go worker pools.",
+    category: "fullstack",
+    categoryLabel: "Full-Stack & Systems",
+    level: "Advanced",
+    duration: "32 Hours",
+    lessonsCount: 36,
+    studentsCount: 2150,
+    rating: 4.96,
+    reviewsCount: 390,
+    price: 0,
+    featured: true,
+    thumbnailUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=80",
+    bannerGradient: "linear-gradient(135deg, #6366f1 0%, #4338ca 100%)",
+    instructor: {
+      name: "Kaito Takahashi",
+      role: "Staff Infrastructure Architect",
+      avatar: "KT",
+      company: "HyperScale",
+    },
+    skills: ["Go (Golang)", "Apache Kafka", "Event Sourcing", "CQRS", "Distributed Consensus", "gRPC"],
+    modules: [
+      {
+        id: "go-mod-1",
+        title: "Module 1: Kafka Partitioning & Go Consumer Groups",
+        duration: "6 Hours",
+        lessons: [
+          {
+            id: "go-1-1",
+            title: "Zero-Data-Loss Consumer Group Rebalancing",
+            duration: "35 min",
+            type: "video",
+            summary: "Handle graceful partition rebalances and committed offsets in Go.",
+            notes: "# Kafka Consumer Groups in Go\nMaintain exact-once and at-least-once message processing semantics.",
+            codeSnippet: "package main\nimport \"github.com/segmentio/kafka-go\"\n// Consumer implementation"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "web3-solidity-security",
+    slug: "web3-solidity-security",
+    title: "Smart Contract Security & Applied Cryptography in Solidity",
+    tagline: "Audit EVM smart contracts, prevent reentrancy, and construct cryptographic zero-knowledge proofs",
+    description: "Deep dive into EVM bytecode, gas optimization, reentrancy attacks, flash loan defense, multi-signature vaults, and zero-knowledge SNARK verifiers.",
+    category: "security",
+    categoryLabel: "Cybersecurity & Web3",
+    level: "Intermediate",
+    duration: "19 Hours",
+    lessonsCount: 22,
+    studentsCount: 1890,
+    rating: 4.81,
+    reviewsCount: 280,
+    price: 0,
+    thumbnailUrl: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=800&q=80",
+    bannerGradient: "linear-gradient(135deg, #14b8a6 0%, #0f766e 100%)",
+    instructor: {
+      name: "Dr. Maya Patel",
+      role: "Protocol Security Auditor",
+      avatar: "MP",
+      company: "ShieldSec",
+    },
+    skills: ["Solidity", "Smart Contract Auditing", "EVM Bytecode", "Gas Optimization", "Zero-Knowledge Proofs"],
+    modules: [
+      {
+        id: "sec-mod-1",
+        title: "Module 1: Reentrancy & Access Control Vulnerabilities",
+        duration: "4.5 Hours",
+        lessons: [
+          {
+            id: "sec-1-1",
+            title: "Checks-Effects-Interactions Pattern & ReentrancyGuard",
+            duration: "28 min",
+            type: "video",
+            summary: "Eliminate reentrancy exploits using reentrancy guards and state ordering.",
+            notes: "# Smart Contract Defense\nAlways update state variables before triggering external calls.",
+            codeSnippet: "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\ncontract Vault { ... }"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "sre-ebpf-observability",
+    slug: "sre-ebpf-observability",
+    title: "Kernel-Level Observability & SRE with eBPF and Prometheus",
+    tagline: "Inspect Linux kernel network packets, trace system calls, and debug latency at line rate",
+    description: "Master modern SRE and Linux kernel instrumentation using eBPF programs, Cilium service mesh, OpenTelemetry distributed tracing, and Prometheus alerting.",
+    category: "devops",
+    categoryLabel: "DevOps & Cloud",
+    level: "Advanced",
+    duration: "25 Hours",
+    lessonsCount: 28,
+    studentsCount: 1740,
+    rating: 4.93,
+    reviewsCount: 310,
+    price: 0,
+    thumbnailUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
+    bannerGradient: "linear-gradient(135deg, #f97316 0%, #c2410c 100%)",
+    instructor: {
+      name: "Marcus Brody",
+      role: "Principal Reliability Engineer",
+      avatar: "MB",
+      company: "KernelOps",
+    },
+    skills: ["eBPF", "Linux Kernel", "Prometheus", "OpenTelemetry", "Cilium", "Distributed Tracing"],
+    modules: [
+      {
+        id: "ebpf-mod-1",
+        title: "Module 1: eBPF Architecture & XDP Packet Filters",
+        duration: "5 Hours",
+        lessons: [
+          {
+            id: "ebpf-1-1",
+            title: "Writing In-Kernel XDP Filters for DDoS Mitigation",
+            duration: "32 min",
+            type: "video",
+            summary: "Drop malicious network packets at the network driver layer before kernel allocation.",
+            notes: "# In-Kernel eBPF Filtering\neBPF runs verified sandboxed bytecode inside the Linux kernel.",
+            codeSnippet: "SEC(\"xdp\") int xdp_filter(struct xdp_md *ctx) { return XDP_PASS; }"
+          }
+        ]
+      }
+    ]
   }
 ];
 
@@ -511,9 +816,27 @@ export function CourseProvider({ children }: { children: ReactNode }) {
   
   const [courses, setCourses] = useState<Course[]>(() => {
     const saved = localStorage.getItem("astra_courses_db");
+    const initialMap = new Map(INITIAL_COURSES.map(c => [c.id, c]));
     if (saved) {
       try {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          const existingIds = new Set(parsed.map((c: Course) => c.id));
+          const merged = parsed.map((c: Course) => {
+            const init = initialMap.get(c.id);
+            return {
+              ...c,
+              price: 0,
+              thumbnailUrl: c.thumbnailUrl || init?.thumbnailUrl || "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=800&q=80",
+            };
+          });
+          INITIAL_COURSES.forEach((c) => {
+            if (!existingIds.has(c.id)) {
+              merged.push(c);
+            }
+          });
+          return merged;
+        }
       } catch {
         return INITIAL_COURSES;
       }
@@ -550,6 +873,80 @@ export function CourseProvider({ children }: { children: ReactNode }) {
         studentName: user ? user.name : "Alex Morgan",
         issueDate: "October 02, 2026",
         credentialId: "ASTRA-CERT-8849-2026",
+        skills: ["React 19", "Server Components", "Next.js 15", "Edge Streaming", "PostgreSQL"],
+        instructorName: "Elena Rostova",
+      }
+    ];
+  });
+
+  const [bookmarks, setBookmarks] = useState<BookmarkNote[]>(() => {
+    const saved = localStorage.getItem("astra_bookmarks");
+    if (saved) {
+      try { return JSON.parse(saved); } catch { return []; }
+    }
+    return [
+      {
+        id: "bm-1",
+        courseId: "ai-agents-masterclass",
+        courseTitle: "Autonomous AI Agents & LLM Systems",
+        lessonId: "ai-1-1",
+        lessonTitle: "Introduction to Agentic Architectures vs Traditional LLM Calls",
+        noteText: "Key concept: Autonomous Agent cycle operates in Perception -> Planning -> Tool Dispatch -> Reflection loop.",
+        snippet: `// Agent State Graph Loop\nconst workflow = new StateGraph(AgentState)\n  .addNode("agent", callModel)\n  .addNode("tools", toolExecutor)\n  .addEdge("tools", "agent");`,
+        tags: ["Architecture", "LangGraph", "AI"],
+        createdAt: "Oct 5, 2026",
+      },
+      {
+        id: "bm-2",
+        courseId: "fullstack-react-nextjs",
+        courseTitle: "Full-Stack Web Architecture: React 19 & Next.js",
+        lessonId: "fs-1-1",
+        lessonTitle: "React 19 Server Components Architecture & Actions",
+        noteText: "Server Actions eliminate manual API handlers and provide zero-bundle RPC invocation directly with optimistic UI updates.",
+        snippet: `"use server";\nexport async function updateProfile(formData: FormData) {\n  const user = await db.user.update({...});\n  revalidatePath("/dashboard");\n}`,
+        tags: ["React 19", "Server Actions", "Full-Stack"],
+        createdAt: "Oct 6, 2026",
+      }
+    ];
+  });
+
+  const [flashcards, setFlashcards] = useState<Flashcard[]>(() => {
+    const saved = localStorage.getItem("astra_flashcards");
+    if (saved) {
+      try { return JSON.parse(saved); } catch { return []; }
+    }
+    return [
+      {
+        id: "fc-1",
+        courseId: "ai-agents-masterclass",
+        category: "AI & LangGraph",
+        front: "What is the primary difference between a Cyclic Agent Graph and a DAG?",
+        back: "A Cyclic Graph allows self-reflection, error retries, and multi-step tool execution loops until the objective is satisfied, unlike one-way DAGs.",
+        mastered: false,
+      },
+      {
+        id: "fc-2",
+        courseId: "fullstack-react-nextjs",
+        category: "React 19",
+        front: "What is the role of useActionState in React 19?",
+        back: "It manages the pending status, returned state, and form action dispatch for asynchronous server actions without manual useState booleans.",
+        mastered: true,
+      },
+      {
+        id: "fc-3",
+        courseId: "zero-trust-rust-security",
+        category: "Rust & Security",
+        front: "Why does Rust eliminate Use-After-Free vulnerabilities?",
+        back: "Compile-time borrow checker and affine type system guarantee single ownership and automatic memory deallocation without a garbage collector.",
+        mastered: false,
+      },
+      {
+        id: "fc-4",
+        courseId: "devops-k8s-gitops",
+        category: "DevOps & Cloud",
+        front: "What is GitOps reconciliation in ArgoCD?",
+        back: "Continuous loop comparing the desired Git declaration state against the live Kubernetes cluster state, automatically correcting drift.",
+        mastered: false,
       }
     ];
   });
@@ -570,6 +967,14 @@ export function CourseProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     localStorage.setItem("astra_certificates", JSON.stringify(certificates));
   }, [certificates]);
+
+  useEffect(() => {
+    localStorage.setItem("astra_bookmarks", JSON.stringify(bookmarks));
+  }, [bookmarks]);
+
+  useEffect(() => {
+    localStorage.setItem("astra_flashcards", JSON.stringify(flashcards));
+  }, [flashcards]);
 
   const getCourseById = (idOrSlug: string) => {
     return courses.find((c) => c.id === idOrSlug || c.slug === idOrSlug);
@@ -659,10 +1064,44 @@ export function CourseProvider({ children }: { children: ReactNode }) {
       studentName: user ? user.name : "Alex Morgan",
       issueDate: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
       credentialId: `ASTRA-CERT-${Math.floor(1000 + Math.random() * 9000)}-2026`,
+      skills: course ? course.skills : ["Systems Architecture", "Advanced Computing"],
+      instructorName: course ? course.instructor.name : "Dr. Sarah Chen",
     };
 
     setCertificates((prev) => [newCert, ...prev]);
     return newCert;
+  };
+
+  const addBookmark = (bookmark: Omit<BookmarkNote, "id" | "createdAt">) => {
+    const newBm: BookmarkNote = {
+      ...bookmark,
+      id: `bm-${Date.now()}`,
+      createdAt: new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
+    };
+    setBookmarks((prev) => [newBm, ...prev]);
+  };
+
+  const removeBookmark = (id: string) => {
+    setBookmarks((prev) => prev.filter((b) => b.id !== id));
+  };
+
+  const isBookmarked = (lessonId: string) => {
+    return bookmarks.some((b) => b.lessonId === lessonId);
+  };
+
+  const toggleFlashcardMastered = (id: string) => {
+    setFlashcards((prev) =>
+      prev.map((fc) => (fc.id === id ? { ...fc, mastered: !fc.mastered } : fc))
+    );
+  };
+
+  const addFlashcard = (card: Omit<Flashcard, "id">) => {
+    const newFc: Flashcard = {
+      ...card,
+      id: `fc-${Date.now()}`,
+      mastered: false,
+    };
+    setFlashcards((prev) => [newFc, ...prev]);
   };
 
   return (
@@ -672,6 +1111,8 @@ export function CourseProvider({ children }: { children: ReactNode }) {
         enrolledCourseIds,
         completedLessonIds,
         certificates,
+        bookmarks,
+        flashcards,
         getCourseById,
         enrollInCourse,
         unenrollFromCourse,
@@ -683,6 +1124,11 @@ export function CourseProvider({ children }: { children: ReactNode }) {
         updateCourse,
         deleteCourse,
         claimCertificate,
+        addBookmark,
+        removeBookmark,
+        isBookmarked,
+        toggleFlashcardMastered,
+        addFlashcard,
       }}
     >
       {children}

@@ -90,6 +90,32 @@ export default function StudentDashboardPage() {
           </div>
         </div>
 
+        {/* 3-Day Free Trial Active Status Banner */}
+        <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-500/10 via-teal-500/10 to-purple-500/10 border border-emerald-500/30 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs shadow-md">
+          <div className="flex items-center gap-2.5">
+            <span className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 font-black flex items-center justify-center text-sm">
+              🎁
+            </span>
+            <div>
+              <p className="font-extrabold text-[var(--text)] flex items-center gap-2">
+                <span>3-Day Full Access Free Trial Active</span>
+                <span className="px-2 py-0.5 rounded-full bg-emerald-500 text-black text-[10px] font-black uppercase">
+                  3 Days Remaining
+                </span>
+              </p>
+              <p className="text-[11px] text-[var(--muted)]">
+                You have unrestricted access to all masterclasses, pattern-wise DSA sheets, and verified certifications.
+              </p>
+            </div>
+          </div>
+          <Link
+            to="/dsa-sheet"
+            className="px-3 py-1.5 rounded-xl font-bold bg-emerald-500 text-black hover:bg-emerald-400 transition-colors shrink-0 shadow-sm"
+          >
+            Practice DSA Sheets →
+          </Link>
+        </div>
+
         {/* Quick Role Switcher Banner (for Development & Testing) */}
         <div className="p-4 rounded-2xl bg-[var(--surface)] border border-[var(--border-soft)] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
           <div className="flex items-center gap-2">
@@ -102,6 +128,61 @@ export default function StudentDashboardPage() {
           >
             Switch to Admin / Course Creator (Dr. Sarah Chen) →
           </button>
+        </div>
+
+        {/* Interactive Student Hub Quick Navigation Strip */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <Link
+            to="/contests"
+            className="p-4 rounded-2xl bg-[var(--surface)] border border-[var(--border-soft)] hover:border-amber-400/50 transition-all flex items-center gap-3 group shadow-sm"
+          >
+            <span className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
+              ⚡
+            </span>
+            <div>
+              <h4 className="text-xs font-extrabold group-hover:text-amber-400 transition-colors">Contest Arena</h4>
+              <p className="text-[10px] text-[var(--muted)]">Daily & 1v1 Duels</p>
+            </div>
+          </Link>
+
+          <Link
+            to="/dsa-sheet"
+            className="p-4 rounded-2xl bg-[var(--surface)] border border-[var(--border-soft)] hover:border-emerald-400/50 transition-all flex items-center gap-3 group shadow-sm"
+          >
+            <span className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
+              🧠
+            </span>
+            <div>
+              <h4 className="text-xs font-extrabold group-hover:text-emerald-400 transition-colors">DSA Sheets</h4>
+              <p className="text-[10px] text-[var(--muted)]">380+ Pattern Problems</p>
+            </div>
+          </Link>
+
+          <Link
+            to="/notes"
+            className="p-4 rounded-2xl bg-[var(--surface)] border border-[var(--border-soft)] hover:border-indigo-400/50 transition-all flex items-center gap-3 group shadow-sm"
+          >
+            <span className="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
+              📑
+            </span>
+            <div>
+              <h4 className="text-xs font-extrabold group-hover:text-indigo-400 transition-colors">Notes & Bookmarks</h4>
+              <p className="text-[10px] text-[var(--muted)]">Snippets & Cards</p>
+            </div>
+          </Link>
+
+          <Link
+            to="/verify"
+            className="p-4 rounded-2xl bg-[var(--surface)] border border-[var(--border-soft)] hover:border-emerald-400/50 transition-all flex items-center gap-3 group shadow-sm"
+          >
+            <span className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
+              🏆
+            </span>
+            <div>
+              <h4 className="text-xs font-extrabold group-hover:text-emerald-400 transition-colors">Credentials Hub</h4>
+              <p className="text-[10px] text-[var(--muted)]">Public Verification</p>
+            </div>
+          </Link>
         </div>
 
         {/* Continue Learning Active Hero Card */}
@@ -153,7 +234,7 @@ export default function StudentDashboardPage() {
               <h3 className="text-sm font-extrabold uppercase tracking-wider text-[var(--accent)] flex items-center gap-2">
                 <span>📊</span> Daily Study & Coding Activity (52-Week Matrix)
               </h3>
-              <p className="text-[11px] text-[var(--muted)] mt-0.5">324 lessons and sandbox exercises completed over the past year.</p>
+              <p className="text-[11px] text-[var(--muted)] mt-0.5">324 lessons and hands-on exercises completed over the past year.</p>
             </div>
             <div className="flex items-center gap-2 text-[10px] text-[var(--muted)] font-medium">
               <span>Less</span>
@@ -251,7 +332,7 @@ export default function StudentDashboardPage() {
                     <h4 className="text-base font-extrabold leading-snug">{c.title}</h4>
                     <p className="text-xs text-[var(--muted)] line-clamp-2">{c.description}</p>
                     <div className="flex items-center gap-2 text-xs font-bold text-[var(--accent)]">
-                      <span>Price: {c.price === 0 ? "Free" : `$${c.price}`}</span>
+                      <span>Full Access Included</span>
                       <span>•</span>
                       <span>⭐ {c.rating}</span>
                     </div>
@@ -318,9 +399,34 @@ export default function StudentDashboardPage() {
               <span>Issue Date: {selectedCert.issueDate}</span>
               <span className="font-mono text-amber-400 font-bold">{selectedCert.credentialId}</span>
             </div>
-            <button onClick={() => setSelectedCert(null)} className="button button-sm text-xs">
-              Close Certificate
-            </button>
+            <div className="flex flex-wrap gap-2.5 justify-center pt-2">
+              <Link
+                to={`/verify/${selectedCert.credentialId}`}
+                onClick={() => setSelectedCert(null)}
+                className="button button-sm text-xs font-bold flex items-center gap-1.5"
+              >
+                <span>🌐</span> Public Verification Page
+              </Link>
+              <button
+                onClick={() => {
+                  const name = encodeURIComponent(selectedCert.courseTitle);
+                  const orgName = encodeURIComponent("Astra Academy");
+                  const certUrl = encodeURIComponent(`${window.location.origin}/verify/${selectedCert.credentialId}`);
+                  const certId = encodeURIComponent(selectedCert.credentialId);
+                  const linkedinUrl = `https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name=${name}&organizationName=${orgName}&certUrl=${certUrl}&certId=${certId}&issueYear=2026&issueMonth=10`;
+                  window.open(linkedinUrl, "_blank");
+                }}
+                className="px-4 py-2 rounded-xl text-xs font-bold bg-[#0a66c2] text-white hover:bg-[#084e96] flex items-center gap-1.5"
+              >
+                <span>🔗</span> Add to LinkedIn
+              </button>
+              <button
+                onClick={() => setSelectedCert(null)}
+                className="px-4 py-2 rounded-xl text-xs font-bold border border-gray-700 bg-gray-800 text-gray-300 hover:bg-gray-700"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       )}

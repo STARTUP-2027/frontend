@@ -13,6 +13,8 @@ export interface UserProfile {
   streak: number;
   enrolledCourseIds: string[];
   completedLessonIds: string[];
+  isTrialActive?: boolean;
+  trialDaysLeft?: number;
 }
 
 export interface AuthContextType {
@@ -36,6 +38,8 @@ const DEFAULT_STUDENT: UserProfile = {
   streak: 14,
   enrolledCourseIds: ["ai-agents-masterclass", "fullstack-react-nextjs", "rust-systems"],
   completedLessonIds: ["ai-1-1", "ai-1-2", "ai-1-3", "fs-1-1", "fs-1-2"],
+  isTrialActive: true,
+  trialDaysLeft: 3,
 };
 
 const DEFAULT_ADMIN: UserProfile = {
