@@ -285,7 +285,7 @@ export default function InfiniteHierarchyEditor({ items, onChange }: InfiniteHie
                 style={{ paddingLeft: `${Math.max(12, depth * 20)}px` }}
                 className={`group flex items-center justify-between py-2 pr-2.5 rounded-xl cursor-pointer transition-all border ${
                   isSelected
-                    ? "bg-purple-600/15 border-purple-500/60 text-[var(--text)] shadow-sm ring-1 ring-purple-500/25"
+                    ? "bg-blue-500/10 border-blue-500/50 text-[var(--text)] shadow-sm ring-1 ring-blue-500/20"
                     : "bg-[var(--surface)] hover:bg-[var(--surface-soft)] border-[var(--border-soft)] text-[var(--muted)]"
                 }`}
               >
@@ -304,7 +304,7 @@ export default function InfiniteHierarchyEditor({ items, onChange }: InfiniteHie
 
                   <span className="text-xs shrink-0">{typeIcon}</span>
 
-                  <span className={`text-xs truncate font-bold ${isSelected ? "text-purple-400 font-black" : "text-[var(--text)]"}`}>
+                  <span className={`text-xs truncate font-bold ${isSelected ? "text-blue-600 dark:text-blue-400 font-bold" : "text-[var(--text)]"}`}>
                     {node.title}
                   </span>
 
@@ -324,7 +324,7 @@ export default function InfiniteHierarchyEditor({ items, onChange }: InfiniteHie
                       handleAddChild(node.id, "submodule");
                     }}
                     title="Add Nested Submodule"
-                    className="p-1 rounded-md bg-purple-500/20 hover:bg-purple-500/40 text-purple-300 text-[10px] font-bold"
+                    className="p-1 rounded-md bg-blue-500/10 hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 text-[10px] font-bold"
                   >
                     + Sub
                   </button>
@@ -353,7 +353,7 @@ export default function InfiniteHierarchyEditor({ items, onChange }: InfiniteHie
               {/* Recursive Children */}
               {hasChildren && isExpanded && (
                 <div className="relative">
-                  <div className="absolute left-4 top-0 bottom-0 w-px bg-purple-500/20 pointer-events-none" />
+                  <div className="absolute left-4 top-0 bottom-0 w-px bg-blue-500/20 pointer-events-none" />
                   {renderTreeNodes(node.children!, depth + 1)}
                 </div>
               )}
@@ -371,7 +371,7 @@ export default function InfiniteHierarchyEditor({ items, onChange }: InfiniteHie
         <div className="flex items-center gap-4 flex-wrap">
           <div className="flex items-center gap-1.5 font-bold text-[var(--text)]">
             <span>🌳 Cisco-Grade Curriculum Hierarchy:</span>
-            <span className="px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-400 font-black">
+            <span className="px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold">
               {stats.totalNodes} Nodes
             </span>
           </div>
@@ -386,7 +386,7 @@ export default function InfiniteHierarchyEditor({ items, onChange }: InfiniteHie
         <button
           type="button"
           onClick={handleAddRootModule}
-          className="px-3.5 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-black text-xs shadow flex items-center gap-1.5 cursor-pointer"
+          className="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-sm flex items-center gap-1.5 cursor-pointer"
         >
           <span>➕</span> Add Root Module
         </button>
@@ -416,7 +416,7 @@ export default function InfiniteHierarchyEditor({ items, onChange }: InfiniteHie
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[var(--border-soft)] pb-4">
                 <div>
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-400 border border-purple-500/30">
+                    <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
                       Format: {selectedNode.type}
                     </span>
                     <span className="text-xs text-[var(--muted)] font-mono">{selectedNode.duration || "20 min"}</span>
@@ -428,7 +428,7 @@ export default function InfiniteHierarchyEditor({ items, onChange }: InfiniteHie
                   <button
                     type="button"
                     onClick={() => handleAddChild(selectedNode.id, "submodule")}
-                    className="px-2.5 py-1.5 rounded-xl bg-purple-600/20 hover:bg-purple-600/40 text-purple-300 font-bold text-xs border border-purple-500/30 flex items-center gap-1 cursor-pointer"
+                    className="px-2.5 py-1.5 rounded-xl bg-blue-500/10 hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 font-bold text-xs border border-blue-500/20 flex items-center gap-1 cursor-pointer"
                   >
                     <span>➕</span> Nest Submodule
                   </button>
@@ -450,7 +450,7 @@ export default function InfiniteHierarchyEditor({ items, onChange }: InfiniteHie
                     type="text"
                     value={selectedNode.title}
                     onChange={(e) => handleFieldChange("title", e.target.value)}
-                    className="w-full px-3 py-1.5 rounded-xl bg-[var(--surface-soft)] border border-[var(--border-soft)] text-[var(--text)] font-semibold outline-none focus:border-purple-500"
+                    className="w-full px-3 py-1.5 rounded-xl bg-[var(--surface-soft)] border border-[var(--border-soft)] text-[var(--text)] font-semibold outline-none focus:border-[var(--accent)]"
                   />
                 </div>
 
@@ -475,7 +475,7 @@ export default function InfiniteHierarchyEditor({ items, onChange }: InfiniteHie
                     type="text"
                     value={selectedNode.summary || ""}
                     onChange={(e) => handleFieldChange("summary", e.target.value)}
-                    className="w-full px-3 py-1.5 rounded-xl bg-[var(--surface-soft)] border border-[var(--border-soft)] text-[var(--text)] outline-none focus:border-purple-500"
+                    className="w-full px-3 py-1.5 rounded-xl bg-[var(--surface-soft)] border border-[var(--border-soft)] text-[var(--text)] outline-none focus:border-[var(--accent)]"
                     placeholder="Brief description of skills mastered in this topic..."
                   />
                 </div>
@@ -497,7 +497,7 @@ export default function InfiniteHierarchyEditor({ items, onChange }: InfiniteHie
                       onClick={() => setActiveTab(tab.id as any)}
                       className={`px-3 py-2 font-bold transition-colors border-b-2 whitespace-nowrap cursor-pointer ${
                         activeTab === tab.id
-                          ? "border-purple-500 text-purple-400 bg-[var(--surface-soft)]"
+                          ? "border-[var(--accent)] text-[var(--accent)] bg-[var(--surface-soft)]"
                           : "border-transparent text-[var(--muted)] hover:text-[var(--text)]"
                       }`}
                     >
@@ -516,7 +516,7 @@ export default function InfiniteHierarchyEditor({ items, onChange }: InfiniteHie
                         <button
                           type="button"
                           onClick={() => handleInsertTemplate("> 💡 **Cisco Best Practice**: Always set verification timeouts <= 30s.")}
-                          className="px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-bold hover:bg-indigo-500/30 cursor-pointer"
+                          className="px-2 py-0.5 rounded bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold hover:bg-blue-500/20 cursor-pointer"
                         >
                           + Pro-Tip Callout
                         </button>
@@ -530,7 +530,7 @@ export default function InfiniteHierarchyEditor({ items, onChange }: InfiniteHie
                         <button
                           type="button"
                           onClick={() => handleInsertTemplate("| Step | Invariant | SLA |\n| --- | --- | --- |\n| Ingest | Sanitized | <10ms |")}
-                          className="px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 font-bold hover:bg-purple-500/30 cursor-pointer"
+                          className="px-2 py-0.5 rounded bg-slate-500/10 text-slate-700 dark:text-slate-300 font-bold hover:bg-slate-500/20 cursor-pointer"
                         >
                           + Protocol Table
                         </button>
@@ -547,7 +547,7 @@ export default function InfiniteHierarchyEditor({ items, onChange }: InfiniteHie
                         rows={10}
                         value={selectedNode.notes || ""}
                         onChange={(e) => handleFieldChange("notes", e.target.value)}
-                        className="w-full p-3.5 rounded-xl font-mono text-xs bg-[var(--surface)] text-[var(--text)] border border-[var(--border-soft)] focus:outline-none focus:border-purple-500 leading-relaxed"
+                        className="w-full p-3.5 rounded-xl font-mono text-xs bg-[var(--surface)] text-[var(--text)] border border-[var(--border-soft)] focus:outline-none focus:border-[var(--accent)] leading-relaxed"
                         placeholder="Write Cisco-style markdown documentation, theory, diagrams..."
                       />
                     </div>
@@ -573,7 +573,7 @@ export default function InfiniteHierarchyEditor({ items, onChange }: InfiniteHie
                           <button
                             type="button"
                             onClick={handleAddTimestamp}
-                            className="px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 font-bold text-[10px] cursor-pointer"
+                            className="px-2 py-0.5 rounded bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold text-[10px] cursor-pointer"
                           >
                             + Add Timestamp
                           </button>
@@ -682,7 +682,7 @@ export default function InfiniteHierarchyEditor({ items, onChange }: InfiniteHie
                                       name={`correct-${quiz.id || qIdx}`}
                                       checked={quiz.correctIndex === optIdx}
                                       onChange={() => handleUpdateQuiz(qIdx, { ...quiz, correctIndex: optIdx })}
-                                      className="accent-purple-500 w-3.5 h-3.5 cursor-pointer"
+                                      className="accent-blue-600 w-3.5 h-3.5 cursor-pointer"
                                     />
                                     <input
                                       type="text"
@@ -724,7 +724,7 @@ export default function InfiniteHierarchyEditor({ items, onChange }: InfiniteHie
                         <button
                           type="button"
                           onClick={handleAddFlashcard}
-                          className="px-2.5 py-1 rounded bg-purple-500/20 text-purple-300 font-bold cursor-pointer"
+                          className="px-2.5 py-1 rounded bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold cursor-pointer"
                         >
                           + Add Flashcard
                         </button>
@@ -768,7 +768,7 @@ export default function InfiniteHierarchyEditor({ items, onChange }: InfiniteHie
                         <button
                           type="button"
                           onClick={handleAddResource}
-                          className="px-2.5 py-1 rounded bg-purple-500/20 text-purple-300 font-bold cursor-pointer"
+                          className="px-2.5 py-1 rounded bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold cursor-pointer"
                         >
                           + Add Asset
                         </button>

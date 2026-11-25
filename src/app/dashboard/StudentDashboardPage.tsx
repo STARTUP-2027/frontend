@@ -36,11 +36,11 @@ export default function StudentDashboardPage() {
   });
 
   const getHeatmapColor = (level: number) => {
-    if (level === 0) return dark ? "bg-[#161424]" : "bg-[#ede9fe]";
-    if (level === 1) return "bg-purple-300 dark:bg-purple-900";
-    if (level === 2) return "bg-purple-400 dark:bg-purple-700";
-    if (level === 3) return "bg-purple-500 dark:bg-purple-600";
-    return "bg-purple-600 dark:bg-purple-400 shadow-[0_0_8px_rgba(168,85,247,0.6)]";
+    if (level === 0) return dark ? "bg-slate-800" : "bg-slate-100";
+    if (level === 1) return "bg-blue-200 dark:bg-blue-950";
+    if (level === 2) return "bg-blue-300 dark:bg-blue-800";
+    if (level === 3) return "bg-blue-500 dark:bg-blue-600";
+    return "bg-blue-600 dark:bg-blue-500";
   };
 
   return (
@@ -49,16 +49,16 @@ export default function StudentDashboardPage() {
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-28 space-y-8">
         {/* Student Welcome & Gamification Banner */}
-        <div className="relative overflow-hidden p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-purple-900/30 via-indigo-900/20 to-transparent border border-[var(--border-soft)] shadow-xl">
+        <div className="relative overflow-hidden p-6 sm:p-8 rounded-3xl bg-[var(--surface)] border border-[var(--border)] shadow-md">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
             <div className="flex items-center gap-4">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-purple-500 to-indigo-600 text-white font-extrabold text-xl flex items-center justify-center shadow-lg">
+              <div className="w-16 h-16 rounded-2xl bg-blue-600 text-white font-extrabold text-xl flex items-center justify-center shadow-md">
                 {user?.avatar || "AM"}
               </div>
               <div>
                 <div className="flex items-center gap-2">
                   <h1 className="text-xl sm:text-2xl font-black tracking-tight">Welcome back, {user?.name || "Alex Morgan"}!</h1>
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
                     Pro Learner
                   </span>
                 </div>
@@ -68,30 +68,30 @@ export default function StudentDashboardPage() {
 
             {/* Gamification Stats */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <div className="p-3.5 rounded-2xl bg-[var(--surface)] border border-[var(--border-soft)] text-center shadow-sm">
+              <div className="p-3.5 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border-soft)] text-center shadow-sm">
                 <span className="text-[10px] uppercase font-bold text-[var(--muted)]">Streak</span>
-                <p className="text-lg font-black text-amber-400 flex items-center justify-center gap-1">
+                <p className="text-lg font-black text-amber-500 flex items-center justify-center gap-1">
                   🔥 {user?.streak || 14} <span className="text-[10px] font-normal text-[var(--muted)]">Days</span>
                 </p>
               </div>
-              <div className="p-3.5 rounded-2xl bg-[var(--surface)] border border-[var(--border-soft)] text-center shadow-sm">
+              <div className="p-3.5 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border-soft)] text-center shadow-sm">
                 <span className="text-[10px] uppercase font-bold text-[var(--muted)]">Learning XP</span>
                 <p className="text-lg font-black text-[var(--accent)]">⚡ {user?.xp || 1450}</p>
               </div>
-              <div className="p-3.5 rounded-2xl bg-[var(--surface)] border border-[var(--border-soft)] text-center shadow-sm">
+              <div className="p-3.5 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border-soft)] text-center shadow-sm">
                 <span className="text-[10px] uppercase font-bold text-[var(--muted)]">Completed</span>
-                <p className="text-lg font-black text-emerald-400">✅ {user?.completedLessonIds.length || 42} <span className="text-[10px] font-normal text-[var(--muted)]">Lessons</span></p>
+                <p className="text-lg font-black text-emerald-600 dark:text-emerald-400">✅ {user?.completedLessonIds.length || 42} <span className="text-[10px] font-normal text-[var(--muted)]">Lessons</span></p>
               </div>
-              <div className="p-3.5 rounded-2xl bg-[var(--surface)] border border-[var(--border-soft)] text-center shadow-sm">
+              <div className="p-3.5 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border-soft)] text-center shadow-sm">
                 <span className="text-[10px] uppercase font-bold text-[var(--muted)]">Certificates</span>
-                <p className="text-lg font-black text-indigo-400">🏆 {certificates.length}</p>
+                <p className="text-lg font-black text-blue-600 dark:text-blue-400">🏆 {certificates.length}</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* 3-Day Free Trial Active Status Banner */}
-        <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-500/10 via-teal-500/10 to-purple-500/10 border border-emerald-500/30 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs shadow-md">
+        <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs shadow-sm">
           <div className="flex items-center gap-2.5">
             <span className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 font-black flex items-center justify-center text-sm">
               🎁
@@ -124,7 +124,7 @@ export default function StudentDashboardPage() {
           </div>
           <button
             onClick={() => switchRole("admin")}
-            className="px-3 py-1.5 rounded-xl font-bold bg-purple-500/10 text-purple-400 border border-purple-500/30 hover:bg-purple-500/20 transition-colors"
+            className="px-3 py-1.5 rounded-xl font-bold bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 hover:bg-blue-500/20 transition-colors"
           >
             Switch to Admin / Course Creator (Dr. Sarah Chen) →
           </button>
@@ -160,13 +160,13 @@ export default function StudentDashboardPage() {
 
           <Link
             to="/notes"
-            className="p-4 rounded-2xl bg-[var(--surface)] border border-[var(--border-soft)] hover:border-indigo-400/50 transition-all flex items-center gap-3 group shadow-sm"
+            className="p-4 rounded-2xl bg-[var(--surface)] border border-[var(--border-soft)] hover:border-blue-400/50 transition-all flex items-center gap-3 group shadow-sm"
           >
-            <span className="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
+            <span className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
               📑
             </span>
             <div>
-              <h4 className="text-xs font-extrabold group-hover:text-indigo-400 transition-colors">Notes & Bookmarks</h4>
+              <h4 className="text-xs font-extrabold group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Notes & Bookmarks</h4>
               <p className="text-[10px] text-[var(--muted)]">Snippets & Cards</p>
             </div>
           </Link>
@@ -207,7 +207,7 @@ export default function StudentDashboardPage() {
                   </div>
                   <div className="w-full h-3 bg-[var(--surface-soft)] rounded-full overflow-hidden border border-[var(--border)]">
                     <div
-                      className="h-full bg-gradient-to-r from-purple-500 to-indigo-500 transition-all duration-700"
+                      className="h-full bg-blue-600 dark:bg-blue-500 transition-all duration-700"
                       style={{ width: `${primaryProgress.percentage}%` }}
                     />
                   </div>
@@ -393,7 +393,7 @@ export default function StudentDashboardPage() {
                 {selectedCert.studentName}
               </p>
               <p className="text-xs text-gray-400 mt-3">has successfully mastered and completed all requirements for</p>
-              <p className="text-base font-bold text-purple-300 mt-1">{selectedCert.courseTitle}</p>
+              <p className="text-base font-bold text-blue-400 mt-1">{selectedCert.courseTitle}</p>
             </div>
             <div className="flex justify-between items-center text-[10px] text-gray-400 pt-4 border-t border-gray-800">
               <span>Issue Date: {selectedCert.issueDate}</span>

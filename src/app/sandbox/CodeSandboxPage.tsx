@@ -1335,7 +1335,7 @@ export default function CodeSandboxPage() {
               onClick={() => setIsProblemSidebarOpen(!isProblemSidebarOpen)}
               className={`px-3 py-1.5 rounded-xl border text-xs font-bold flex items-center gap-1.5 transition-all shrink-0 cursor-pointer ${
                 isProblemSidebarOpen
-                  ? "bg-purple-600 text-white border-purple-500 shadow-md shadow-purple-600/25"
+                  ? "bg-blue-600 text-white border-blue-500 shadow-sm"
                   : "bg-[var(--surface-soft)] hover:bg-[var(--surface)] border-[var(--border)] text-[var(--text)]"
               }`}
               title="Toggle Problem Catalog Sidebar"
@@ -1343,7 +1343,7 @@ export default function CodeSandboxPage() {
               <span className="text-xs">☰</span>
               <span className="hidden sm:inline">Problem List</span>
               <span className={`px-1.5 py-0.5 rounded-md text-[10px] font-black ${
-                isProblemSidebarOpen ? "bg-white/25 text-white" : "bg-purple-500/15 text-purple-400 border border-purple-500/25"
+                isProblemSidebarOpen ? "bg-white/25 text-white" : "bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20"
               }`}>
                 {solvedProblemIds.length}/{PROBLEMS.length}
               </span>
@@ -1374,7 +1374,7 @@ export default function CodeSandboxPage() {
               <select
                 value={selectedProblemId}
                 onChange={(e) => selectProblem(e.target.value)}
-                className="w-full truncate px-3 py-1.5 rounded-xl bg-[var(--surface-soft)] border border-[var(--border)] text-xs font-black text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-purple-500 cursor-pointer"
+                className="w-full truncate px-3 py-1.5 rounded-xl bg-[var(--surface-soft)] border border-[var(--border)] text-xs font-black text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] cursor-pointer"
               >
                 {PROBLEMS.map((p, idx) => (
                   <option key={p.id} value={p.id}>
@@ -1398,7 +1398,7 @@ export default function CodeSandboxPage() {
             </span>
 
             {/* XP Tag */}
-            <span className="text-[11px] font-extrabold text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded-lg border border-purple-500/20 hidden lg:inline-block shrink-0">
+            <span className="text-[11px] font-extrabold text-blue-600 dark:text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded-lg border border-blue-500/20 hidden lg:inline-block shrink-0">
               +{currentProblem.xpReward} XP
             </span>
           </div>
@@ -1451,7 +1451,7 @@ export default function CodeSandboxPage() {
             <button
               onClick={handleRunCode}
               disabled={isRunning || isSubmitting}
-              className="px-3.5 py-1.5 rounded-xl bg-[var(--surface-soft)] hover:bg-[var(--surface)] border border-[var(--border)] text-xs font-bold text-[var(--text)] hover:border-purple-500 transition-all flex items-center gap-1.5 shadow-sm active:scale-98 cursor-pointer disabled:opacity-50"
+              className="px-3.5 py-1.5 rounded-xl bg-[var(--surface-soft)] hover:bg-[var(--surface)] border border-[var(--border)] text-xs font-bold text-[var(--text)] hover:border-[var(--accent)] transition-all flex items-center gap-1.5 shadow-sm active:scale-98 cursor-pointer disabled:opacity-50"
             >
               <span>{isRunning ? "⏳" : "▶"}</span>
               <span>{isRunning ? "Running..." : "Run Tests"}</span>
@@ -1461,7 +1461,7 @@ export default function CodeSandboxPage() {
             <button
               onClick={handleSubmitSolution}
               disabled={isRunning || isSubmitting}
-              className="px-4 py-1.5 rounded-xl bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-black shadow-lg shadow-purple-500/25 transition-all flex items-center gap-1.5 active:scale-98 cursor-pointer disabled:opacity-50"
+              className="px-4 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-sm transition-all flex items-center gap-1.5 active:scale-98 cursor-pointer disabled:opacity-50"
             >
               <span>{isSubmitting ? "⚡" : "✓"}</span>
               <span>{isSubmitting ? "Submitting..." : "Submit Solution"}</span>
@@ -1534,7 +1534,7 @@ export default function CodeSandboxPage() {
                   onChange={(e) => setEditorTheme(e.target.value as any)}
                   className="px-3 py-1.5 rounded-xl bg-[var(--surface-soft)] border border-[var(--border)] font-bold text-[var(--text)]"
                 >
-                  <option value="astra">🌌 Astra Nebula (Dark Purple)</option>
+                  <option value="astra">🌌 Astra Slate (Default)</option>
                   <option value="midnight">🌑 Midnight Amethyst</option>
                   <option value="cyberpunk">⚡ Cyberpunk Synthwave</option>
                   <option value="pearl">☀️ Minimal Daylight (Light)</option>
@@ -1590,11 +1590,11 @@ export default function CodeSandboxPage() {
             <div className="p-3.5 border-b border-[var(--border-soft)] bg-[var(--surface-soft)]/60 space-y-3 shrink-0">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-purple-500 animate-pulse" />
+                  <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
                   <h3 className="text-xs font-black uppercase tracking-wider text-[var(--text)]">
                     Problem Catalog
                   </h3>
-                  <span className="px-1.5 py-0.5 rounded-md bg-purple-500/10 border border-purple-500/20 text-[10px] font-bold text-purple-400">
+                  <span className="px-1.5 py-0.5 rounded-md bg-blue-500/10 border border-blue-500/20 text-[10px] font-bold text-blue-600 dark:text-blue-400">
                     {filteredProblems.length} available
                   </span>
                 </div>
@@ -1646,7 +1646,7 @@ export default function CodeSandboxPage() {
                   placeholder="Search by title, tag, category..."
                   value={problemSearchQuery}
                   onChange={(e) => setProblemSearchQuery(e.target.value)}
-                  className="w-full pl-8 pr-7 py-1.5 rounded-xl bg-[var(--surface)] border border-[var(--border-soft)] text-xs text-[var(--text)] outline-none focus:border-purple-500 transition-colors"
+                  className="w-full pl-8 pr-7 py-1.5 rounded-xl bg-[var(--surface)] border border-[var(--border-soft)] text-xs text-[var(--text)] outline-none focus:border-[var(--accent)] transition-colors"
                 />
                 <span className="absolute left-2.5 top-1.5 text-xs text-[var(--muted)]">🔍</span>
                 {problemSearchQuery && (
@@ -1674,7 +1674,7 @@ export default function CodeSandboxPage() {
                       onClick={() => setStatusFilter(st.id)}
                       className={`py-1 rounded-lg text-[10px] font-bold transition-all text-center truncate cursor-pointer ${
                         statusFilter === st.id
-                          ? "bg-purple-600 text-white shadow-xs"
+                          ? "bg-blue-600 text-white shadow-xs"
                           : "text-[var(--muted)] hover:text-[var(--text)] hover:bg-[var(--surface-soft)]"
                       }`}
                     >
@@ -1699,7 +1699,7 @@ export default function CodeSandboxPage() {
                       onClick={() => setDifficultyFilter(diff.id)}
                       className={`py-1 rounded-lg text-[10px] font-bold transition-all text-center truncate cursor-pointer ${
                         difficultyFilter === diff.id
-                          ? "bg-indigo-600 text-white shadow-xs"
+                          ? "bg-slate-700 dark:bg-slate-600 text-white shadow-xs"
                           : "text-[var(--muted)] hover:text-[var(--text)] hover:bg-[var(--surface-soft)]"
                       }`}
                     >
@@ -1753,7 +1753,7 @@ export default function CodeSandboxPage() {
                   <span>Showing {filteredProblems.length} of {PROBLEMS.length} problems</span>
                   <button
                     onClick={handleResetFilters}
-                    className="text-purple-400 hover:text-purple-300 font-bold hover:underline cursor-pointer"
+                    className="text-blue-600 dark:text-blue-400 hover:underline font-bold cursor-pointer"
                   >
                     Reset filters
                   </button>
@@ -1769,7 +1769,7 @@ export default function CodeSandboxPage() {
                   <p className="font-semibold">No problems match your current filters.</p>
                   <button
                     onClick={handleResetFilters}
-                    className="px-3 py-1 rounded-lg bg-purple-600/20 text-purple-400 font-bold hover:bg-purple-600/30 text-[11px] cursor-pointer"
+                    className="px-3 py-1 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold hover:bg-blue-500/20 text-[11px] cursor-pointer"
                   >
                     Reset all filters
                   </button>
@@ -1787,7 +1787,7 @@ export default function CodeSandboxPage() {
                       onClick={() => selectProblem(prob.id)}
                       className={`p-2.5 rounded-xl cursor-pointer transition-all border text-left group ${
                         isSelected
-                          ? "bg-purple-600/15 border-purple-500/60 shadow-sm ring-1 ring-purple-500/30"
+                          ? "bg-blue-500/10 border-blue-500/60 shadow-sm ring-1 ring-blue-500/30"
                           : "bg-[var(--surface)] hover:bg-[var(--surface-soft)] border-[var(--border-soft)]/50 hover:border-[var(--border)]"
                       }`}
                     >
@@ -1810,7 +1810,7 @@ export default function CodeSandboxPage() {
                         </div>
 
                         <div className="flex-1 min-w-0">
-                          <h4 className={`text-xs font-bold leading-snug line-clamp-1 ${isSelected ? "text-purple-400 font-black" : "text-[var(--text)] group-hover:text-purple-300"}`}>
+                          <h4 className={`text-xs font-bold leading-snug line-clamp-1 ${isSelected ? "text-blue-600 dark:text-blue-400 font-black" : "text-[var(--text)] group-hover:text-blue-500"}`}>
                             {probIdx}. {prob.title}
                           </h4>
 
@@ -1827,7 +1827,7 @@ export default function CodeSandboxPage() {
                             <span className="text-[10px] text-[var(--muted)] font-mono">
                               {prob.acceptanceRate}
                             </span>
-                            <span className="text-[10px] text-purple-400 font-extrabold ml-auto">
+                            <span className="text-[10px] text-blue-600 dark:text-blue-400 font-bold ml-auto">
                               +{prob.xpReward} XP
                             </span>
                           </div>
@@ -1854,7 +1854,7 @@ export default function CodeSandboxPage() {
               <button
                 onClick={() => setIsLeftCollapsed(false)}
                 title="Expand Description Panel"
-                className="w-full py-2 text-center text-xs font-black text-purple-400 hover:bg-[var(--surface)] rounded-xl"
+                className="w-full py-2 text-center text-xs font-black text-blue-600 dark:text-blue-400 hover:bg-[var(--surface)] rounded-xl"
               >
                 ⊞
               </button>
@@ -1930,7 +1930,7 @@ export default function CodeSandboxPage() {
                         key={idx}
                         className="p-3.5 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border-soft)] space-y-2 font-mono text-[11px]"
                       >
-                        <div className="text-[10px] font-bold text-purple-400 uppercase tracking-wider">
+                        <div className="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">
                           Example {idx + 1}
                         </div>
                         <div>
@@ -1988,7 +1988,7 @@ export default function CodeSandboxPage() {
                       >
                         <summary className="font-bold text-[var(--text)] flex items-center justify-between select-none">
                           <span>💡 Hint {idx + 1}</span>
-                          <span className="text-purple-400 text-xs">Reveal ▼</span>
+                          <span className="text-blue-600 dark:text-blue-400 text-xs">Reveal ▼</span>
                         </summary>
                         <p className="mt-2 text-xs text-[var(--muted)] leading-relaxed pt-2 border-t border-[var(--border-soft)]">
                           {hint}
@@ -1997,8 +1997,8 @@ export default function CodeSandboxPage() {
                     ))}
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-purple-500/10 border border-purple-500/20 space-y-2">
-                    <h4 className="text-xs font-bold text-purple-300 uppercase tracking-wider">
+                  <div className="p-4 rounded-2xl bg-blue-500/10 border border-blue-500/20 space-y-2">
+                    <h4 className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">
                       Optimal Target Complexity
                     </h4>
                     <div className="flex items-center justify-between text-xs font-mono">
@@ -2053,7 +2053,7 @@ export default function CodeSandboxPage() {
 
                           <button
                             onClick={() => setCode(sub.codeSnippet)}
-                            className="text-[10px] text-purple-400 hover:underline font-bold"
+                            className="text-[10px] text-blue-600 dark:text-blue-400 hover:underline font-bold"
                           >
                             Revert to this code snapshot →
                           </button>
@@ -2084,7 +2084,7 @@ export default function CodeSandboxPage() {
                     <h3 className="text-sm font-black text-[var(--text)]">Private Problem Scratchpad</h3>
                     <button
                       onClick={handleSaveNotes}
-                      className="px-3 py-1 rounded-xl text-xs font-bold bg-purple-600 text-white shadow-sm hover:bg-purple-500 transition-colors"
+                      className="px-3 py-1 rounded-xl text-xs font-bold bg-blue-600 text-white shadow-sm hover:bg-blue-700 transition-colors"
                     >
                       Save to Astra Notes
                     </button>
@@ -2115,9 +2115,9 @@ export default function CodeSandboxPage() {
             onMouseDown={handleStartHorizontalDrag}
             title="Drag to resize horizontally (Double click to reset 50-50)"
             onDoubleClick={() => setLeftWidthPercent(50)}
-            className="hidden lg:flex w-2.5 hover:w-3 bg-[var(--surface-soft)] hover:bg-purple-500/40 cursor-col-resize items-center justify-center transition-all z-10 select-none group border-x border-[var(--border-soft)]"
+            className="hidden lg:flex w-2.5 hover:w-3 bg-[var(--surface-soft)] hover:bg-blue-500/20 cursor-col-resize items-center justify-center transition-all z-10 select-none group border-x border-[var(--border-soft)]"
           >
-            <div className="w-1 h-8 rounded-full bg-[var(--border)] group-hover:bg-purple-400 transition-colors" />
+            <div className="w-1 h-8 rounded-full bg-[var(--border)] group-hover:bg-blue-500 transition-colors" />
           </div>
         )}
 
@@ -2150,7 +2150,7 @@ export default function CodeSandboxPage() {
                 <span>•</span>
                 <span>UTF-8</span>
                 <span>•</span>
-                <span className="text-purple-400">Ctrl + Enter to Run</span>
+                <span className="text-blue-400">Ctrl + Enter to Run</span>
               </div>
             </div>
 
@@ -2218,9 +2218,9 @@ export default function CodeSandboxPage() {
               onMouseDown={handleStartVerticalDrag}
               title="Drag to resize terminal height (Double click to reset 40%)"
               onDoubleClick={() => setTerminalHeightPercent(40)}
-              className="h-2 hover:h-2.5 bg-[var(--surface-soft)] hover:bg-purple-500/40 cursor-row-resize flex items-center justify-center transition-all z-10 select-none group border-y border-[var(--border-soft)]"
+              className="h-2 hover:h-2.5 bg-[var(--surface-soft)] hover:bg-blue-500/20 cursor-row-resize flex items-center justify-center transition-all z-10 select-none group border-y border-[var(--border-soft)]"
             >
-              <div className="h-0.5 w-12 rounded-full bg-[var(--border)] group-hover:bg-purple-400 transition-colors" />
+              <div className="h-0.5 w-12 rounded-full bg-[var(--border)] group-hover:bg-blue-500 transition-colors" />
             </div>
           )}
 
@@ -2455,7 +2455,7 @@ export default function CodeSandboxPage() {
               setTerminalHeightPercent(38);
               setIsTerminalCollapsed(false);
             }}
-            className="text-purple-400 hover:underline font-bold"
+            className="text-blue-600 dark:text-blue-400 hover:underline font-bold"
           >
             Reset Layout
           </button>

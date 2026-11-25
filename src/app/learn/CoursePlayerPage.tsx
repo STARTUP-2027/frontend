@@ -180,7 +180,7 @@ export default function CoursePlayerPage() {
 
       {/* Focus Mode Escape Banner */}
       {isFocusMode && (
-        <div className="bg-purple-900/90 text-purple-100 text-xs py-1.5 px-4 flex items-center justify-between z-50">
+        <div className="bg-slate-900 text-slate-100 text-xs py-1.5 px-4 flex items-center justify-between border-b border-slate-800 z-50">
           <div className="flex items-center gap-2 font-bold">
             <span>✨ Focus Mode Active:</span>
             <span className="truncate">{activeItem?.title}</span>

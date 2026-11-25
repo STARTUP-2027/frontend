@@ -72,7 +72,7 @@ export default function StudentNotesHubPage() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-xl">
           <div>
             <div className="flex items-center gap-2">
-              <span className="px-3 py-1 rounded-full text-[11px] font-extrabold tracking-wider bg-purple-500/20 text-purple-400 border border-purple-500/30 uppercase">
+              <span className="px-3 py-1 rounded-full text-[11px] font-extrabold tracking-wider bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 uppercase">
                 Personal Learning Hub
               </span>
               <span className="text-xs text-[var(--muted)]">{bookmarks.length} Bookmarks • {flashcards.length} Flashcards</span>
@@ -166,7 +166,7 @@ export default function StudentNotesHubPage() {
                             <span>Code Snippet</span>
                             <button
                               onClick={() => handleCopySnippet(bm.id, bm.snippet)}
-                              className="text-purple-400 hover:underline font-bold"
+                              className="text-blue-600 dark:text-blue-400 hover:underline font-bold"
                             >
                               {copiedSnippetId === bm.id ? "✓ Copied!" : "📋 Copy Code"}
                             </button>
@@ -228,7 +228,7 @@ export default function StudentNotesHubPage() {
                   >
                     <div className="space-y-3">
                       <div className="flex items-center justify-between text-[10px]">
-                        <span className="px-2.5 py-0.5 rounded-full font-bold bg-purple-500/10 text-purple-400 border border-purple-500/20 uppercase">
+                        <span className="px-2.5 py-0.5 rounded-full font-bold bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 uppercase">
                           {fc.category}
                         </span>
                         <span className="text-[var(--muted)] font-mono">

@@ -114,13 +114,13 @@ const domainShowcaseData: Record<
         title: "2. Multi-Agent Swarms with LangGraph & Tool Calling",
         duration: "6.0 Hours",
         tag: "Interactive Lab",
-        tagClass: "bg-purple-500/10 text-purple-400 border-purple-500/30",
+        tagClass: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20",
       },
       {
         title: "3. Production RAG Benchmarking & Evaluators",
         duration: "5.5 Hours",
         tag: "Hands-on",
-        tagClass: "bg-indigo-500/10 text-indigo-400 border-indigo-500/30",
+        tagClass: "bg-slate-500/10 text-slate-600 dark:text-slate-300 border-slate-500/20",
       },
       {
         title: "4. Capstone: Autonomous Code Synthesis Engine",
@@ -159,13 +159,13 @@ const domainShowcaseData: Record<
         title: "2. Edge Streaming & Real-time WebSocket Hubs",
         duration: "6.5 Hours",
         tag: "Interactive Lab",
-        tagClass: "bg-purple-500/10 text-purple-400 border-purple-500/30",
+        tagClass: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20",
       },
       {
         title: "3. Distributed Database Indexing & Caching Shards",
         duration: "4.5 Hours",
         tag: "Hands-on",
-        tagClass: "bg-indigo-500/10 text-indigo-400 border-indigo-500/30",
+        tagClass: "bg-slate-500/10 text-slate-600 dark:text-slate-300 border-slate-500/20",
       },
       {
         title: "4. Capstone: Real-time Multi-tenant SaaS Engine",
@@ -204,13 +204,13 @@ const domainShowcaseData: Record<
         title: "2. Zero-Trust Identity & mTLS Authentication",
         duration: "5.5 Hours",
         tag: "Interactive Lab",
-        tagClass: "bg-purple-500/10 text-purple-400 border-purple-500/30",
+        tagClass: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20",
       },
       {
         title: "3. Cryptographic Token Guards & Tenant Isolation",
         duration: "4.5 Hours",
         tag: "Hands-on",
-        tagClass: "bg-indigo-500/10 text-indigo-400 border-indigo-500/30",
+        tagClass: "bg-slate-500/10 text-slate-600 dark:text-slate-300 border-slate-500/20",
       },
       {
         title: "4. Capstone: Production Zero-Trust Security Gateway",
@@ -249,13 +249,13 @@ const domainShowcaseData: Record<
         title: "2. Kubernetes Cluster Orchestration & Ingress Routing",
         duration: "7.0 Hours",
         tag: "Interactive Lab",
-        tagClass: "bg-purple-500/10 text-purple-400 border-purple-500/30",
+        tagClass: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20",
       },
       {
         title: "3. ArgoCD GitOps Continuous Delivery Pipelines",
         duration: "5.0 Hours",
         tag: "Hands-on",
-        tagClass: "bg-indigo-500/10 text-indigo-400 border-indigo-500/30",
+        tagClass: "bg-slate-500/10 text-slate-600 dark:text-slate-300 border-slate-500/20",
       },
       {
         title: "4. Capstone: High-Availability Cloud Infrastructure",
@@ -384,7 +384,7 @@ export function SiteNav() {
                 onClick={() => setProfileOpen(!profileOpen)}
                 className="flex items-center gap-2.5 p-1.5 pr-3 rounded-full bg-[var(--surface-soft)] border border-[var(--border-soft)] hover:border-[var(--accent)] transition-all"
               >
-                <span className="w-8 h-8 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-600 text-white font-extrabold text-xs flex items-center justify-center">
+                <span className="w-8 h-8 rounded-full bg-blue-600 text-white font-extrabold text-xs flex items-center justify-center">
                   {user?.avatar || "AM"}
                 </span>
                 <span className="text-xs font-bold hidden sm:inline-block truncate max-w-[120px]">
@@ -399,7 +399,7 @@ export function SiteNav() {
                   <div className="p-2 border-b border-[var(--border-soft)]">
                     <p className="font-extrabold truncate">{user?.name}</p>
                     <p className="text-[10px] text-[var(--muted)] truncate">{user?.email}</p>
-                    <span className="mt-1 inline-block text-[9px] font-bold px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20 uppercase">
+                    <span className="mt-1 inline-block text-[9px] font-bold px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 uppercase">
                       {user?.role === "admin" ? "Platform Admin / Creator" : "Pro Student"}
                     </span>
                   </div>
@@ -422,7 +422,7 @@ export function SiteNav() {
 
                   {user?.role === "admin" ? (
                     <>
-                      <Link to="/admin" onClick={() => setProfileOpen(false)} className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold text-purple-400">
+                      <Link to="/admin" onClick={() => setProfileOpen(false)} className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold text-blue-600 dark:text-blue-400">
                         <span>✨</span> Creator Studio & Editor
                       </Link>
                       <button onClick={() => { switchRole("student"); setProfileOpen(false); navigate("/dashboard"); }} className="w-full text-left flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] text-[var(--muted)] font-semibold">
@@ -430,7 +430,7 @@ export function SiteNav() {
                       </button>
                     </>
                   ) : (
-                    <button onClick={() => { switchRole("admin"); setProfileOpen(false); navigate("/admin"); }} className="w-full text-left flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] text-purple-400 font-semibold">
+                    <button onClick={() => { switchRole("admin"); setProfileOpen(false); navigate("/admin"); }} className="w-full text-left flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] text-blue-600 dark:text-blue-400 font-semibold">
                       <span>👑</span> Switch to Admin Creator View
                     </button>
                   )}
@@ -476,7 +476,7 @@ export function SiteFooter() {
   return (
     <footer className="mt-8 sm:mt-10 border-t border-[var(--border-soft)] bg-gradient-to-b from-[var(--surface)] to-[var(--bg)] text-[var(--text)] transition-colors relative overflow-hidden">
       {/* Subtle Glow backdrop effect */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-24 bg-gradient-to-b from-purple-500/10 to-transparent blur-3xl pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-24 bg-gradient-to-b from-blue-500/5 to-transparent blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-10 pb-10 space-y-8 relative z-10">
         {/* Top Tier: Live Metrics Banner & Newsletter */}
@@ -568,7 +568,7 @@ export function SiteFooter() {
 
           {/* Column 3: Learning Tracks */}
           <div className="space-y-3">
-            <h5 className="font-extrabold uppercase tracking-wider text-purple-400 text-[11px]">
+            <h5 className="font-extrabold uppercase tracking-wider text-[var(--text)] text-[11px]">
               Learning Tracks
             </h5>
             <ul className="space-y-2 text-[var(--muted)]">
@@ -582,7 +582,7 @@ export function SiteFooter() {
 
           {/* Column 4: Platform & Creator */}
           <div className="space-y-3">
-            <h5 className="font-extrabold uppercase tracking-wider text-indigo-400 text-[11px]">
+            <h5 className="font-extrabold uppercase tracking-wider text-[var(--text)] text-[11px]">
               Platform & Creator
             </h5>
             <ul className="space-y-2 text-[var(--muted)]">
@@ -742,8 +742,8 @@ export default function App() {
               </div>
               <div className="px-4 py-2 rounded-2xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-md flex items-center gap-2.5 text-xs">
                 <div className="avatar-stack flex -space-x-1.5">
-                  <i className="w-5 h-5 rounded-full bg-purple-500 text-[9px] text-white flex items-center justify-center">AV</i>
-                  <i className="w-5 h-5 rounded-full bg-indigo-500 text-[9px] text-white flex items-center justify-center">JB</i>
+                  <i className="w-5 h-5 rounded-full bg-blue-600 text-[9px] text-white flex items-center justify-center">AV</i>
+                  <i className="w-5 h-5 rounded-full bg-sky-600 text-[9px] text-white flex items-center justify-center">JB</i>
                   <i className="w-5 h-5 rounded-full bg-emerald-500 text-[9px] text-white flex items-center justify-center">MS</i>
                 </div>
                 <span><strong>15,000+ Engineers</strong> <span className="text-[var(--muted)]">building now</span></span>
@@ -778,7 +778,7 @@ export default function App() {
                     ) : (
                       <div
                         className="w-full h-full"
-                        style={{ background: c.bannerGradient || "linear-gradient(135deg, #7c3aed 0%, #4338ca 100%)" }}
+                        style={{ background: c.bannerGradient || "linear-gradient(135deg, #1e293b 0%, #334155 100%)" }}
                       />
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/35 pointer-events-none" />
@@ -808,7 +808,7 @@ export default function App() {
                   <div className="p-4 space-y-2.5">
                     <div className="flex items-center justify-between text-[10px] text-[var(--muted)] font-semibold">
                       <span className="flex items-center gap-1.5">
-                        <span className="w-2 h-2 rounded-full bg-purple-400 inline-block" />
+                        <span className="w-2 h-2 rounded-full bg-blue-500 inline-block" />
                         {c.level}
                       </span>
                       <span>{c.studentsCount.toLocaleString()} enrolled</span>
@@ -842,7 +842,7 @@ export default function App() {
                 {/* Footer Action */}
                 <div className="p-4 pt-2.5 border-t border-[var(--border-soft)] bg-[var(--surface-soft)]/30 flex items-center justify-between gap-2 mt-auto">
                   <div className="flex items-center gap-2 min-w-0">
-                    <div className="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 font-bold text-[9px] flex items-center justify-center shrink-0">
+                    <div className="w-6 h-6 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold text-[9px] flex items-center justify-center shrink-0">
                       {c.instructor.avatar}
                     </div>
                     <span className="text-[11px] font-semibold text-[var(--text)] truncate max-w-[80px]">

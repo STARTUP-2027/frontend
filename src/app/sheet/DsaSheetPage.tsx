@@ -192,7 +192,7 @@ function NotesModal({
           </button>
           <button
             onClick={handleSave}
-            className="flex items-center gap-1.5 rounded-xl bg-[var(--accent)] px-4 py-2 text-xs font-bold text-white hover:opacity-90 transition-all shadow-md shadow-purple-500/20"
+            className="flex items-center gap-1.5 rounded-xl bg-[var(--accent)] px-4 py-2 text-xs font-bold text-white hover:opacity-90 transition-all shadow-md shadow-blue-500/20"
           >
             {saved ? (
               <>
@@ -444,18 +444,15 @@ export default function DsaSheetPage() {
 
       <main className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         {/* ===================== HERO BANNER ===================== */}
-        <section className="relative p-6 sm:p-10 rounded-3xl bg-gradient-to-br from-[var(--surface)] via-[var(--surface-soft)] to-[var(--surface)] border border-[var(--border-soft)] shadow-2xl overflow-hidden">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl pointer-events-none" />
-
+        <section className="relative p-6 sm:p-10 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-md overflow-hidden">
           <div className="relative z-10 flex flex-col lg:flex-row lg:items-end justify-between gap-6">
             <div className="space-y-3 max-w-2xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-black uppercase tracking-wider">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-black uppercase tracking-wider">
                 <FlameIcon size={14} /> Pattern-Based DSA Sheet
               </div>
 
               <h1 className="text-3xl sm:text-5xl font-black tracking-tight leading-tight text-[var(--text)]">
-                Learn <span className="text-emerald-400">patterns</span>, <br />
+                Learn <span className="text-emerald-500 dark:text-emerald-400">patterns</span>, <br />
                 not just the solution.
               </h1>
 
@@ -466,20 +463,20 @@ export default function DsaSheetPage() {
 
             {/* Metric Pills */}
             <div className="flex flex-wrap items-center gap-2.5 pb-1">
-              <div className="inline-flex items-center gap-2 rounded-2xl bg-[var(--surface)] border border-[var(--border-soft)] px-4 py-2 text-xs shadow-sm">
-                <BookOpenIcon size={15} className="text-emerald-400" />
+              <div className="inline-flex items-center gap-2 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border-soft)] px-4 py-2 text-xs shadow-sm">
+                <BookOpenIcon size={15} className="text-emerald-500 dark:text-emerald-400" />
                 <span className="font-extrabold text-[var(--text)]">{sheets.length}</span>
                 <span className="text-[var(--muted)]">Sheets</span>
               </div>
 
-              <div className="inline-flex items-center gap-2 rounded-2xl bg-[var(--surface)] border border-[var(--border-soft)] px-4 py-2 text-xs shadow-sm">
-                <LayersIcon size={15} className="text-purple-400" />
+              <div className="inline-flex items-center gap-2 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border-soft)] px-4 py-2 text-xs shadow-sm">
+                <LayersIcon size={15} className="text-blue-500 dark:text-blue-400" />
                 <span className="font-extrabold text-[var(--text)]">50</span>
                 <span className="text-[var(--muted)]">Topics</span>
               </div>
 
-              <div className="inline-flex items-center gap-2 rounded-2xl bg-[var(--surface)] border border-[var(--border-soft)] px-4 py-2 text-xs shadow-sm">
-                <CodeIcon size={15} className="text-sky-400" />
+              <div className="inline-flex items-center gap-2 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border-soft)] px-4 py-2 text-xs shadow-sm">
+                <CodeIcon size={15} className="text-sky-500 dark:text-sky-400" />
                 <span className="font-extrabold text-[var(--text)]">{stats.totalAll}</span>
                 <span className="text-[var(--muted)]">Problems</span>
               </div>
@@ -981,14 +978,14 @@ export default function DsaSheetPage() {
                                                 onClick={() => setActiveNoteProblem(prob)}
                                                 className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer relative ${
                                                   hasNote
-                                                    ? "bg-purple-500/20 text-purple-400"
+                                                    ? "bg-blue-500/10 text-blue-600 dark:text-blue-400"
                                                     : "text-[var(--muted)] hover:bg-[var(--surface-soft)] hover:text-[var(--text)]"
                                                 }`}
                                                 title={hasNote ? "Edit your note" : "Add personal note"}
                                               >
                                                 <FileTextIcon size={15} />
                                                 {hasNote && (
-                                                  <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-purple-400" />
+                                                  <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-blue-500" />
                                                 )}
                                               </button>
 

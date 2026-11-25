@@ -12,7 +12,7 @@ const GRADIENT_PRESETS = [
   { id: "cyberpunk", name: "Cyberpunk Violet", gradient: "linear-gradient(135deg, #7c3aed 0%, #4338ca 100%)" },
   { id: "emerald", name: "Emerald Deep", gradient: "linear-gradient(135deg, #059669 0%, #0d9488 50%, #0284c7 100%)" },
   { id: "sunset", name: "Sunset Amber", gradient: "linear-gradient(135deg, #f59e0b 0%, #ea580c 50%, #e11d48 100%)" },
-  { id: "cosmic", name: "Cosmic Indigo", gradient: "linear-gradient(135deg, #6366f1 0%, #a855f7 100%)" },
+  { id: "cosmic", name: "Slate Blue", gradient: "linear-gradient(135deg, #2563eb 0%, #1e40af 100%)" },
   { id: "obsidian", name: "Midnight Obsidian", gradient: "linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%)" },
   { id: "aurora", name: "Aurora Teal", gradient: "linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%)" },
   { id: "crimson", name: "Hyperdrive Crimson", gradient: "linear-gradient(135deg, #e11d48 0%, #701a75 100%)" },
@@ -375,7 +375,7 @@ export default function AdminCreatorHub() {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-xl relative overflow-hidden">
           <div className="relative z-10">
             <div className="flex items-center gap-3">
-              <span className="px-3 py-1 rounded-full text-[11px] font-extrabold tracking-wider bg-purple-500/20 text-purple-400 border border-purple-500/30 uppercase">
+              <span className="px-3 py-1 rounded-full text-[11px] font-extrabold tracking-wider bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 uppercase">
                 Instructor & Curriculum Studio
               </span>
               {editingCourseId ? (
@@ -480,7 +480,7 @@ export default function AdminCreatorHub() {
                     <span>1️⃣</span> Course Overview & Metadata
                   </h3>
                   {editingCourseId && (
-                    <span className="text-[10px] font-mono bg-purple-500/10 text-purple-400 px-2 py-0.5 rounded-md border border-purple-500/20">
+                    <span className="text-[10px] font-mono bg-blue-500/10 text-blue-600 dark:text-blue-400 px-2 py-0.5 rounded-md border border-blue-500/20">
                       ID: {editingCourseId}
                     </span>
                   )}
@@ -717,7 +717,7 @@ export default function AdminCreatorHub() {
                       <button
                         type="button"
                         onClick={handleAddModule}
-                        className="px-3 py-1.5 rounded-xl text-xs font-bold bg-purple-600 hover:bg-purple-700 text-white flex items-center gap-1 shadow-sm"
+                        className="px-3 py-1.5 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-1 shadow-sm"
                       >
                         <span>➕ Add Module</span>
                       </button>
@@ -903,9 +903,9 @@ export default function AdminCreatorHub() {
                 </div>
 
                 {/* The Mockup Card */}
-                <div className={`p-6 rounded-3xl border shadow-2xl space-y-4 transition-colors ${
+                <div className={`p-6 rounded-3xl border shadow-md space-y-4 transition-colors ${
                   previewDarkMode
-                    ? "bg-[#131120] text-white border-purple-500/30"
+                    ? "bg-slate-900 text-white border-slate-800"
                     : "bg-white text-gray-900 border-gray-200"
                 }`}>
                   {/* Thumbnail / Gradient Banner */}
@@ -950,8 +950,8 @@ export default function AdminCreatorHub() {
                         key={s}
                         className={`px-2 py-0.5 rounded-md text-[10px] font-medium ${
                           previewDarkMode
-                            ? "bg-purple-500/10 text-purple-300 border border-purple-500/20"
-                            : "bg-purple-50 text-purple-700 border border-purple-100"
+                            ? "bg-blue-500/10 text-blue-300 border border-blue-500/20"
+                            : "bg-blue-50 text-blue-700 border border-blue-100"
                         }`}
                       >
                         {s}
@@ -963,7 +963,7 @@ export default function AdminCreatorHub() {
                     previewDarkMode ? "border-gray-800" : "border-gray-100"
                   }`}>
                     <div className="flex items-center gap-2">
-                      <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-purple-500 to-indigo-600 text-white font-bold text-[10px] flex items-center justify-center">
+                      <div className="w-7 h-7 rounded-full bg-blue-600 text-white font-bold text-[10px] flex items-center justify-center">
                         {instructorName.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase() || "SC"}
                       </div>
                       <div className="min-w-0">
@@ -973,7 +973,7 @@ export default function AdminCreatorHub() {
                         <p className="text-[9px] text-gray-400 truncate max-w-[100px]">{instructorRole}</p>
                       </div>
                     </div>
-                    <span className="text-xs font-extrabold text-purple-400">
+                    <span className="text-xs font-bold text-[var(--accent)]">
                       {modules.reduce((acc, m) => acc + m.lessons.length, 0)} Lessons
                     </span>
                   </div>
@@ -1104,12 +1104,12 @@ export default function AdminCreatorHub() {
               <div className="p-5 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)]">
                 <span className="text-[10px] font-bold uppercase text-[var(--muted)]">Average Completion Rate</span>
                 <p className="text-2xl font-black mt-1">87.4%</p>
-                <span className="text-xs text-purple-400 font-bold">Top 5% across EdTech</span>
+                <span className="text-xs text-blue-600 dark:text-blue-400 font-bold">Top 5% across EdTech</span>
               </div>
               <div className="p-5 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)]">
                 <span className="text-[10px] font-bold uppercase text-[var(--muted)]">Certificates Verified</span>
                 <p className="text-2xl font-black mt-1">4,320</p>
-                <span className="text-xs text-indigo-400 font-bold">Shared to LinkedIn</span>
+                <span className="text-xs text-emerald-600 dark:text-emerald-400 font-bold">Shared to LinkedIn</span>
               </div>
             </div>
           </div>

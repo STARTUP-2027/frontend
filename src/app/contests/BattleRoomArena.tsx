@@ -455,16 +455,16 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
       {arenaState === "lobby" && (
         <div className="space-y-6">
           {/* Top Banner */}
-          <div className="relative p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-purple-900/60 via-indigo-900/40 to-slate-900/80 border border-purple-500/30 shadow-2xl overflow-hidden text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div className="relative p-6 sm:p-8 rounded-3xl bg-[var(--surface)] border border-[var(--border)] shadow-md overflow-hidden text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6">
             <div className="space-y-2 max-w-xl z-10">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 text-[11px] font-black tracking-wider uppercase">
-                <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 text-[11px] font-bold tracking-wider uppercase">
+                <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
                 Live 1v1 Video Coding Arena
               </div>
-              <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+              <h2 className="text-2xl sm:text-3xl font-black text-[var(--text)] tracking-tight">
                 Head-to-Head Engineering Duels with Live Video
               </h2>
-              <p className="text-xs sm:text-sm text-purple-200/80 leading-relaxed">
+              <p className="text-xs sm:text-sm text-[var(--muted)] leading-relaxed">
                 Create a private room to battle friends with video chat, share an invite link, or match with top engineers worldwide in real-time speed coding.
               </p>
             </div>
@@ -472,14 +472,14 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
             <div className="flex flex-col sm:flex-row gap-3 shrink-0 z-10 w-full sm:w-auto">
               <button
                 onClick={handleCreateRoom}
-                className="px-6 py-3 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-extrabold text-sm shadow-lg shadow-purple-600/30 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2"
+                className="px-6 py-3 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-sm hover:scale-102 active:scale-98 transition-all flex items-center justify-center gap-2"
               >
                 <span>⚔️</span> Create Battle Room
               </button>
               <button
                 onClick={() => setIsSearchingRandom(true)}
                 disabled={isSearchingRandom}
-                className="px-6 py-3 rounded-2xl bg-[var(--surface-soft)] hover:bg-[var(--surface)] border border-[var(--border)] text-[var(--text)] font-extrabold text-sm hover:border-purple-400 transition-all flex items-center justify-center gap-2"
+                className="px-6 py-3 rounded-2xl bg-[var(--surface-soft)] hover:bg-[var(--surface)] border border-[var(--border)] text-[var(--text)] font-bold text-sm hover:border-[var(--accent)] transition-all flex items-center justify-center gap-2"
               >
                 <span>🌐</span> {isSearchingRandom ? `Finding Peer (${searchTimer}s)...` : "Quick Match Random"}
               </button>
@@ -491,7 +491,7 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
             {/* Box 1: Join with Code / Meeting Link */}
             <div className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-xl space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-black text-lg">
+                <div className="w-10 h-10 rounded-2xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold text-lg">
                   🔑
                 </div>
                 <div>
@@ -510,13 +510,13 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
                       setJoinCodeInput(e.target.value);
                       setJoinError(null);
                     }}
-                    className="w-full px-4 py-3 rounded-xl bg-[var(--surface-soft)] border border-[var(--border-soft)] focus:border-purple-500 font-mono text-sm tracking-wider text-[var(--text)] outline-none"
+                    className="w-full px-4 py-3 rounded-xl bg-[var(--surface-soft)] border border-[var(--border-soft)] focus:border-[var(--accent)] font-mono text-sm tracking-wider text-[var(--text)] outline-none"
                   />
                   {joinError && <p className="text-xs text-rose-400 font-semibold mt-1">{joinError}</p>}
                 </div>
                 <button
                   type="submit"
-                  className="w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2"
+                  className="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-sm transition-all flex items-center justify-center gap-2"
                 >
                   Enter Arena Room →
                 </button>
@@ -568,7 +568,7 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
               </button>
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-purple-500/20 text-purple-400 border border-purple-500/30">
+                  <span className="text-xs font-bold uppercase px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
                     Room: {roomCode}
                   </span>
                   {isHost ? (
@@ -576,7 +576,7 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
                       👑 You are Room Host
                     </span>
                   ) : (
-                    <span className="text-[11px] font-black px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-400">
+                    <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-slate-500/10 text-slate-600 dark:text-slate-400">
                       Challenger Guest
                     </span>
                   )}
@@ -596,7 +596,7 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
               {isHost && (
                 <button
                   onClick={handleStartBattle}
-                  className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-black text-xs shadow-lg shadow-purple-600/30 flex items-center gap-2 hover:scale-105 active:scale-95 transition-all"
+                  className="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-sm flex items-center gap-2 hover:scale-102 active:scale-98 transition-all"
                 >
                   <span>⚡ START BATTLE</span>
                 </button>
@@ -610,12 +610,12 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
             <div className="lg:col-span-7 space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {/* Host / Your Video Feed */}
-                <div className="relative aspect-video rounded-3xl bg-slate-950 border border-purple-500/40 shadow-xl overflow-hidden flex flex-col justify-between p-3.5">
+                <div className="relative aspect-video rounded-3xl bg-slate-950 border border-[var(--border)] shadow-md overflow-hidden flex flex-col justify-between p-3.5">
                   {hasWebcamAccess && isCamActive ? (
                     <video ref={localVideoRef} autoPlay playsInline muted className="absolute inset-0 w-full h-full object-cover" />
                   ) : (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-purple-950 via-slate-900 to-black">
-                      <div className="w-16 h-16 rounded-full bg-purple-600/30 border-2 border-purple-400 flex items-center justify-center text-xl font-black text-white shadow-lg">
+                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-900">
+                      <div className="w-16 h-16 rounded-full bg-blue-600/20 border-2 border-blue-500 flex items-center justify-center text-xl font-bold text-white shadow-md">
                         {hostUser.avatar}
                       </div>
                       <span className="text-xs font-bold text-gray-300 mt-2">Camera Disabled</span>
@@ -652,13 +652,13 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
                 </div>
 
                 {/* Opponent Video Feed */}
-                <div className="relative aspect-video rounded-3xl bg-slate-950 border border-[var(--border-soft)] shadow-xl overflow-hidden flex flex-col justify-between p-3.5">
+                <div className="relative aspect-video rounded-3xl bg-slate-950 border border-[var(--border-soft)] shadow-md overflow-hidden flex flex-col justify-between p-3.5">
                   {opponent ? (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-indigo-950 via-slate-900 to-black">
-                      <div className="w-16 h-16 rounded-full bg-indigo-600/30 border-2 border-indigo-400 flex items-center justify-center text-xl font-black text-white shadow-lg animate-pulse">
+                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-900">
+                      <div className="w-16 h-16 rounded-full bg-slate-700 border-2 border-slate-500 flex items-center justify-center text-xl font-bold text-white shadow-md">
                         {opponent.avatar}
                       </div>
-                      <span className="text-xs font-bold text-indigo-300 mt-2">{opponent.role}</span>
+                      <span className="text-xs font-bold text-slate-300 mt-2">{opponent.role}</span>
                     </div>
                   ) : (
                     <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center space-y-2">
@@ -668,7 +668,7 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
                       <p className="text-xs font-bold text-[var(--muted)]">Waiting for challenger to join...</p>
                       <button
                         onClick={handleCopyMeetingLink}
-                        className="text-[11px] text-purple-400 hover:underline font-extrabold"
+                        className="text-[11px] text-[var(--accent)] hover:underline font-bold"
                       >
                         Copy meeting link to invite
                       </button>
@@ -712,7 +712,7 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
                   {pendingJoinRequests.map((req) => (
                     <div key={req.id} className="flex items-center justify-between p-2.5 rounded-xl bg-[var(--surface)] border border-[var(--border-soft)]">
                       <div className="flex items-center gap-2.5">
-                        <div className="w-7 h-7 rounded-full bg-indigo-600 text-white font-bold text-xs flex items-center justify-center">
+                        <div className="w-7 h-7 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center">
                           {req.avatar}
                         </div>
                         <div>
@@ -771,9 +771,9 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
                             key={mins}
                             type="button"
                             onClick={() => setMatchDurationMin(mins)}
-                            className={`py-1.5 rounded-lg font-black text-xs border ${
+                            className={`py-1.5 rounded-lg font-bold text-xs border ${
                               matchDurationMin === mins
-                                ? "border-purple-500 bg-purple-500/20 text-purple-400"
+                                ? "border-[var(--accent)] bg-blue-500/10 text-blue-600 dark:text-blue-400"
                                 : "border-[var(--border-soft)] bg-[var(--surface-soft)] text-[var(--muted)]"
                             }`}
                           >
@@ -805,7 +805,7 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
                       key={msg.id}
                       className={`p-2 rounded-xl max-w-[85%] ${
                         msg.sender === "you"
-                          ? "ml-auto bg-purple-600 text-white"
+                          ? "ml-auto bg-blue-600 text-white"
                           : msg.sender === "opponent"
                           ? "mr-auto bg-[var(--surface-soft)] text-[var(--text)] border border-[var(--border-soft)]"
                           : "mx-auto bg-black/20 text-[var(--muted)] text-[10px] text-center w-full"
@@ -828,7 +828,7 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
                     onChange={(e) => setChatInput(e.target.value)}
                     className="flex-1 px-3 py-1.5 rounded-xl bg-[var(--surface-soft)] border border-[var(--border-soft)] text-xs text-[var(--text)] outline-none"
                   />
-                  <button type="submit" className="px-3 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs">
+                  <button type="submit" className="px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs">
                     Send
                   </button>
                 </form>
@@ -842,10 +842,10 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
       {arenaState === "battle" && (
         <div className="space-y-4">
           {/* Battle Header Bar with Dual Video PiP & Live Timer */}
-          <div className="p-4 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-2xl flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="p-4 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-md flex flex-col md:flex-row items-center justify-between gap-4">
             {/* Left: Challenge Title & Track */}
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center font-black">
+              <div className="w-9 h-9 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold">
                 ⚔️
               </div>
               <div>
@@ -856,10 +856,10 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
 
             {/* Center: Live Timer Countdown */}
             <div className="flex items-center gap-3">
-              <div className={`px-5 py-1.5 rounded-full font-mono text-base font-black border flex items-center gap-2 ${
+              <div className={`px-5 py-1.5 rounded-full font-mono text-base font-bold border flex items-center gap-2 ${
                 battleTimeLeft < 30
-                  ? "bg-rose-500/20 text-rose-400 border-rose-500/40 animate-pulse"
-                  : "bg-purple-500/20 text-purple-300 border-purple-500/30"
+                  ? "bg-rose-500/10 text-rose-500 border-rose-500/30 animate-pulse"
+                  : "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20"
               }`}>
                 <span>⏱️</span>
                 <span>{Math.floor(battleTimeLeft / 60)}:{(battleTimeLeft % 60).toString().padStart(2, "0")}</span>
@@ -871,14 +871,14 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
               {/* Telemetry Indicator */}
               <div className="text-right text-xs">
                 <span className="text-[10px] text-[var(--muted)] block">Opponent Progress</span>
-                <span className="font-bold text-indigo-400">
+                <span className="font-bold text-slate-700 dark:text-slate-300">
                   {opponentTestsPassed}/{activeProblem.testCases.length} Passed {opponentTyping && "⌨️ Typing..."}
                 </span>
               </div>
 
               <button
                 onClick={handleSubmitSolution}
-                className="px-5 py-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-black text-xs shadow-lg shadow-emerald-500/20 flex items-center gap-1.5"
+                className="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-sm flex items-center gap-1.5"
               >
                 <span>🚀 Submit Final</span>
               </button>
@@ -898,8 +898,8 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
               </div>
 
               {/* Live Code Editor Box */}
-              <div className="rounded-2xl border border-[var(--border-soft)] bg-[#0c0a17] overflow-hidden shadow-xl">
-                <div className="px-4 py-2 bg-[#120f24] border-b border-purple-900/40 flex items-center justify-between text-xs">
+              <div className="rounded-2xl border border-[var(--border-soft)] bg-slate-950 overflow-hidden shadow-md">
+                <div className="px-4 py-2 bg-slate-900 border-b border-slate-800 flex items-center justify-between text-xs">
                   <div className="flex items-center gap-2">
                     <span className="w-2.5 h-2.5 rounded-full bg-rose-500/80" />
                     <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
@@ -908,7 +908,7 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
                   </div>
                   <button
                     onClick={handleRunTests}
-                    className="px-3 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs flex items-center gap-1"
+                    className="px-3 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center gap-1"
                   >
                     <span>▶ Run Tests</span>
                   </button>
@@ -918,13 +918,13 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
                   value={userCode}
                   onChange={(e) => setUserCode(e.target.value)}
                   rows={14}
-                  className="w-full p-4 bg-transparent font-mono text-xs text-purple-200 outline-none resize-none leading-relaxed"
+                  className="w-full p-4 bg-transparent font-mono text-xs text-slate-200 outline-none resize-none leading-relaxed"
                   spellCheck={false}
                 />
 
                 {/* Test Output Strip */}
                 {testOutput && (
-                  <div className="p-3 bg-black/60 border-t border-purple-900/40 font-mono text-[11px] text-emerald-400 whitespace-pre-wrap">
+                  <div className="p-3 bg-black/60 border-t border-slate-800 font-mono text-[11px] text-emerald-400 whitespace-pre-wrap">
                     {testOutput}
                   </div>
                 )}
@@ -936,11 +936,11 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
               {/* Dual Video Call Feeds in Match */}
               <div className="grid grid-cols-2 gap-2">
                 {/* You Video PiP */}
-                <div className="aspect-video rounded-2xl bg-slate-950 border border-purple-500/40 relative overflow-hidden flex flex-col justify-between p-2">
+                <div className="aspect-video rounded-2xl bg-slate-950 border border-[var(--border)] relative overflow-hidden flex flex-col justify-between p-2">
                   {hasWebcamAccess && isCamActive ? (
                     <video ref={localVideoRef} autoPlay playsInline muted className="absolute inset-0 w-full h-full object-cover" />
                   ) : (
-                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-purple-950 to-slate-900">
+                    <div className="absolute inset-0 flex items-center justify-center bg-slate-900">
                       <span className="text-xs font-bold text-white">{hostUser.avatar}</span>
                     </div>
                   )}
@@ -951,13 +951,13 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
                 </div>
 
                 {/* Opponent Video PiP */}
-                <div className="aspect-video rounded-2xl bg-slate-950 border border-indigo-500/40 relative overflow-hidden flex flex-col justify-between p-2">
-                  <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-indigo-950 to-slate-900">
+                <div className="aspect-video rounded-2xl bg-slate-950 border border-[var(--border)] relative overflow-hidden flex flex-col justify-between p-2">
+                  <div className="absolute inset-0 flex items-center justify-center bg-slate-900">
                     <span className="text-xs font-bold text-white">{opponent?.avatar || "OP"}</span>
                   </div>
                   <div className="relative z-10 flex items-center justify-between text-[9px] font-bold text-white">
                     <span className="bg-black/60 px-1.5 py-0.5 rounded">{opponent?.name?.split(" ")[0]}</span>
-                    <span className="text-indigo-400 font-mono">{opponentTestsPassed}/{activeProblem.testCases.length} ✓</span>
+                    <span className="text-slate-300 font-mono">{opponentTestsPassed}/{activeProblem.testCases.length} ✓</span>
                   </div>
                 </div>
               </div>
@@ -967,23 +967,23 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
                 <span className="text-[10px] font-black uppercase text-[var(--muted)] block">Live Pass-Rate Telemetry</span>
                 <div className="space-y-1.5">
                   <div className="flex items-center justify-between text-[11px] font-bold">
-                    <span className="text-purple-400">You</span>
+                    <span className="text-blue-600 dark:text-blue-400">You</span>
                     <span>{userTestsPassed} / {activeProblem.testCases.length}</span>
                   </div>
                   <div className="w-full h-2 rounded-full bg-[var(--surface-soft)] overflow-hidden">
                     <div
-                      className="h-full bg-purple-500 transition-all duration-500"
+                      className="h-full bg-blue-600 transition-all duration-500"
                       style={{ width: `${(userTestsPassed / activeProblem.testCases.length) * 100}%` }}
                     />
                   </div>
 
                   <div className="flex items-center justify-between text-[11px] font-bold pt-1">
-                    <span className="text-indigo-400">{opponent?.name?.split(" ")[0]}</span>
+                    <span className="text-slate-600 dark:text-slate-400">{opponent?.name?.split(" ")[0]}</span>
                     <span>{opponentTestsPassed} / {activeProblem.testCases.length}</span>
                   </div>
                   <div className="w-full h-2 rounded-full bg-[var(--surface-soft)] overflow-hidden">
                     <div
-                      className="h-full bg-indigo-500 transition-all duration-500"
+                      className="h-full bg-slate-500 transition-all duration-500"
                       style={{ width: `${(opponentTestsPassed / activeProblem.testCases.length) * 100}%` }}
                     />
                   </div>
@@ -998,7 +998,7 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
                       key={msg.id}
                       className={`p-1.5 rounded-lg text-[11px] ${
                         msg.sender === "you"
-                          ? "ml-auto bg-purple-600 text-white max-w-[85%]"
+                          ? "ml-auto bg-blue-600 text-white max-w-[85%]"
                           : msg.sender === "opponent"
                           ? "mr-auto bg-[var(--surface-soft)] text-[var(--text)] border border-[var(--border-soft)] max-w-[85%]"
                           : "text-[10px] text-[var(--muted)] text-center w-full"
@@ -1018,7 +1018,7 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
                     onChange={(e) => setChatInput(e.target.value)}
                     className="flex-1 px-2.5 py-1 rounded-lg bg-[var(--surface-soft)] border border-[var(--border-soft)] text-xs text-[var(--text)] outline-none"
                   />
-                  <button type="submit" className="px-2.5 py-1 rounded-lg bg-purple-600 text-white font-bold text-xs">
+                  <button type="submit" className="px-2.5 py-1 rounded-lg bg-blue-600 text-white font-bold text-xs">
                     Send
                   </button>
                 </form>
@@ -1030,7 +1030,7 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
 
       {/* ================= 4. POST-MATCH VICTORY & SUMMARY MODAL ================= */}
       {arenaState === "result" && battleResult && (
-        <div className="p-6 sm:p-8 rounded-3xl bg-[var(--surface)] border border-purple-500/40 shadow-2xl text-center space-y-6 max-w-xl mx-auto">
+        <div className="p-6 sm:p-8 rounded-3xl bg-[var(--surface)] border border-[var(--border)] shadow-xl text-center space-y-6 max-w-xl mx-auto">
           <div className="text-5xl animate-bounce">
             {battleResult.winner === "you" ? "🏆" : battleResult.winner === "opponent" ? "🥈" : "🤝"}
           </div>
@@ -1066,7 +1066,7 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
                 setArenaState("waiting_room");
                 setBattleResult(null);
               }}
-              className="px-6 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-black text-xs shadow-md"
+              className="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-sm"
             >
               🔄 Rematch Opponent
             </button>

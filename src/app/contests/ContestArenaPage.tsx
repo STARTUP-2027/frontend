@@ -50,7 +50,7 @@ const ALL_CHALLENGES: Challenge[] = [
     solvedCount: 1420,
     acceptanceRate: "64.2%",
     tags: ["LangGraph", "Cyclic Memory", "AI Agents", "StateGraph"],
-    bannerGradient: "linear-gradient(135deg, #7c3aed 0%, #4338ca 100%)",
+    bannerGradient: "linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)",
   },
   {
     id: "ch-2",
@@ -160,7 +160,7 @@ function computeRRF(denseRank, sparseRank, k = 60) {
     solvedCount: 890,
     acceptanceRate: "59.4%",
     tags: ["Vector Search", "RRF", "RAG", "Qdrant"],
-    bannerGradient: "linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%)",
+    bannerGradient: "linear-gradient(135deg, #0284c7 0%, #0369a1 100%)",
   },
   {
     id: "ch-6",
@@ -237,7 +237,7 @@ function acquireToken(capacity, available, requested) {
     solvedCount: 1540,
     acceptanceRate: "76.4%",
     tags: ["Go (Golang)", "Concurrency", "Worker Pool", "Rate Limiting"],
-    bannerGradient: "linear-gradient(135deg, #6366f1 0%, #4338ca 100%)",
+    bannerGradient: "linear-gradient(135deg, #2563eb 0%, #1e40af 100%)",
   },
 ];
 
@@ -485,11 +485,11 @@ export default function ContestArenaPage() {
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-32 sm:pt-36 pb-20 space-y-8">
 
         {/* HERO ARENA HEADER */}
-        <div className="relative overflow-hidden p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-purple-900/40 via-indigo-950/60 to-purple-900/20 border border-[var(--border-soft)] shadow-2xl backdrop-blur-xl">
+        <div className="relative overflow-hidden p-6 sm:p-8 rounded-3xl bg-[var(--surface)] border border-[var(--border)] shadow-md">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
             <div className="space-y-2 max-w-2xl">
               <div className="flex items-center gap-3">
-                <span className="px-3 py-1 rounded-full text-[11px] font-extrabold tracking-wider bg-amber-500/20 text-amber-400 border border-amber-500/30 uppercase flex items-center gap-1.5 shadow-sm">
+                <span className="px-3 py-1 rounded-full text-[11px] font-extrabold tracking-wider bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 uppercase flex items-center gap-1.5 shadow-sm">
                   <span>⚡</span> Live Coding & Contest Arena
                 </span>
                 <span className="text-xs text-[var(--muted)] font-mono">Season 4 Active</span>
@@ -503,7 +503,7 @@ export default function ContestArenaPage() {
             </div>
 
             {/* Quick Stats Pill */}
-            <div className="flex items-center gap-3 bg-[var(--surface)]/90 backdrop-blur-md p-4 rounded-2xl border border-[var(--border-soft)] shadow-lg shrink-0">
+            <div className="flex items-center gap-3 bg-[var(--surface-soft)] p-4 rounded-2xl border border-[var(--border-soft)] shadow-sm shrink-0">
               <div className="text-center px-3 border-r border-[var(--border-soft)]">
                 <span className="text-[10px] uppercase font-black text-[var(--muted)] tracking-wider">Your Rank</span>
                 <p className="text-lg font-black text-amber-400">#4</p>
@@ -679,7 +679,7 @@ export default function ContestArenaPage() {
               <div className="lg:col-span-8 space-y-4">
                 {filteredChallenges.length === 0 ? (
                   <div className="p-12 text-center rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] space-y-4 shadow-xl">
-                    <div className="w-16 h-16 rounded-full bg-purple-500/10 text-purple-400 text-3xl flex items-center justify-center mx-auto">
+                    <div className="w-16 h-16 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-3xl flex items-center justify-center mx-auto">
                       🔍
                     </div>
                     <h3 className="text-lg font-black">No quizzes match your filter criteria</h3>
@@ -702,25 +702,22 @@ export default function ContestArenaPage() {
                       return (
                         <article
                           key={ch.id}
-                          className="group relative rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] hover:border-purple-500/50 shadow-lg hover:shadow-2xl hover:shadow-purple-500/10 transition-all duration-300 flex flex-col justify-between overflow-hidden text-left h-full"
+                          className="group relative rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] hover:border-[var(--accent)] shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between overflow-hidden text-left h-full"
                         >
-                          {/* Ambient radial glow background on card hover */}
-                          <div className="absolute top-0 right-0 w-44 h-44 bg-purple-500/5 rounded-full blur-2xl group-hover:bg-purple-500/15 transition-all pointer-events-none" />
-
                           {/* Card Inner Wrapper for 100% Equal Height Alignment */}
                           <div className="flex flex-col h-full justify-between relative z-10">
 
                             {/* Top Header Stripe with Modern Glassmorphic Badges */}
                             <div
                               className="p-4 flex items-center justify-between text-white relative overflow-hidden shrink-0 border-b border-white/10"
-                              style={{ background: ch.bannerGradient || "linear-gradient(135deg, #7c3aed 0%, #4338ca 100%)" }}
+                              style={{ background: ch.bannerGradient || "linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)" }}
                             >
                               <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px] pointer-events-none" />
 
                               {/* Badges */}
                               <div className="relative z-10 flex items-center gap-2 flex-wrap">
                                 <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 shadow-sm flex items-center gap-1">
-                                  <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse" />
+                                  <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
                                   {ch.categoryLabel}
                                 </span>
                                 <span className="text-[10px] font-extrabold tracking-wider px-2 py-0.5 rounded-full bg-black/30 backdrop-blur-md border border-white/10">
@@ -746,7 +743,7 @@ export default function ContestArenaPage() {
 
                               {/* Title with Fixed Height */}
                               <div>
-                                <h3 className="text-sm sm:text-base font-extrabold text-[var(--text)] group-hover:text-purple-400 transition-colors line-clamp-2 leading-snug min-h-[2.75rem]">
+                                <h3 className="text-sm sm:text-base font-extrabold text-[var(--text)] group-hover:text-[var(--accent)] transition-colors line-clamp-2 leading-snug min-h-[2.75rem]">
                                   {ch.title}
                                 </h3>
 
@@ -761,7 +758,7 @@ export default function ContestArenaPage() {
                                 {ch.tags.slice(0, 3).map((tag) => (
                                   <span
                                     key={tag}
-                                    className="px-2 py-0.5 rounded-lg bg-[var(--surface-soft)] border border-[var(--border-soft)] group-hover:border-purple-500/30 text-[10px] font-semibold text-[var(--text)] transition-colors"
+                                    className="px-2 py-0.5 rounded-lg bg-[var(--surface-soft)] border border-[var(--border-soft)] group-hover:border-[var(--accent)] text-[10px] font-semibold text-[var(--text)] transition-colors"
                                   >
                                     #{tag}
                                   </span>
@@ -799,14 +796,14 @@ export default function ContestArenaPage() {
                                   ? "bg-amber-500/15 text-amber-400 border border-amber-500/30"
                                   : ch.difficulty === "Advanced"
                                   ? "bg-rose-500/15 text-rose-400 border border-rose-500/30"
-                                  : "bg-purple-500/15 text-purple-400 border border-purple-500/30"
+                                  : "bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20"
                               }`}>
                                 {ch.difficulty}
                               </span>
 
                               <button
                                 onClick={() => handleOpenChallenge(ch)}
-                                className="px-4 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-extrabold text-xs shadow-md shadow-purple-600/20 hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5"
+                                className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-sm hover:scale-102 active:scale-98 transition-all flex items-center gap-1.5"
                               >
                                 <span>{isSolved ? "Retake" : "Solve Challenge"}</span>
                                 <span>→</span>
@@ -839,7 +836,7 @@ export default function ContestArenaPage() {
                           }`}>
                             {usr.rank === 1 ? "🥇" : usr.rank === 2 ? "🥈" : usr.rank === 3 ? "🥉" : `#${usr.rank}`}
                           </span>
-                          <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-600 text-white font-bold text-[11px] flex items-center justify-center shrink-0">
+                          <div className="w-7 h-7 rounded-full bg-blue-600 text-white font-bold text-[11px] flex items-center justify-center shrink-0">
                             {usr.avatar}
                           </div>
                           <div className="min-w-0">
@@ -933,7 +930,7 @@ export default function ContestArenaPage() {
             {/* Modal Header */}
             <div className="p-5 border-b border-[var(--border-soft)] bg-[var(--surface-soft)]/60 flex items-center justify-between shrink-0">
               <div className="flex items-center gap-2">
-                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-purple-500/15 text-purple-400 border border-purple-500/30">
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
                   {activeModalChallenge.categoryLabel}
                 </span>
                 <span className="text-xs font-bold text-emerald-400">+{activeModalChallenge.xp} XP</span>
@@ -1050,12 +1047,12 @@ export default function ContestArenaPage() {
 
               {/* XP Banner */}
               {earnedXP && (
-                <div className="p-4 rounded-2xl bg-gradient-to-r from-purple-500/20 to-indigo-500/20 border border-purple-500/40 text-xs font-bold flex items-center justify-between text-purple-300 animate-fade-in">
+                <div className="p-4 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-xs font-bold flex items-center justify-between text-blue-700 dark:text-blue-300 animate-fade-in">
                   <div className="flex items-center gap-2">
                     <span className="text-xl">🎉</span>
                     <span>Challenge Completed! +{earnedXP} XP added to your standing.</span>
                   </div>
-                  <span className="px-2.5 py-1 rounded-full bg-purple-500/30 text-white text-[10px]">
+                  <span className="px-2.5 py-1 rounded-full bg-blue-600 text-white text-[10px]">
                     Streak +1 🔥
                   </span>
                 </div>

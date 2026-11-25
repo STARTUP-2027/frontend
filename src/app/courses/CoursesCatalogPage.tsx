@@ -281,7 +281,7 @@ export default function CoursesCatalogPage() {
               <span>/</span>
               <span className="text-[var(--text)] font-bold">Courses Directory</span>
               <span>/</span>
-              <span className="text-purple-400 font-bold">Interactive Catalog</span>
+              <span className="text-[var(--accent)] font-bold">Interactive Catalog</span>
             </div>
             <h1 className="text-2xl sm:text-4xl font-black tracking-tight mt-2 text-[var(--text)]">
               Masterclasses & Engineering Hub
@@ -387,7 +387,7 @@ export default function CoursesCatalogPage() {
               <div className="flex items-center gap-2">
                 <span className="text-sm font-black tracking-wide uppercase text-[var(--text)]">Filters</span>
                 {hasActiveFilters && (
-                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-400 font-extrabold border border-purple-500/30">
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 font-extrabold border border-blue-500/20">
                     Active
                   </span>
                 )}
@@ -397,7 +397,7 @@ export default function CoursesCatalogPage() {
                 {hasActiveFilters && (
                   <button
                     onClick={handleClearAllFilters}
-                    className="text-[11px] font-black uppercase text-purple-400 hover:text-purple-300 hover:underline transition-colors"
+                    className="text-[11px] font-black uppercase text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 hover:underline transition-colors"
                   >
                     Clear All
                   </button>
@@ -420,7 +420,7 @@ export default function CoursesCatalogPage() {
                   <span
                     key={cat}
                     onClick={() => handleToggleCategory(cat)}
-                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-purple-500/15 text-purple-300 border border-purple-500/30 hover:bg-purple-500/25 cursor-pointer transition-all"
+                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-blue-500/10 text-blue-600 dark:text-blue-300 border border-blue-500/20 hover:bg-blue-500/20 cursor-pointer transition-all"
                   >
                     {CATEGORY_OPTIONS.find((c) => c.id === cat)?.label || cat} ✕
                   </span>
@@ -429,7 +429,7 @@ export default function CoursesCatalogPage() {
                   <span
                     key={lvl}
                     onClick={() => handleToggleLevel(lvl)}
-                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-indigo-500/15 text-indigo-300 border border-indigo-500/30 hover:bg-indigo-500/25 cursor-pointer transition-all"
+                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-slate-500/10 text-slate-700 dark:text-slate-300 border border-slate-500/20 hover:bg-slate-500/20 cursor-pointer transition-all"
                   >
                     {lvl} ✕
                   </span>
@@ -699,7 +699,7 @@ export default function CoursesCatalogPage() {
 
               {/* Result Summary */}
               <div className="flex items-center gap-2 text-xs font-bold text-[var(--text)]">
-                <span>Showing <strong className="text-purple-400">{filteredCourses.length}</strong> masterclasses</span>
+                <span>Showing <strong className="text-[var(--accent)] font-bold">{filteredCourses.length}</strong> masterclasses</span>
                 {searchQuery && (
                   <span className="text-[var(--muted)] font-normal">for "{searchQuery}"</span>
                 )}
@@ -736,7 +736,7 @@ export default function CoursesCatalogPage() {
             {/* Empty State */}
             {filteredCourses.length === 0 ? (
               <div className="p-12 text-center rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] space-y-4 shadow-xl">
-                <div className="w-16 h-16 rounded-full bg-purple-500/10 text-purple-400 text-3xl flex items-center justify-center mx-auto">
+                <div className="w-16 h-16 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-3xl flex items-center justify-center mx-auto">
                   🔍
                 </div>
                 <h3 className="text-lg font-black">No masterclasses match your chosen filters</h3>
@@ -794,7 +794,7 @@ export default function CoursesCatalogPage() {
                                   </span>
                                 )}
                                 {c.featured && !c.bestseller && (
-                                  <span className="text-[10px] font-black tracking-wider px-2 py-0.5 rounded-full bg-purple-400 text-black shadow-md">
+                                  <span className="text-[10px] font-bold tracking-wider px-2.5 py-0.5 rounded-full bg-blue-600 text-white shadow-sm">
                                     FEATURED
                                   </span>
                                 )}
@@ -859,7 +859,7 @@ export default function CoursesCatalogPage() {
                             {/* Standard Feature Bullets */}
                             <div className="space-y-1 pt-1 text-[11px] text-[var(--muted)] border-t border-[var(--border-soft)]">
                               <div className="flex items-center gap-1.5">
-                                <span className="text-purple-400 font-bold">✓</span>
+                                <span className="text-blue-600 dark:text-blue-400 font-bold">✓</span>
                                 <span className="truncate">⏱ {c.duration} of interactive masterclasses</span>
                               </div>
                               <div className="flex items-center gap-1.5">
@@ -893,12 +893,12 @@ export default function CoursesCatalogPage() {
                             {enrolled && (
                               <div className="p-2.5 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border-soft)] space-y-1">
                                 <div className="flex items-center justify-between text-[10px] font-bold">
-                                  <span className="text-purple-400">Progress</span>
+                                  <span className="text-blue-600 dark:text-blue-400 font-semibold">Progress</span>
                                   <span>{progress.percentage}%</span>
                                 </div>
                                 <div className="w-full h-1.5 rounded-full bg-[var(--surface)] overflow-hidden">
                                   <div
-                                    className="h-full rounded-full bg-gradient-to-r from-purple-500 to-indigo-500"
+                                    className="h-full rounded-full bg-blue-600 dark:bg-blue-500"
                                     style={{ width: `${progress.percentage}%` }}
                                   />
                                 </div>
@@ -910,7 +910,7 @@ export default function CoursesCatalogPage() {
                         {/* Card Footer: Instructor Profile & CTA - Pinned to Exact Bottom Baseline */}
                         <div className="p-4 pt-3 border-t border-[var(--border-soft)] bg-[var(--surface-soft)]/40 flex items-center justify-between gap-3 mt-auto">
                           <div className="flex items-center gap-2 min-w-0">
-                            <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-600 text-white font-extrabold text-[11px] flex items-center justify-center shrink-0">
+                            <div className="w-7 h-7 rounded-full bg-blue-600 dark:bg-blue-700 text-white font-bold text-[11px] flex items-center justify-center shrink-0">
                               {c.instructor.avatar}
                             </div>
                             <div className="min-w-0">
@@ -1028,7 +1028,7 @@ export default function CoursesCatalogPage() {
                         {/* Highlights List */}
                         <ul className="text-[11px] text-[var(--muted)] space-y-1">
                           <li className="flex items-center gap-1.5">
-                            <span className="text-purple-400">⚡</span>
+                            <span className="text-blue-600 dark:text-blue-400">⚡</span>
                             <span>Comprehensive syllabus with hands-on capstone architecture</span>
                           </li>
                           <li className="flex items-center gap-1.5">
