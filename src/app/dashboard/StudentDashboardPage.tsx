@@ -49,7 +49,7 @@ export default function StudentDashboardPage() {
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-28 space-y-8">
         {/* Student Welcome & Gamification Banner */}
-        <div className="relative overflow-hidden p-6 sm:p-8 rounded-3xl bg-[var(--surface)] border border-[var(--border)] shadow-md">
+        <div className="relative overflow-hidden p-6 sm:p-8 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
             <div className="flex items-center gap-4">
               <div className="w-16 h-16 rounded-2xl bg-blue-600 text-white font-extrabold text-xl flex items-center justify-center shadow-md">
@@ -68,38 +68,48 @@ export default function StudentDashboardPage() {
 
             {/* Gamification Stats */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <div className="p-3.5 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border-soft)] text-center shadow-sm">
-                <span className="text-[10px] uppercase font-bold text-[var(--muted)]">Streak</span>
-                <p className="text-lg font-black text-amber-500 flex items-center justify-center gap-1">
-                  🔥 {user?.streak || 14} <span className="text-[10px] font-normal text-[var(--muted)]">Days</span>
-                </p>
+              <div className="p-3.5 sm:p-4 rounded-xl bg-[var(--surface-soft)] border border-[var(--border)] flex items-center gap-3 shadow-xs">
+                <span className="w-9 h-9 rounded-lg bg-amber-500/10 text-amber-500 flex items-center justify-center text-base shrink-0">🔥</span>
+                <div>
+                  <span className="text-[10px] uppercase font-bold text-[var(--muted)] tracking-wider block">Streak</span>
+                  <p className="text-base sm:text-lg font-extrabold text-[var(--text)]">{user?.streak || 14} <span className="text-[10px] font-semibold text-[var(--muted)]">Days</span></p>
+                </div>
               </div>
-              <div className="p-3.5 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border-soft)] text-center shadow-sm">
-                <span className="text-[10px] uppercase font-bold text-[var(--muted)]">Learning XP</span>
-                <p className="text-lg font-black text-[var(--accent)]">⚡ {user?.xp || 1450}</p>
+              <div className="p-3.5 sm:p-4 rounded-xl bg-[var(--surface-soft)] border border-[var(--border)] flex items-center gap-3 shadow-xs">
+                <span className="w-9 h-9 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center text-base shrink-0">⚡</span>
+                <div>
+                  <span className="text-[10px] uppercase font-bold text-[var(--muted)] tracking-wider block">Learning XP</span>
+                  <p className="text-base sm:text-lg font-extrabold text-[var(--text)]">{user?.xp || 1450}</p>
+                </div>
               </div>
-              <div className="p-3.5 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border-soft)] text-center shadow-sm">
-                <span className="text-[10px] uppercase font-bold text-[var(--muted)]">Completed</span>
-                <p className="text-lg font-black text-emerald-600 dark:text-emerald-400">✅ {user?.completedLessonIds.length || 42} <span className="text-[10px] font-normal text-[var(--muted)]">Lessons</span></p>
+              <div className="p-3.5 sm:p-4 rounded-xl bg-[var(--surface-soft)] border border-[var(--border)] flex items-center gap-3 shadow-xs">
+                <span className="w-9 h-9 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-base shrink-0">✅</span>
+                <div>
+                  <span className="text-[10px] uppercase font-bold text-[var(--muted)] tracking-wider block">Completed</span>
+                  <p className="text-base sm:text-lg font-extrabold text-[var(--text)]">{user?.completedLessonIds.length || 42} <span className="text-[10px] font-semibold text-[var(--muted)]">Lessons</span></p>
+                </div>
               </div>
-              <div className="p-3.5 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border-soft)] text-center shadow-sm">
-                <span className="text-[10px] uppercase font-bold text-[var(--muted)]">Certificates</span>
-                <p className="text-lg font-black text-blue-600 dark:text-blue-400">🏆 {certificates.length}</p>
+              <div className="p-3.5 sm:p-4 rounded-xl bg-[var(--surface-soft)] border border-[var(--border)] flex items-center gap-3 shadow-xs">
+                <span className="w-9 h-9 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center text-base shrink-0">🏆</span>
+                <div>
+                  <span className="text-[10px] uppercase font-bold text-[var(--muted)] tracking-wider block">Certificates</span>
+                  <p className="text-base sm:text-lg font-extrabold text-[var(--text)]">{certificates.length}</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         {/* 3-Day Free Trial Active Status Banner */}
-        <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs shadow-sm">
+        <div className="p-4 rounded-xl bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-500/20 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs shadow-xs">
           <div className="flex items-center gap-2.5">
-            <span className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 font-black flex items-center justify-center text-sm">
+            <span className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-bold flex items-center justify-center text-sm shrink-0">
               🎁
             </span>
             <div>
-              <p className="font-extrabold text-[var(--text)] flex items-center gap-2">
+              <p className="font-bold text-[var(--text)] flex items-center gap-2">
                 <span>3-Day Full Access Free Trial Active</span>
-                <span className="px-2 py-0.5 rounded-full bg-emerald-500 text-black text-[10px] font-black uppercase">
+                <span className="px-2 py-0.5 rounded-full bg-emerald-500 text-slate-950 text-[10px] font-bold uppercase">
                   3 Days Remaining
                 </span>
               </p>
@@ -110,116 +120,116 @@ export default function StudentDashboardPage() {
           </div>
           <Link
             to="/dsa-sheet"
-            className="px-3 py-1.5 rounded-xl font-bold bg-emerald-500 text-black hover:bg-emerald-400 transition-colors shrink-0 shadow-sm"
+            className="px-3.5 py-1.5 rounded-lg font-bold bg-emerald-600 text-white hover:bg-emerald-700 transition-colors shrink-0 shadow-xs"
           >
             Practice DSA Sheets →
           </Link>
         </div>
 
         {/* Quick Role Switcher Banner (for Development & Testing) */}
-        <div className="p-4 rounded-2xl bg-[var(--surface)] border border-[var(--border-soft)] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+        <div className="p-4 rounded-xl bg-[var(--surface)] border border-[var(--border)] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs shadow-xs">
           <div className="flex items-center gap-2">
             <span className="text-base">🛠️</span>
             <span>Testing Mode: You are logged in as <strong>Student (Alex Morgan)</strong>. Fixed credentials: <code>student@astra.edu</code> / <code>student123</code></span>
           </div>
           <button
             onClick={() => switchRole("admin")}
-            className="px-3 py-1.5 rounded-xl font-bold bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 hover:bg-blue-500/20 transition-colors"
+            className="px-3.5 py-1.5 rounded-lg font-bold bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 hover:bg-blue-500/20 transition-colors shrink-0"
           >
             Switch to Admin / Course Creator (Dr. Sarah Chen) →
           </button>
         </div>
 
         {/* Interactive Student Hub Quick Navigation Strip */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
           <Link
             to="/contests"
-            className="p-4 rounded-2xl bg-[var(--surface)] border border-[var(--border-soft)] hover:border-amber-400/50 transition-all flex items-center gap-3 group shadow-sm"
+            className="p-4 rounded-xl bg-[var(--surface)] border border-[var(--border)] hover:border-blue-500/50 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex items-center gap-3 group shadow-xs"
           >
-            <span className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
+            <span className="w-10 h-10 rounded-lg bg-amber-500/10 text-amber-500 flex items-center justify-center text-lg group-hover:scale-105 transition-transform shrink-0">
               ⚡
             </span>
-            <div>
-              <h4 className="text-xs font-extrabold group-hover:text-amber-400 transition-colors">Contest Arena</h4>
-              <p className="text-[10px] text-[var(--muted)]">Daily & 1v1 Duels</p>
+            <div className="min-w-0">
+              <h4 className="text-xs font-bold text-[var(--text)] group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors truncate">Contest Arena</h4>
+              <p className="text-[10px] text-[var(--muted)] truncate">Daily & 1v1 Duels</p>
             </div>
           </Link>
 
           <Link
             to="/dsa-sheet"
-            className="p-4 rounded-2xl bg-[var(--surface)] border border-[var(--border-soft)] hover:border-emerald-400/50 transition-all flex items-center gap-3 group shadow-sm"
+            className="p-4 rounded-xl bg-[var(--surface)] border border-[var(--border)] hover:border-blue-500/50 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex items-center gap-3 group shadow-xs"
           >
-            <span className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
+            <span className="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-lg group-hover:scale-105 transition-transform shrink-0">
               🧠
             </span>
-            <div>
-              <h4 className="text-xs font-extrabold group-hover:text-emerald-400 transition-colors">DSA Sheets</h4>
-              <p className="text-[10px] text-[var(--muted)]">380+ Pattern Problems</p>
+            <div className="min-w-0">
+              <h4 className="text-xs font-bold text-[var(--text)] group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors truncate">DSA Sheets</h4>
+              <p className="text-[10px] text-[var(--muted)] truncate">380+ Pattern Problems</p>
             </div>
           </Link>
 
           <Link
             to="/notes"
-            className="p-4 rounded-2xl bg-[var(--surface)] border border-[var(--border-soft)] hover:border-blue-400/50 transition-all flex items-center gap-3 group shadow-sm"
+            className="p-4 rounded-xl bg-[var(--surface)] border border-[var(--border)] hover:border-blue-500/50 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex items-center gap-3 group shadow-xs"
           >
-            <span className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
+            <span className="w-10 h-10 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center text-lg group-hover:scale-105 transition-transform shrink-0">
               📑
             </span>
-            <div>
-              <h4 className="text-xs font-extrabold group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Notes & Bookmarks</h4>
-              <p className="text-[10px] text-[var(--muted)]">Snippets & Cards</p>
+            <div className="min-w-0">
+              <h4 className="text-xs font-bold text-[var(--text)] group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors truncate">Notes & Bookmarks</h4>
+              <p className="text-[10px] text-[var(--muted)] truncate">Snippets & Cards</p>
             </div>
           </Link>
 
           <Link
             to="/verify"
-            className="p-4 rounded-2xl bg-[var(--surface)] border border-[var(--border-soft)] hover:border-emerald-400/50 transition-all flex items-center gap-3 group shadow-sm"
+            className="p-4 rounded-xl bg-[var(--surface)] border border-[var(--border)] hover:border-blue-500/50 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex items-center gap-3 group shadow-xs"
           >
-            <span className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
+            <span className="w-10 h-10 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center text-lg group-hover:scale-105 transition-transform shrink-0">
               🏆
             </span>
-            <div>
-              <h4 className="text-xs font-extrabold group-hover:text-emerald-400 transition-colors">Credentials Hub</h4>
-              <p className="text-[10px] text-[var(--muted)]">Public Verification</p>
+            <div className="min-w-0">
+              <h4 className="text-xs font-bold text-[var(--text)] group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors truncate">Credentials Hub</h4>
+              <p className="text-[10px] text-[var(--muted)] truncate">Public Verification</p>
             </div>
           </Link>
         </div>
 
         {/* Continue Learning Active Hero Card */}
         {primaryResumeCourse && (
-          <div className="p-6 sm:p-8 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-xl relative overflow-hidden">
+          <div className="p-6 sm:p-7 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs hover:shadow-sm transition-all relative overflow-hidden">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
               <div className="space-y-3 max-w-2xl">
                 <div className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
-                  <span className="text-[10px] font-extrabold uppercase tracking-widest text-[var(--accent)]">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-blue-600 dark:text-blue-400">
                     In Progress • Jump Back In
                   </span>
                 </div>
-                <h2 className="text-xl sm:text-2xl font-black">{primaryResumeCourse.title}</h2>
-                <p className="text-xs text-[var(--muted)] line-clamp-2">{primaryResumeCourse.tagline}</p>
+                <h2 className="text-lg sm:text-xl font-extrabold text-[var(--text)]">{primaryResumeCourse.title}</h2>
+                <p className="text-xs text-[var(--muted)] line-clamp-2 leading-relaxed">{primaryResumeCourse.tagline}</p>
 
                 {/* Progress Bar */}
-                <div className="space-y-1.5 pt-2">
+                <div className="space-y-1.5 pt-1">
                   <div className="flex justify-between text-xs font-bold">
-                    <span className="text-[var(--muted)]">Course Mastery</span>
-                    <span className="text-[var(--accent)]">{primaryProgress.percentage}% Completed</span>
+                    <span className="text-[var(--muted)] font-medium">Course Mastery</span>
+                    <span className="text-blue-600 dark:text-blue-400 font-mono">{primaryProgress.percentage}% Completed</span>
                   </div>
-                  <div className="w-full h-3 bg-[var(--surface-soft)] rounded-full overflow-hidden border border-[var(--border)]">
+                  <div className="w-full h-2.5 bg-[var(--surface-soft)] rounded-full overflow-hidden border border-[var(--border)]">
                     <div
-                      className="h-full bg-blue-600 dark:bg-blue-500 transition-all duration-700"
+                      className="h-full bg-blue-600 dark:bg-blue-500 transition-all duration-700 rounded-full"
                       style={{ width: `${primaryProgress.percentage}%` }}
                     />
                   </div>
                 </div>
               </div>
 
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-4 shrink-0">
                 <button
                   onClick={() => navigate(`/learn/${primaryResumeCourse.id}`)}
-                  className="button py-3.5 px-6 text-xs font-extrabold flex items-center gap-2 shadow-xl hover:scale-105 transition-transform"
+                  className="button py-3 px-5 text-xs font-bold flex items-center gap-2 shadow-xs hover:shadow-sm"
                 >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m9 7 8 5-8 5V7Z"/></svg>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="m9 7 8 5-8 5V7Z"/></svg>
                   Resume Classroom
                 </button>
               </div>
@@ -228,7 +238,7 @@ export default function StudentDashboardPage() {
         )}
 
         {/* GitHub-Style Daily Learning Activity Heatmap */}
-        <div className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-md space-y-4">
+        <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
               <h3 className="text-sm font-extrabold uppercase tracking-wider text-[var(--accent)] flex items-center gap-2">
@@ -271,7 +281,7 @@ export default function StudentDashboardPage() {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-base font-extrabold tracking-tight">My Enrolled Masterclasses ({enrolledCourses.length})</h3>
-            <Link to="/courses" className="text-xs font-bold text-[var(--accent)] hover:underline">
+            <Link to="/courses" className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline">
               Browse Full Catalog →
             </Link>
           </div>
@@ -282,29 +292,31 @@ export default function StudentDashboardPage() {
               return (
                 <div
                   key={c.id}
-                  className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] hover:border-[var(--accent)] shadow-md transition-all flex flex-col justify-between space-y-4"
+                  className="rounded-2xl bg-[var(--surface)] border border-[var(--border)] hover:border-blue-500/50 shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between overflow-hidden"
                 >
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between text-[10px] font-bold text-[var(--muted)] uppercase">
-                      <span>{c.categoryLabel}</span>
-                      <span className="text-[var(--accent)] font-mono">{prog.percentage}% done</span>
+                  <div className="p-5 space-y-3">
+                    <div className="flex items-center justify-between text-[10px] font-bold text-[var(--muted)] uppercase tracking-wider">
+                      <span className="px-2 py-0.5 rounded-full bg-[var(--surface-soft)] border border-[var(--border-soft)]">{c.categoryLabel}</span>
+                      <span className="text-blue-600 dark:text-blue-400 font-mono font-bold">{prog.percentage}% done</span>
                     </div>
 
-                    <h4 className="text-base font-extrabold leading-snug">{c.title}</h4>
-                    <p className="text-xs text-[var(--muted)] line-clamp-2">{c.tagline}</p>
+                    <h4 className="text-sm font-bold leading-snug line-clamp-1">{c.title}</h4>
+                    <p className="text-xs text-[var(--muted)] line-clamp-2 min-h-[2.5rem] leading-relaxed">{c.tagline}</p>
 
                     {/* Progress Bar */}
-                    <div className="w-full h-2 bg-[var(--surface-soft)] rounded-full overflow-hidden border border-[var(--border)]">
-                      <div
-                        className="h-full bg-[var(--accent)] transition-all"
-                        style={{ width: `${prog.percentage}%` }}
-                      />
+                    <div className="space-y-1">
+                      <div className="w-full h-1.5 bg-[var(--surface-soft)] rounded-full overflow-hidden border border-[var(--border)]">
+                        <div
+                          className="h-full bg-blue-600 dark:bg-blue-500 rounded-full transition-all"
+                          style={{ width: `${prog.percentage}%` }}
+                        />
+                      </div>
                     </div>
                   </div>
 
-                  <div className="pt-4 border-t border-[var(--border-soft)] flex items-center justify-between">
-                    <span className="text-xs text-[var(--muted)]">⏱️ {c.duration}</span>
-                    <Link to={`/learn/${c.id}`} className="button button-sm text-xs font-bold">
+                  <div className="p-4 pt-3 border-t border-[var(--border-soft)] bg-[var(--surface-soft)]/30 flex items-center justify-between">
+                    <span className="text-xs text-[var(--muted)] font-mono">⏱️ {c.duration}</span>
+                    <Link to={`/learn/${c.id}`} className="button button-sm text-xs font-bold shadow-xs">
                       Launch Classroom →
                     </Link>
                   </div>
@@ -325,24 +337,26 @@ export default function StudentDashboardPage() {
               {otherCourses.map((c) => (
                 <div
                   key={c.id}
-                  className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-md space-y-4 flex flex-col justify-between"
+                  className="rounded-2xl bg-[var(--surface)] border border-[var(--border)] hover:border-blue-500/50 shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between overflow-hidden"
                 >
-                  <div className="space-y-3">
-                    <span className="text-[10px] font-bold text-[var(--muted)] uppercase">{c.categoryLabel}</span>
-                    <h4 className="text-base font-extrabold leading-snug">{c.title}</h4>
-                    <p className="text-xs text-[var(--muted)] line-clamp-2">{c.description}</p>
-                    <div className="flex items-center gap-2 text-xs font-bold text-[var(--accent)]">
+                  <div className="p-5 space-y-3">
+                    <span className="px-2 py-0.5 rounded-full bg-[var(--surface-soft)] border border-[var(--border-soft)] text-[10px] font-bold text-[var(--muted)] uppercase tracking-wider inline-block">
+                      {c.categoryLabel}
+                    </span>
+                    <h4 className="text-sm font-bold leading-snug line-clamp-1">{c.title}</h4>
+                    <p className="text-xs text-[var(--muted)] line-clamp-2 min-h-[2.5rem] leading-relaxed">{c.description}</p>
+                    <div className="flex items-center gap-2 text-xs font-semibold text-blue-600 dark:text-blue-400">
                       <span>Full Access Included</span>
                       <span>•</span>
                       <span>⭐ {c.rating}</span>
                     </div>
                   </div>
 
-                  <div className="pt-4 border-t border-[var(--border-soft)] flex items-center justify-between">
-                    <Link to={`/learn/${c.id}`} className="text-xs font-bold text-[var(--muted)] hover:text-[var(--text)]">
+                  <div className="p-4 pt-3 border-t border-[var(--border-soft)] bg-[var(--surface-soft)]/30 flex items-center justify-between">
+                    <Link to={`/learn/${c.id}`} className="text-xs font-semibold text-[var(--muted)] hover:text-[var(--text)]">
                       Preview Syllabus
                     </Link>
-                    <button onClick={() => enrollInCourse(c.id)} className="button button-sm text-xs font-bold">
+                    <button onClick={() => enrollInCourse(c.id)} className="button button-sm text-xs font-bold shadow-xs">
                       Enroll Free
                     </button>
                   </div>
@@ -354,8 +368,8 @@ export default function StudentDashboardPage() {
 
         {/* Verified Certificates Showcase */}
         {certificates.length > 0 && (
-          <div className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-md space-y-4">
-            <h3 className="text-sm font-extrabold uppercase tracking-wider text-[var(--accent)] flex items-center gap-2">
+          <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs space-y-4">
+            <h3 className="text-sm font-extrabold uppercase tracking-wider text-blue-600 dark:text-blue-400 flex items-center gap-2">
               <span>🏆</span> My Verified Certificates ({certificates.length})
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -363,11 +377,11 @@ export default function StudentDashboardPage() {
                 <div
                   key={cert.id}
                   onClick={() => setSelectedCert(cert)}
-                  className="p-4 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border)] hover:border-amber-400/50 cursor-pointer transition-all space-y-2"
+                  className="p-4 rounded-xl bg-[var(--surface-soft)] border border-[var(--border)] hover:border-blue-500/40 hover:shadow-sm cursor-pointer transition-all space-y-2"
                 >
                   <div className="flex items-center justify-between">
                     <span className="text-xl">🎓</span>
-                    <span className="text-[10px] font-mono text-[var(--accent)]">{cert.credentialId}</span>
+                    <span className="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold">{cert.credentialId}</span>
                   </div>
                   <h4 className="text-xs font-bold truncate">{cert.courseTitle}</h4>
                   <p className="text-[10px] text-[var(--muted)]">Issued to {cert.studentName} on {cert.issueDate}</p>
@@ -381,7 +395,7 @@ export default function StudentDashboardPage() {
       {/* Certificate Viewer Modal */}
       {selectedCert && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-in">
-          <div className="max-w-xl w-full p-8 rounded-3xl bg-gradient-to-b from-[#1c1830] to-[#120f20] text-white border-2 border-amber-500/40 shadow-2xl space-y-6 text-center">
+          <div className="max-w-xl w-full p-8 rounded-2xl bg-gradient-to-b from-[#1c1830] to-[#120f20] text-white border-2 border-amber-500/40 shadow-2xl space-y-6 text-center">
             <div className="w-16 h-16 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center mx-auto text-2xl">
               🏆
             </div>

@@ -69,7 +69,7 @@ export default function StudentNotesHubPage() {
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-28 space-y-8">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-xl">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs">
           <div>
             <div className="flex items-center gap-2">
               <span className="px-3 py-1 rounded-full text-[11px] font-extrabold tracking-wider bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 uppercase">
@@ -134,7 +134,7 @@ export default function StudentNotesHubPage() {
         {activeTab === "bookmarks" && (
           <div className="space-y-4">
             {filteredBookmarks.length === 0 ? (
-              <div className="p-12 text-center rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] space-y-3">
+              <div className="p-12 text-center rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs space-y-3">
                 <span className="text-4xl">📚</span>
                 <h3 className="text-base font-bold">No saved notes matching your search</h3>
                 <p className="text-xs text-[var(--muted)]">Bookmark lesson notes in the course player or create custom notes above.</p>
@@ -144,15 +144,15 @@ export default function StudentNotesHubPage() {
                 {filteredBookmarks.map((bm) => (
                   <div
                     key={bm.id}
-                    className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-md space-y-4 flex flex-col justify-between"
+                    className="rounded-2xl bg-[var(--surface)] border border-[var(--border)] hover:border-blue-500/50 shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 p-5 sm:p-6 space-y-4 flex flex-col justify-between"
                   >
                     <div className="space-y-3">
                       <div className="flex items-center justify-between text-[10px] text-[var(--muted)]">
-                        <span className="font-bold text-[var(--accent)] uppercase">{bm.courseTitle}</span>
+                        <span className="font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">{bm.courseTitle}</span>
                         <span>{bm.createdAt}</span>
                       </div>
 
-                      <h3 className="text-sm font-extrabold text-[var(--text)] leading-snug">
+                      <h3 className="text-sm font-bold text-[var(--text)] leading-snug">
                         {bm.lessonTitle}
                       </h3>
 
@@ -171,18 +171,18 @@ export default function StudentNotesHubPage() {
                               {copiedSnippetId === bm.id ? "✓ Copied!" : "📋 Copy Code"}
                             </button>
                           </div>
-                          <pre className="p-3.5 rounded-xl bg-[#090810] text-[#93c5fd] font-mono text-[11px] overflow-x-auto border border-gray-800">
+                          <pre className="p-3.5 rounded-xl bg-slate-950 text-blue-300 font-mono text-[11px] overflow-x-auto border border-slate-800">
                             {bm.snippet}
                           </pre>
                         </div>
                       )}
 
                       {bm.tags && (
-                        <div className="flex flex-wrap gap-1 pt-1">
+                        <div className="flex flex-wrap gap-1.5 pt-1">
                           {bm.tags.map((tag) => (
                             <span
                               key={tag}
-                              className="px-2 py-0.5 rounded-md bg-[var(--surface-soft)] text-[10px] text-[var(--muted)] font-medium"
+                              className="px-2 py-0.5 rounded-md bg-[var(--surface-soft)] border border-[var(--border-soft)] text-[10px] text-[var(--muted)] font-medium"
                             >
                               #{tag}
                             </span>
@@ -193,7 +193,7 @@ export default function StudentNotesHubPage() {
 
                     <div className="pt-4 border-t border-[var(--border-soft)] flex items-center justify-between">
                       {bm.courseId !== "sandbox-code" && bm.courseId !== "custom-notes" ? (
-                        <Link to={`/learn/${bm.courseId}`} className="text-xs font-bold text-[var(--accent)] hover:underline">
+                        <Link to={`/learn/${bm.courseId}`} className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline">
                           Jump to Lesson →
                         </Link>
                       ) : (
@@ -223,7 +223,7 @@ export default function StudentNotesHubPage() {
                 return (
                   <div
                     key={fc.id}
-                    className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-md space-y-4 flex flex-col justify-between min-h-[260px] transition-all hover:border-[var(--accent)] cursor-pointer"
+                    className="rounded-2xl bg-[var(--surface)] border border-[var(--border)] hover:border-blue-500/50 shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 p-5 sm:p-6 space-y-4 flex flex-col justify-between min-h-[260px] cursor-pointer"
                     onClick={() => setFlippedCardId(isFlipped ? null : fc.id)}
                   >
                     <div className="space-y-3">
@@ -284,7 +284,7 @@ export default function StudentNotesHubPage() {
         {/* Modal for adding custom note */}
         {showAddNoteModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-in">
-            <div className="max-w-lg w-full p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border)] shadow-2xl space-y-4">
+            <div className="max-w-lg w-full p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-2xl space-y-4">
               <div className="flex items-center justify-between">
                 <h3 className="text-base font-black">Add Personal Note or Code Snippet</h3>
                 <button onClick={() => setShowAddNoteModal(false)} className="text-sm font-bold text-[var(--muted)]">✕</button>

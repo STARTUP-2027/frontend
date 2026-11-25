@@ -395,7 +395,7 @@ export default function InfiniteHierarchyEditor({ items, onChange }: InfiniteHie
       {/* Grid: Left Tree Navigation (5 cols) + Right Selected Node Cisco Studio (7 cols) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
         {/* Left: Interactive Tree View (5 cols) */}
-        <div className="lg:col-span-5 p-4 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-xl space-y-3">
+        <div className="lg:col-span-5 p-4 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs space-y-3">
           <div className="flex items-center justify-between pb-2 border-b border-[var(--border-soft)]">
             <h3 className="text-xs font-black uppercase tracking-wider text-[var(--accent)] flex items-center gap-1.5">
               <span>🌲</span> Curriculum Tree (Infinite Nesting)
@@ -411,7 +411,7 @@ export default function InfiniteHierarchyEditor({ items, onChange }: InfiniteHie
         {/* Right: Selected Node Properties & Cisco Multi-Format Studio (7 cols) */}
         <div className="lg:col-span-7 space-y-4">
           {selectedNode ? (
-            <div className="p-5 sm:p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-xl space-y-5">
+            <div className="p-5 sm:p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs space-y-5">
               {/* Header: Node Type & Title + Nested Submodule Buttons */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[var(--border-soft)] pb-4">
                 <div>
@@ -809,7 +809,7 @@ export default function InfiniteHierarchyEditor({ items, onChange }: InfiniteHie
               </div>
             </div>
           ) : (
-            <div className="p-12 rounded-3xl bg-[var(--surface)] border border-dashed border-[var(--border-soft)] text-center text-xs text-[var(--muted)]">
+            <div className="p-12 rounded-2xl bg-[var(--surface)] border border-dashed border-[var(--border)] text-center text-xs text-[var(--muted)]">
               Select a module or submodule from the tree on the left to configure its Cisco theory, video, lab, and assessments.
             </div>
           )}

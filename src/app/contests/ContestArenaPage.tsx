@@ -485,7 +485,7 @@ export default function ContestArenaPage() {
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-32 sm:pt-36 pb-20 space-y-8">
 
         {/* HERO ARENA HEADER */}
-        <div className="relative overflow-hidden p-6 sm:p-8 rounded-3xl bg-[var(--surface)] border border-[var(--border)] shadow-md">
+        <div className="relative overflow-hidden p-6 sm:p-8 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
             <div className="space-y-2 max-w-2xl">
               <div className="flex items-center gap-3">
@@ -559,7 +559,7 @@ export default function ContestArenaPage() {
           <div className="space-y-6">
 
             {/* SEARCH & FILTERS HUB (FLIPKART / MODERN CLEAN STYLE) */}
-            <div className="p-4 sm:p-5 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-xl space-y-4 backdrop-blur-xl">
+            <div className="p-4 sm:p-5 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs space-y-4 backdrop-blur-xl">
 
               {/* Row 1: Search + Category + Difficulty + Type */}
               <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
@@ -678,7 +678,7 @@ export default function ContestArenaPage() {
               {/* ================= CARDS FEED (8 COLS) ================= */}
               <div className="lg:col-span-8 space-y-4">
                 {filteredChallenges.length === 0 ? (
-                  <div className="p-12 text-center rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] space-y-4 shadow-xl">
+                  <div className="p-12 text-center rounded-2xl bg-[var(--surface)] border border-[var(--border)] space-y-4 shadow-xs">
                     <div className="w-16 h-16 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-3xl flex items-center justify-center mx-auto">
                       🔍
                     </div>
@@ -694,7 +694,7 @@ export default function ContestArenaPage() {
                     </button>
                   </div>
                 ) : (
-                  /* ROCK-SOLID MODERN GRID: Sleek glassmorphism cards with glowing accents */
+                  /* ROCK-SOLID MODERN GRID: Sleek cards with clear visual hierarchy */
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5 auto-rows-fr">
                     {filteredChallenges.map((ch) => {
                       const isSolved = solvedChallengeIds.includes(ch.id);
@@ -702,53 +702,53 @@ export default function ContestArenaPage() {
                       return (
                         <article
                           key={ch.id}
-                          className="group relative rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] hover:border-[var(--accent)] shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between overflow-hidden text-left h-full"
+                          className="group relative rounded-2xl bg-[var(--surface)] border border-[var(--border)] hover:border-blue-500/50 shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between overflow-hidden text-left h-full"
                         >
                           {/* Card Inner Wrapper for 100% Equal Height Alignment */}
                           <div className="flex flex-col h-full justify-between relative z-10">
 
                             {/* Top Header Stripe with Modern Glassmorphic Badges */}
                             <div
-                              className="p-4 flex items-center justify-between text-white relative overflow-hidden shrink-0 border-b border-white/10"
-                              style={{ background: ch.bannerGradient || "linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)" }}
+                              className="p-3.5 sm:p-4 flex items-center justify-between text-white relative overflow-hidden shrink-0 border-b border-white/10"
+                              style={{ background: ch.bannerGradient || "linear-gradient(135deg, #1e293b 0%, #334155 100%)" }}
                             >
-                              <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px] pointer-events-none" />
+                              <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px] pointer-events-none" />
 
                               {/* Badges */}
-                              <div className="relative z-10 flex items-center gap-2 flex-wrap">
-                                <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 shadow-sm flex items-center gap-1">
+                              <div className="relative z-10 flex items-center gap-1.5 flex-wrap">
+                                <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-900/80 backdrop-blur-md border border-white/10 shadow-xs flex items-center gap-1">
                                   <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
                                   {ch.categoryLabel}
                                 </span>
-                                <span className="text-[10px] font-extrabold tracking-wider px-2 py-0.5 rounded-full bg-black/30 backdrop-blur-md border border-white/10">
+                                <span className="text-[10px] font-bold tracking-wider px-2 py-0.5 rounded-full bg-slate-900/60 backdrop-blur-md border border-white/10">
                                   {ch.type === "quiz" ? "🧠 ARCHITECT QUIZ" : "💻 LIVE BENCHMARK"}
                                 </span>
                               </div>
 
                               {/* Solved Status & XP */}
-                              <div className="relative z-10 flex items-center gap-2">
+                              <div className="relative z-10 flex items-center gap-1.5">
                                 {isSolved && (
-                                  <span className="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-emerald-400 text-slate-950 shadow-md flex items-center gap-1">
+                                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-400 text-slate-950 shadow-xs flex items-center gap-1">
                                     <span>✓</span> SOLVED
                                   </span>
                                 )}
-                                <span className="text-[11px] font-black px-2.5 py-1 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/40 backdrop-blur-md shadow-sm">
+                                <span className="text-[11px] font-mono font-bold px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30 backdrop-blur-md">
                                   +{ch.xp} XP
                                 </span>
                               </div>
                             </div>
 
                             {/* Card Body with Fixed Line-Clamped Heights to Prevent Layout Distortion */}
-                            <div className="p-5 space-y-3.5 flex-1 flex flex-col justify-between">
+                            <div className="p-4 sm:p-5 space-y-3 flex-1 flex flex-col justify-between">
 
                               {/* Title with Fixed Height */}
                               <div>
-                                <h3 className="text-sm sm:text-base font-extrabold text-[var(--text)] group-hover:text-[var(--accent)] transition-colors line-clamp-2 leading-snug min-h-[2.75rem]">
+                                <h3 className="text-sm sm:text-base font-bold text-[var(--text)] group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2 leading-snug min-h-[2.5rem]">
                                   {ch.title}
                                 </h3>
 
                                 {/* Question Preview Line Clamped */}
-                                <p className="text-xs text-[var(--muted)] line-clamp-2 leading-relaxed mt-1.5 min-h-[2.25rem]">
+                                <p className="text-xs text-[var(--muted)] line-clamp-2 leading-relaxed mt-1 min-h-[2.25rem]">
                                   {ch.question}
                                 </p>
                               </div>
@@ -758,7 +758,7 @@ export default function ContestArenaPage() {
                                 {ch.tags.slice(0, 3).map((tag) => (
                                   <span
                                     key={tag}
-                                    className="px-2 py-0.5 rounded-lg bg-[var(--surface-soft)] border border-[var(--border-soft)] group-hover:border-[var(--accent)] text-[10px] font-semibold text-[var(--text)] transition-colors"
+                                    className="px-2 py-0.5 rounded-md bg-[var(--surface-soft)] border border-[var(--border-soft)] text-[10px] font-medium text-[var(--text)]"
                                   >
                                     #{tag}
                                   </span>
@@ -771,31 +771,31 @@ export default function ContestArenaPage() {
                               </div>
 
                               {/* Metadata Strip: 3-column stats */}
-                              <div className="grid grid-cols-3 gap-2 py-2 px-3 rounded-xl bg-[var(--surface-soft)]/60 border border-[var(--border-soft)] text-[11px] text-[var(--muted)] font-semibold text-center">
+                              <div className="grid grid-cols-3 gap-2 py-2 px-3 rounded-lg bg-[var(--surface-soft)]/60 border border-[var(--border-soft)] text-[11px] text-[var(--muted)] font-medium text-center">
                                 <div className="flex flex-col">
-                                  <span className="text-[9px] text-[var(--muted)] uppercase font-bold">Timer</span>
-                                  <span className="text-[var(--text)] font-extrabold">⏱️ {Math.floor(ch.timeLimitSec / 60)} min</span>
+                                  <span className="text-[9px] text-[var(--muted)] uppercase font-bold tracking-wider">Timer</span>
+                                  <span className="text-[var(--text)] font-bold">⏱️ {Math.floor(ch.timeLimitSec / 60)} min</span>
                                 </div>
                                 <div className="flex flex-col border-x border-[var(--border-soft)]">
-                                  <span className="text-[9px] text-[var(--muted)] uppercase font-bold">Solved</span>
-                                  <span className="text-[var(--text)] font-extrabold">👥 {ch.solvedCount.toLocaleString()}</span>
+                                  <span className="text-[9px] text-[var(--muted)] uppercase font-bold tracking-wider">Solved</span>
+                                  <span className="text-[var(--text)] font-bold">👥 {ch.solvedCount.toLocaleString()}</span>
                                 </div>
                                 <div className="flex flex-col">
-                                  <span className="text-[9px] text-[var(--muted)] uppercase font-bold">Acceptance</span>
-                                  <span className="text-emerald-400 font-extrabold font-mono">{ch.acceptanceRate}</span>
+                                  <span className="text-[9px] text-[var(--muted)] uppercase font-bold tracking-wider">Acceptance</span>
+                                  <span className="text-emerald-500 font-bold font-mono">{ch.acceptanceRate}</span>
                                 </div>
                               </div>
                             </div>
 
-                            {/* Pinned Card Footer Action (Always aligned at the exact bottom baseline!) */}
+                            {/* Pinned Card Footer Action */}
                             <div className="p-4 pt-3 border-t border-[var(--border-soft)] bg-[var(--surface-soft)]/40 flex items-center justify-between gap-3 mt-auto">
-                              <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider ${
+                              <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
                                 ch.difficulty === "Beginner"
-                                  ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30"
+                                  ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20"
                                   : ch.difficulty === "Intermediate"
-                                  ? "bg-amber-500/15 text-amber-400 border border-amber-500/30"
+                                  ? "bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20"
                                   : ch.difficulty === "Advanced"
-                                  ? "bg-rose-500/15 text-rose-400 border border-rose-500/30"
+                                  ? "bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20"
                                   : "bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20"
                               }`}>
                                 {ch.difficulty}
@@ -803,7 +803,7 @@ export default function ContestArenaPage() {
 
                               <button
                                 onClick={() => handleOpenChallenge(ch)}
-                                className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-sm hover:scale-102 active:scale-98 transition-all flex items-center gap-1.5"
+                                className="button button-sm text-xs font-bold shadow-xs hover:shadow-sm flex items-center gap-1.5"
                               >
                                 <span>{isSolved ? "Retake" : "Solve Challenge"}</span>
                                 <span>→</span>
@@ -819,9 +819,9 @@ export default function ContestArenaPage() {
 
               {/* ================= ARENA LEADERBOARD (4 COLS) ================= */}
               <aside className="lg:col-span-4 space-y-5 sticky top-28">
-                <div className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] space-y-4 shadow-xl">
+                <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] space-y-4 shadow-xs">
                   <div className="flex items-center justify-between border-b border-[var(--border-soft)] pb-3">
-                    <h3 className="text-sm font-black uppercase tracking-wider text-[var(--accent)] flex items-center gap-1.5">
+                    <h3 className="text-sm font-extrabold uppercase tracking-wider text-blue-600 dark:text-blue-400 flex items-center gap-1.5">
                       <span>👑</span> Arena Leaderboard
                     </h3>
                     <span className="text-[10px] text-[var(--muted)] font-mono">Real-time Sync</span>
@@ -871,7 +871,7 @@ export default function ContestArenaPage() {
         {/* ================= TAB 2: WEEKLY SPEED HACKATHON ================= */}
         {activeMainTab === "hackathon" && (
           <div className="space-y-6">
-            <div className="p-8 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-xl relative overflow-hidden">
+            <div className="p-8 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs relative overflow-hidden">
               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div className="space-y-3 max-w-2xl">
                   <div className="flex items-center gap-2">
@@ -925,7 +925,7 @@ export default function ContestArenaPage() {
       {/* ================= INTERACTIVE CHALLENGE / QUIZ SOLVER MODAL ================= */}
       {activeModalChallenge && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md animate-fade-in">
-          <div className="w-full max-w-2xl rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+          <div className="w-full max-w-2xl rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
 
             {/* Modal Header */}
             <div className="p-5 border-b border-[var(--border-soft)] bg-[var(--surface-soft)]/60 flex items-center justify-between shrink-0">

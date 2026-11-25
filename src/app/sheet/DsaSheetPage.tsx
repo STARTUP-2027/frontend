@@ -89,7 +89,7 @@ function VideoModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 backdrop-blur-md animate-fade-in">
-      <div className="relative w-full max-w-4xl rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-2xl space-y-4">
+      <div className="relative w-full max-w-4xl rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-xl space-y-4">
         <div className="flex items-center justify-between border-b border-[var(--border-soft)] pb-3">
           <div className="flex items-center gap-2.5 min-w-0">
             <span className="flex h-3 w-3 rounded-full bg-rose-500 animate-pulse shrink-0" />
@@ -160,7 +160,7 @@ function NotesModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-md animate-fade-in">
-      <div className="relative w-full max-w-lg rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-2xl space-y-4">
+      <div className="relative w-full max-w-lg rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-xl space-y-4">
         <div className="flex items-center justify-between border-b border-[var(--border-soft)] pb-3">
           <div className="min-w-0">
             <h3 className="text-base font-extrabold text-[var(--text)]">Personal Problem Notes</h3>
@@ -444,10 +444,10 @@ export default function DsaSheetPage() {
 
       <main className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         {/* ===================== HERO BANNER ===================== */}
-        <section className="relative p-6 sm:p-10 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-md overflow-hidden">
+        <section className="relative p-6 sm:p-8 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs overflow-hidden">
           <div className="relative z-10 flex flex-col lg:flex-row lg:items-end justify-between gap-6">
             <div className="space-y-3 max-w-2xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-black uppercase tracking-wider">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-bold uppercase tracking-wider">
                 <FlameIcon size={14} /> Pattern-Based DSA Sheet
               </div>
 
@@ -463,25 +463,25 @@ export default function DsaSheetPage() {
 
             {/* Metric Pills */}
             <div className="flex flex-wrap items-center gap-2.5 pb-1">
-              <div className="inline-flex items-center gap-2 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border-soft)] px-4 py-2 text-xs shadow-sm">
+              <div className="inline-flex items-center gap-2 rounded-xl bg-[var(--surface-soft)] border border-[var(--border)] px-3.5 py-1.5 text-xs shadow-xs">
                 <BookOpenIcon size={15} className="text-emerald-500 dark:text-emerald-400" />
                 <span className="font-extrabold text-[var(--text)]">{sheets.length}</span>
                 <span className="text-[var(--muted)]">Sheets</span>
               </div>
 
-              <div className="inline-flex items-center gap-2 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border-soft)] px-4 py-2 text-xs shadow-sm">
+              <div className="inline-flex items-center gap-2 rounded-xl bg-[var(--surface-soft)] border border-[var(--border)] px-3.5 py-1.5 text-xs shadow-xs">
                 <LayersIcon size={15} className="text-blue-500 dark:text-blue-400" />
                 <span className="font-extrabold text-[var(--text)]">50</span>
                 <span className="text-[var(--muted)]">Topics</span>
               </div>
 
-              <div className="inline-flex items-center gap-2 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border-soft)] px-4 py-2 text-xs shadow-sm">
+              <div className="inline-flex items-center gap-2 rounded-xl bg-[var(--surface-soft)] border border-[var(--border)] px-3.5 py-1.5 text-xs shadow-xs">
                 <CodeIcon size={15} className="text-sky-500 dark:text-sky-400" />
                 <span className="font-extrabold text-[var(--text)]">{stats.totalAll}</span>
                 <span className="text-[var(--muted)]">Problems</span>
               </div>
 
-              <div className="inline-flex items-center gap-2 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 px-4 py-2 text-xs shadow-sm">
+              <div className="inline-flex items-center gap-2 rounded-xl bg-emerald-500/10 border border-emerald-500/30 px-3.5 py-1.5 text-xs shadow-xs">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                 <span className="font-extrabold text-emerald-400">
                   {stats.solvedAll}/{stats.totalAll} Solved
@@ -528,24 +528,24 @@ export default function DsaSheetPage() {
               <div
                 key={card.slug}
                 onClick={() => setActiveSheetSlug(card.slug)}
-                className={`cursor-pointer rounded-3xl p-5 transition-all flex flex-col justify-between border ${
+                className={`cursor-pointer rounded-2xl p-5 transition-all flex flex-col justify-between border shadow-xs hover:shadow-md hover:-translate-y-0.5 ${
                   active
-                    ? "bg-emerald-500/[0.08] border-emerald-500/50 shadow-xl shadow-emerald-500/10 ring-2 ring-emerald-500/30"
-                    : "bg-[var(--surface)] border-[var(--border-soft)] hover:border-[var(--border)] hover:bg-[var(--surface-soft)]/50"
+                    ? "bg-emerald-500/[0.07] border-emerald-500 ring-2 ring-emerald-500/20"
+                    : "bg-[var(--surface)] border-[var(--border)] hover:border-emerald-500/40"
                 }`}
               >
                 <div className="flex items-center gap-3.5 mb-3">
                   <div
-                    className={`grid h-10 w-10 shrink-0 place-items-center rounded-2xl text-sm font-black transition-colors ${
+                    className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl text-sm font-extrabold transition-colors ${
                       active
-                        ? "bg-emerald-500 text-black shadow-md shadow-emerald-500/20"
+                        ? "bg-emerald-600 text-white shadow-xs"
                         : "bg-[var(--surface-soft)] text-[var(--muted)] border border-[var(--border)]"
                     }`}
                   >
                     {card.number}
                   </div>
                   <div className="min-w-0">
-                    <h3 className="text-sm sm:text-base font-extrabold text-[var(--text)] truncate">
+                    <h3 className="text-sm sm:text-base font-bold text-[var(--text)] truncate">
                       {card.name}
                     </h3>
                     <p className="text-[11px] text-[var(--muted)] truncate">{card.subtitle}</p>
@@ -557,7 +557,7 @@ export default function DsaSheetPage() {
                     <span>
                       {sheetStat.solved}/{sheetStat.total || card.defaultTotal} solved
                     </span>
-                    <span className={active ? "text-emerald-400" : ""}>{pct}%</span>
+                    <span className={active ? "text-emerald-500 dark:text-emerald-400 font-extrabold" : ""}>{pct}%</span>
                   </div>
                   <div className="h-1.5 w-full bg-[var(--surface-soft)] rounded-full overflow-hidden">
                     <div
@@ -572,7 +572,7 @@ export default function DsaSheetPage() {
         </section>
 
         {/* ===================== ACTIVE SHEET MAIN VIEWPORT ===================== */}
-        <section className="rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] p-5 sm:p-7 space-y-6 shadow-2xl">
+        <section className="rounded-2xl bg-[var(--surface)] border border-[var(--border)] p-5 sm:p-7 space-y-6 shadow-xs">
           {/* Active Sheet Header & Progress */}
           <div className="space-y-2">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
@@ -717,7 +717,7 @@ export default function DsaSheetPage() {
           {/* ===================== TOPICS LIST ===================== */}
           <div className="space-y-6 pt-2">
             {filteredTopics.length === 0 ? (
-              <div className="p-12 text-center rounded-3xl bg-[var(--surface-soft)]/50 border border-[var(--border-soft)] space-y-3">
+              <div className="p-12 text-center rounded-2xl bg-[var(--surface-soft)]/50 border border-[var(--border)] space-y-3 shadow-xs">
                 <div className="w-12 h-12 rounded-full bg-emerald-500/10 text-emerald-400 text-2xl flex items-center justify-center mx-auto">
                   🔍
                 </div>
@@ -743,7 +743,7 @@ export default function DsaSheetPage() {
                 return (
                   <div
                     key={topic.id}
-                    className="rounded-3xl border border-[var(--border-soft)] bg-[var(--surface)] overflow-hidden shadow-lg"
+                    className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] overflow-hidden shadow-xs hover:border-emerald-500/30 transition-all"
                   >
                     {/* Collapsible Topic Header */}
                     <div

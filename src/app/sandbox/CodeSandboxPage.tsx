@@ -1473,7 +1473,7 @@ export default function CodeSandboxPage() {
       {/* SETTINGS MODAL / POPOVER */}
       {isSettingsOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
-          <div className="w-full max-w-md rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-2xl p-6 space-y-5">
+          <div className="w-full max-w-md rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xl p-6 space-y-5">
             <div className="flex items-center justify-between border-b border-[var(--border-soft)] pb-3">
               <div className="flex items-center gap-2">
                 <span className="text-base">⚙️</span>

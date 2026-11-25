@@ -151,40 +151,44 @@ export default function PricingPage() {
                       <Icon name="sparkles" size={13} /> MOST POPULAR
                     </span>
                   )}
-                  <span className="plan-icon">
-                    <Icon name={plan.icon} />
-                  </span>
-                  <h3>{plan.name}</h3>
-                  <p>{plan.copy}</p>
+                  <div>
+                    <span className="plan-icon">
+                      <Icon name={plan.icon} />
+                    </span>
+                    <h3>{plan.name}</h3>
+                    <p>{plan.copy}</p>
 
-                  <div className="price">
-                    {plan.name === "Enterprise" ? (
-                      <b>{plan.customText}</b>
-                    ) : (
-                      <>
-                        <sup>$</sup>
-                        <b>{price}</b>
-                        <span>/ user<br />/ month</span>
-                      </>
-                    )}
+                    <div className="price">
+                      {plan.name === "Enterprise" ? (
+                        <b>{plan.customText}</b>
+                      ) : (
+                        <>
+                          <sup>$</sup>
+                          <b>{price}</b>
+                          <span>/ user<br />/ month</span>
+                        </>
+                      )}
+                    </div>
+
+                    <button
+                      className={plan.popular ? "button" : "price-button"}
+                      onClick={() => navigate("/signup")}
+                    >
+                      {plan.name === "Team & Enterprise" ? "Enroll Engineering Team" : "Start learning free"} <Icon name="arrow" />
+                    </button>
                   </div>
 
-                  <button
-                    className={plan.popular ? "button" : "price-button"}
-                    onClick={() => navigate("/signup")}
-                  >
-                    {plan.name === "Team & Enterprise" ? "Enroll Engineering Team" : "Start learning free"} <Icon name="arrow" />
-                  </button>
-
-                  <small>WHAT’S INCLUDED</small>
-                  <ul>
-                    {plan.features.map((feature) => (
-                      <li key={feature}>
-                        <span><Icon name="check" size={13} /></span>
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="mt-6 pt-6 border-t border-[var(--border-soft)]">
+                    <small className="feature-header">WHAT’S INCLUDED</small>
+                    <ul>
+                      {plan.features.map((feature) => (
+                        <li key={feature}>
+                          <span><Icon name="check" size={13} /></span>
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </article>
               );
             })}

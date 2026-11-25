@@ -372,7 +372,7 @@ export default function AdminCreatorHub() {
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-28 space-y-8">
         {/* Header with Role Badge & Mode Indicator */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-xl relative overflow-hidden">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs relative overflow-hidden">
           <div className="relative z-10">
             <div className="flex items-center gap-3">
               <span className="px-3 py-1 rounded-full text-[11px] font-extrabold tracking-wider bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 uppercase">
@@ -474,7 +474,7 @@ export default function AdminCreatorHub() {
               )}
 
               {/* Step 1: Course Overview & Metadata */}
-              <div className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] space-y-4 shadow-sm">
+              <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] space-y-4 shadow-xs">
                 <div className="flex items-center justify-between">
                   <h3 className="text-sm font-extrabold uppercase tracking-wider text-[var(--accent)] flex items-center gap-2">
                     <span>1️⃣</span> Course Overview & Metadata
@@ -608,7 +608,7 @@ export default function AdminCreatorHub() {
               </div>
 
               {/* Step 2: Thumbnail / Banner Studio */}
-              <div className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] space-y-6 shadow-sm">
+              <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] space-y-6 shadow-xs">
                 <div>
                   <h3 className="text-sm font-extrabold uppercase tracking-wider text-[var(--accent)] flex items-center gap-2">
                     <span>🎨</span> Thumbnail & Banner Customizer Studio
@@ -694,7 +694,7 @@ export default function AdminCreatorHub() {
               </div>
 
               {/* Step 3: Interactive Curriculum & Quiz Builder (Infinite Hierarchy) */}
-              <div className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] space-y-6 shadow-sm">
+              <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] space-y-6 shadow-xs">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[var(--border-soft)] pb-4">
                   <div>
                     <h3 className="text-sm font-extrabold uppercase tracking-wider text-[var(--accent)] flex items-center gap-2">
@@ -903,7 +903,7 @@ export default function AdminCreatorHub() {
                 </div>
 
                 {/* The Mockup Card */}
-                <div className={`p-6 rounded-3xl border shadow-md space-y-4 transition-colors ${
+                <div className={`p-6 rounded-2xl border shadow-xs space-y-4 transition-colors ${
                   previewDarkMode
                     ? "bg-slate-900 text-white border-slate-800"
                     : "bg-white text-gray-900 border-gray-200"
@@ -994,7 +994,7 @@ export default function AdminCreatorHub() {
 
         {/* TAB 2: Manage Catalog Table with Post-Publish Edit Actions */}
         {activeTab === "courses" && (
-          <div className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] space-y-6 shadow-md">
+          <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] space-y-6 shadow-xs">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <div>
                 <h3 className="text-sm font-black uppercase tracking-wider text-[var(--accent)]">
@@ -1091,22 +1091,22 @@ export default function AdminCreatorHub() {
         {activeTab === "analytics" && (
           <div className="space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div className="p-5 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)]">
+              <div className="p-5 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs">
                 <span className="text-[10px] font-bold uppercase text-[var(--muted)]">Total Enrolled Students</span>
                 <p className="text-2xl font-black mt-1">15,080</p>
                 <span className="text-xs text-emerald-500 font-bold">↑ +18% this month</span>
               </div>
-              <div className="p-5 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)]">
+              <div className="p-5 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs">
                 <span className="text-[10px] font-bold uppercase text-[var(--muted)]">Monthly Course Revenue</span>
                 <p className="text-2xl font-black mt-1">$148,920</p>
                 <span className="text-xs text-emerald-500 font-bold">↑ +24% vs last quarter</span>
               </div>
-              <div className="p-5 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)]">
+              <div className="p-5 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs">
                 <span className="text-[10px] font-bold uppercase text-[var(--muted)]">Average Completion Rate</span>
                 <p className="text-2xl font-black mt-1">87.4%</p>
                 <span className="text-xs text-blue-600 dark:text-blue-400 font-bold">Top 5% across EdTech</span>
               </div>
-              <div className="p-5 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)]">
+              <div className="p-5 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs">
                 <span className="text-[10px] font-bold uppercase text-[var(--muted)]">Certificates Verified</span>
                 <p className="text-2xl font-black mt-1">4,320</p>
                 <span className="text-xs text-emerald-600 dark:text-emerald-400 font-bold">Shared to LinkedIn</span>

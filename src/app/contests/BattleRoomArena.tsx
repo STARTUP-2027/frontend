@@ -455,7 +455,7 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
       {arenaState === "lobby" && (
         <div className="space-y-6">
           {/* Top Banner */}
-          <div className="relative p-6 sm:p-8 rounded-3xl bg-[var(--surface)] border border-[var(--border)] shadow-md overflow-hidden text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div className="relative p-6 sm:p-8 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs overflow-hidden text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6">
             <div className="space-y-2 max-w-xl z-10">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 text-[11px] font-bold tracking-wider uppercase">
                 <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
@@ -489,9 +489,9 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
           {/* Lobby Grid: Matchmaking & Join Code */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Box 1: Join with Code / Meeting Link */}
-            <div className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-xl space-y-4">
+            <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold text-lg">
+                <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold text-lg">
                   🔑
                 </div>
                 <div>
@@ -524,9 +524,9 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
             </div>
 
             {/* Box 2: Live Arena Rules & Video Call Specs */}
-            <div className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-xl space-y-4">
+            <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-black text-lg">
+                <div className="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-black text-lg">
                   📹
                 </div>
                 <div>
@@ -558,7 +558,7 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
       {arenaState === "waiting_room" && (
         <div className="space-y-6">
           {/* Header Bar */}
-          <div className="p-5 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-xl flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="p-5 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-4">
               <button
                 onClick={() => setArenaState("lobby")}
@@ -610,7 +610,7 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
             <div className="lg:col-span-7 space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {/* Host / Your Video Feed */}
-                <div className="relative aspect-video rounded-3xl bg-slate-950 border border-[var(--border)] shadow-md overflow-hidden flex flex-col justify-between p-3.5">
+                <div className="relative aspect-video rounded-2xl bg-slate-950 border border-[var(--border)] shadow-xs overflow-hidden flex flex-col justify-between p-3.5">
                   {hasWebcamAccess && isCamActive ? (
                     <video ref={localVideoRef} autoPlay playsInline muted className="absolute inset-0 w-full h-full object-cover" />
                   ) : (
@@ -652,7 +652,7 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
                 </div>
 
                 {/* Opponent Video Feed */}
-                <div className="relative aspect-video rounded-3xl bg-slate-950 border border-[var(--border-soft)] shadow-md overflow-hidden flex flex-col justify-between p-3.5">
+                <div className="relative aspect-video rounded-2xl bg-slate-950 border border-[var(--border)] shadow-xs overflow-hidden flex flex-col justify-between p-3.5">
                   {opponent ? (
                     <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-900">
                       <div className="w-16 h-16 rounded-full bg-slate-700 border-2 border-slate-500 flex items-center justify-center text-xl font-bold text-white shadow-md">
@@ -743,7 +743,7 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
             {/* Right: Room Host Rules & In-Room Chat (5 cols) */}
             <div className="lg:col-span-5 space-y-4">
               {/* Rules Configuration */}
-              <div className="p-5 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-xl space-y-3.5">
+              <div className="p-5 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs space-y-3.5">
                 <h3 className="text-xs font-black uppercase tracking-wider text-[var(--accent)] flex items-center gap-1.5">
                   <span>⚙️</span> Match Rules & Challenge Topic
                 </h3>
@@ -793,7 +793,7 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
               </div>
 
               {/* Lobby Chat */}
-              <div className="p-5 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-xl flex flex-col h-64 justify-between">
+              <div className="p-5 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs flex flex-col h-64 justify-between">
                 <h4 className="text-xs font-black uppercase tracking-wider text-[var(--muted)] pb-2 border-b border-[var(--border-soft)] flex items-center justify-between">
                   <span>💬 Lobby Chat</span>
                   <span className="text-[10px] text-emerald-400">● 2 Connected</span>
@@ -842,7 +842,7 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
       {arenaState === "battle" && (
         <div className="space-y-4">
           {/* Battle Header Bar with Dual Video PiP & Live Timer */}
-          <div className="p-4 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-md flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="p-4 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs flex flex-col md:flex-row items-center justify-between gap-4">
             {/* Left: Challenge Title & Track */}
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold">
@@ -1030,7 +1030,7 @@ export default function BattleRoomArena({ initialRoomCode, onExit }: BattleRoomP
 
       {/* ================= 4. POST-MATCH VICTORY & SUMMARY MODAL ================= */}
       {arenaState === "result" && battleResult && (
-        <div className="p-6 sm:p-8 rounded-3xl bg-[var(--surface)] border border-[var(--border)] shadow-xl text-center space-y-6 max-w-xl mx-auto">
+        <div className="p-6 sm:p-8 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xl text-center space-y-6 max-w-xl mx-auto">
           <div className="text-5xl animate-bounce">
             {battleResult.winner === "you" ? "🏆" : battleResult.winner === "opponent" ? "🥈" : "🤝"}
           </div>

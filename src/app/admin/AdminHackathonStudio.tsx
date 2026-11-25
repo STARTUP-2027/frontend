@@ -253,7 +253,7 @@ export default function AdminHackathonStudio() {
       )}
 
       {/* Header Bar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-xl">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <span className="px-3 py-0.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 text-[10px] font-bold uppercase">
@@ -306,7 +306,7 @@ export default function AdminHackathonStudio() {
       {activeTab === "problems" && (
         <div className="space-y-6">
           {currentHackathon.problems.map((prob, pIdx) => (
-            <div key={prob.id} className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-xl space-y-5">
+            <div key={prob.id} className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs space-y-5">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[var(--border-soft)] pb-4">
                 <div className="flex items-center gap-2.5">
                   <span className="w-8 h-8 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold text-xs flex items-center justify-center">
@@ -442,7 +442,7 @@ export default function AdminHackathonStudio() {
       {/* TAB 2: OVERVIEW & PRIZE POOL */}
       {activeTab === "overview" && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-xl space-y-4 text-xs">
+          <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs space-y-4 text-xs">
             <h3 className="text-sm font-black uppercase text-[var(--accent)] flex items-center gap-2">
               <span>📅</span> Timeline & Phases
             </h3>
@@ -465,7 +465,7 @@ export default function AdminHackathonStudio() {
             </div>
           </div>
 
-          <div className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-xl space-y-4 text-xs">
+          <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs space-y-4 text-xs">
             <h3 className="text-sm font-black uppercase text-amber-400 flex items-center gap-2">
               <span>🏆</span> Prize Pool Breakdown (${currentHackathon.prizePool.toLocaleString()})
             </h3>
@@ -483,7 +483,7 @@ export default function AdminHackathonStudio() {
 
       {/* TAB 3: RUBRIC */}
       {activeTab === "rubric" && (
-        <div className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-xl space-y-4 text-xs">
+        <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs space-y-4 text-xs">
           <h3 className="text-sm font-black uppercase text-[var(--accent)] flex items-center gap-2">
             <span>⚖️</span> Evaluation Rubric Weights
           </h3>
@@ -516,7 +516,7 @@ export default function AdminHackathonStudio() {
 
       {/* TAB 4: SUBMISSIONS */}
       {activeTab === "submissions" && (
-        <div className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-xl space-y-4 text-xs">
+        <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs space-y-4 text-xs">
           <div className="flex items-center justify-between border-b border-[var(--border-soft)] pb-3">
             <h3 className="text-sm font-black uppercase text-[var(--accent)] flex items-center gap-2">
               <span>📥</span> Registered Teams & Live Submissions

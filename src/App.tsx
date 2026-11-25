@@ -298,7 +298,7 @@ export function SiteNav() {
     <header className="nav-wrap">
       <nav className="nav">
         <Link to="/" aria-label="Astra Academy home"><Logo /></Link>
-        
+
         {/* Navigation Links */}
         <div className={`nav-links ${menuOpen ? "open" : ""}`}>
           {!isLoggedIn ? (
@@ -480,7 +480,7 @@ export function SiteFooter() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-10 pb-10 space-y-8 relative z-10">
         {/* Top Tier: Live Metrics Banner & Newsletter */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 p-8 rounded-3xl bg-[var(--surface)]/70 border border-[var(--border-soft)] backdrop-blur-md shadow-xl">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 p-6 sm:p-8 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs">
           {/* Brand & Live Platform Status */}
           <div className="lg:col-span-6 space-y-4">
             <Link to="/" aria-label="Astra Academy home"><Logo /></Link>
@@ -758,16 +758,16 @@ export default function App() {
         {/* Featured Masterclasses Grid */}
         <section className="section features" id="features">
           <SectionHeader eyebrow="Curated Masterclasses" title={<>Built by industry leaders. <span className="gradient-text">Mastered by you.</span></>} copy="Every course is packed with architectural diagrams, production-grade projects, and portfolio-ready capstones." />
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-4 max-w-7xl mx-auto">
             {courses.slice(0, 4).map((c) => (
               <article
                 key={c.id}
-                className="group relative rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] hover:border-[var(--accent)] shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col justify-between overflow-hidden text-left h-full"
+                className="group relative rounded-2xl bg-[var(--surface)] border border-[var(--border)] hover:border-blue-500/50 shadow-xs hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden text-left h-full"
               >
                 <div>
                   {/* Standardized Course Image Thumbnail */}
-                  <div className="relative h-40 w-full overflow-hidden bg-[var(--surface-soft)]">
+                  <div className="relative h-44 w-full overflow-hidden bg-[var(--surface-soft)] shrink-0">
                     {c.thumbnailUrl ? (
                       <img
                         src={c.thumbnailUrl}
@@ -781,32 +781,32 @@ export default function App() {
                         style={{ background: c.bannerGradient || "linear-gradient(135deg, #1e293b 0%, #334155 100%)" }}
                       />
                     )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/35 pointer-events-none" />
-                    
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30 pointer-events-none" />
+
                     <div className="relative z-10 p-3 flex items-center justify-between">
-                      <span className="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-black/60 text-white backdrop-blur-md border border-white/20">
+                      <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-slate-900/80 text-white backdrop-blur-md border border-white/10 shadow-sm">
                         {c.categoryLabel}
                       </span>
                       {c.bestseller && (
-                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-amber-400 text-black shadow-md">
+                        <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-amber-400 text-slate-950 shadow-sm flex items-center gap-1">
                           ★ BESTSELLER
                         </span>
                       )}
                     </div>
 
-                    <div className="absolute bottom-2.5 left-3 right-3 z-10 flex items-center justify-between text-white text-[10px]">
-                      <span className="bg-black/60 backdrop-blur-md px-2 py-0.5 rounded-md font-mono text-white/90">
+                    <div className="absolute bottom-2.5 left-3 right-3 z-10 flex items-center justify-between text-white text-[11px]">
+                      <span className="bg-slate-900/80 backdrop-blur-md px-2 py-0.5 rounded-md font-mono text-white/90 border border-white/10">
                         ⏱ {c.duration}
                       </span>
-                      <span className="text-amber-300 bg-black/60 backdrop-blur-md px-2 py-0.5 rounded-md font-bold">
+                      <span className="text-amber-300 bg-slate-900/80 backdrop-blur-md px-2 py-0.5 rounded-md font-bold border border-white/10 flex items-center gap-1">
                         ★ {c.rating}
                       </span>
                     </div>
                   </div>
 
                   {/* Body Content */}
-                  <div className="p-4 space-y-2.5">
-                    <div className="flex items-center justify-between text-[10px] text-[var(--muted)] font-semibold">
+                  <div className="p-4 sm:p-5 space-y-3">
+                    <div className="flex items-center justify-between text-[11px] text-[var(--muted)] font-semibold">
                       <span className="flex items-center gap-1.5">
                         <span className="w-2 h-2 rounded-full bg-blue-500 inline-block" />
                         {c.level}
@@ -814,24 +814,24 @@ export default function App() {
                       <span>{c.studentsCount.toLocaleString()} enrolled</span>
                     </div>
 
-                    <h3 className="text-sm font-extrabold text-[var(--text)] group-hover:text-[var(--accent)] transition-colors line-clamp-1 leading-snug">
+                    <h3 className="text-sm font-bold text-[var(--text)] group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-1 leading-snug">
                       {c.title}
                     </h3>
                     <p className="text-xs text-[var(--muted)] line-clamp-2 leading-relaxed min-h-[2.5rem]">
                       {c.tagline}
                     </p>
 
-                    <div className="flex flex-wrap gap-1 pt-1 min-h-[1.75rem]">
+                    <div className="flex flex-wrap gap-1.5 pt-1 min-h-[1.75rem]">
                       {c.skills.slice(0, 2).map((skill) => (
                         <span
                           key={skill}
-                          className="px-2 py-0.5 rounded-md bg-[var(--surface-soft)] border border-[var(--border-soft)] text-[9px] font-medium text-[var(--text)]"
+                          className="px-2 py-0.5 rounded-md bg-[var(--surface-soft)] border border-[var(--border-soft)] text-[10px] font-medium text-[var(--text)]"
                         >
                           {skill}
                         </span>
                       ))}
                       {c.skills.length > 2 && (
-                        <span className="text-[9px] text-[var(--muted)] self-center font-semibold">
+                        <span className="text-[10px] text-[var(--muted)] self-center font-semibold">
                           +{c.skills.length - 2}
                         </span>
                       )}
@@ -840,19 +840,19 @@ export default function App() {
                 </div>
 
                 {/* Footer Action */}
-                <div className="p-4 pt-2.5 border-t border-[var(--border-soft)] bg-[var(--surface-soft)]/30 flex items-center justify-between gap-2 mt-auto">
+                <div className="p-4 sm:p-5 pt-3 border-t border-[var(--border-soft)] bg-[var(--surface-soft)]/40 flex items-center justify-between gap-2 mt-auto">
                   <div className="flex items-center gap-2 min-w-0">
-                    <div className="w-6 h-6 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold text-[9px] flex items-center justify-center shrink-0">
+                    <div className="w-7 h-7 rounded-full bg-blue-600/10 text-blue-600 dark:text-blue-400 font-bold text-[10px] flex items-center justify-center shrink-0 border border-blue-500/20">
                       {c.instructor.avatar}
                     </div>
-                    <span className="text-[11px] font-semibold text-[var(--text)] truncate max-w-[80px]">
+                    <span className="text-xs font-semibold text-[var(--text)] truncate max-w-[90px]">
                       {c.instructor.name}
                     </span>
                   </div>
 
                   <button
                     onClick={() => navigate(`/learn/${c.id}`)}
-                    className="button button-sm text-[11px] py-1 px-3 font-bold shrink-0"
+                    className="button button-sm text-xs py-1.5 px-3.5 font-bold shrink-0 shadow-xs hover:shadow-sm"
                   >
                     Start Learning →
                   </button>
@@ -996,15 +996,34 @@ export default function App() {
           <div className="pricing-grid">
             {pricing.map((plan) => {
               const price = annual ? Math.round(plan.monthly * 0.8) : plan.monthly;
-              return <article className={`price-card ${plan.popular ? "popular" : ""}`} key={plan.name}>
-                {plan.popular && <span className="popular-tag"><Icon name="sparkles" size={13} /> MOST POPULAR</span>}
-                <span className="plan-icon"><Icon name={plan.name === "Starter Pass" ? "bolt" : plan.name === "Pro All-Access" ? "sparkles" : "globe"} /></span>
-                <h3>{plan.name}</h3><p>{plan.copy}</p>
-                <div className="price"><sup>$</sup><b>{price}</b><span>/ month<br />billed {annual ? "annually" : "monthly"}</span></div>
-                <button className={plan.popular ? "button" : "price-button"} onClick={() => navigate("/signup")}>Start Learning <Icon name="arrow" /></button>
-                <small>WHAT’S INCLUDED</small>
-                <ul>{plan.features.map((feature) => <li key={feature}><span><Icon name="check" size={13} /></span>{feature}</li>)}</ul>
-              </article>;
+              return (
+                <article className={`price-card ${plan.popular ? "popular" : ""}`} key={plan.name}>
+                  {plan.popular && <span className="popular-tag"><Icon name="sparkles" size={13} /> MOST POPULAR</span>}
+                  <div>
+                    <span className="plan-icon"><Icon name={plan.name === "Starter Pass" ? "bolt" : plan.name === "Pro All-Access" ? "sparkles" : "globe"} /></span>
+                    <h3>{plan.name}</h3>
+                    <p>{plan.copy}</p>
+                    <div className="price">
+                      <sup>$</sup><b>{price}</b>
+                      <span>/ month<br />billed {annual ? "annually" : "monthly"}</span>
+                    </div>
+                    <button className={plan.popular ? "button" : "price-button"} onClick={() => navigate("/signup")}>
+                      Start Learning <Icon name="arrow" />
+                    </button>
+                  </div>
+                  <div className="mt-6 pt-6 border-t border-[var(--border-soft)]">
+                    <small className="feature-header">WHAT’S INCLUDED</small>
+                    <ul>
+                      {plan.features.map((feature) => (
+                        <li key={feature}>
+                          <span><Icon name="check" size={13} /></span>
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </article>
+              );
             })}
           </div>
         </section>
