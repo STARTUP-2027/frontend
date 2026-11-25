@@ -178,9 +178,10 @@ const INITIAL_COURSES: Course[] = [
     studentsCount: 3840,
     rating: 4.95,
     reviewsCount: 720,
-    price: 89,
+    price: 0,
     featured: true,
     bestseller: true,
+    thumbnailUrl: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80",
     bannerGradient: "linear-gradient(135deg, #7c3aed 0%, #4338ca 100%)",
     instructor: {
       name: "Dr. Aris Vance",
@@ -377,8 +378,9 @@ console.log("Schema compiled. Ready for strict OpenAI Function Calling!");`
     studentsCount: 5120,
     rating: 4.92,
     reviewsCount: 980,
-    price: 79,
+    price: 0,
     featured: true,
+    thumbnailUrl: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80",
     bannerGradient: "linear-gradient(135deg, #0284c7 0%, #0369a1 100%)",
     instructor: {
       name: "Jordan Bell",
@@ -482,7 +484,8 @@ export function LikeButton({ likes, onLike }: { likes: number; onLike: () => Pro
     studentsCount: 2940,
     rating: 4.97,
     reviewsCount: 510,
-    price: 99,
+    price: 0,
+    thumbnailUrl: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80",
     bannerGradient: "linear-gradient(135deg, #10b981 0%, #047857 100%)",
     instructor: {
       name: "Marcus Sterling",
@@ -546,7 +549,8 @@ println!("{}", process_security_event("EVT-9042", 0.94));`
     studentsCount: 3180,
     rating: 4.89,
     reviewsCount: 440,
-    price: 69,
+    price: 0,
+    thumbnailUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80",
     bannerGradient: "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)",
     instructor: {
       name: "Elena Rostova",
@@ -601,6 +605,7 @@ resource "aws_eks_cluster" "primary" {
     reviewsCount: 1120,
     price: 0, // Free course
     featured: true,
+    thumbnailUrl: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=800&q=80",
     bannerGradient: "linear-gradient(135deg, #06b6d4 0%, #0284c7 100%)",
     instructor: {
       name: "Sophia Zhang",
@@ -642,8 +647,9 @@ resource "aws_eks_cluster" "primary" {
     studentsCount: 4210,
     rating: 4.86,
     reviewsCount: 650,
-    price: 49,
+    price: 0,
     bestseller: true,
+    thumbnailUrl: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80",
     bannerGradient: "linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%)",
     instructor: {
       name: "Liam O'Connor",
@@ -685,8 +691,9 @@ resource "aws_eks_cluster" "primary" {
     studentsCount: 2150,
     rating: 4.96,
     reviewsCount: 390,
-    price: 119,
+    price: 0,
     featured: true,
+    thumbnailUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=80",
     bannerGradient: "linear-gradient(135deg, #6366f1 0%, #4338ca 100%)",
     instructor: {
       name: "Kaito Takahashi",
@@ -728,7 +735,8 @@ resource "aws_eks_cluster" "primary" {
     studentsCount: 1890,
     rating: 4.81,
     reviewsCount: 280,
-    price: 89,
+    price: 0,
+    thumbnailUrl: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=800&q=80",
     bannerGradient: "linear-gradient(135deg, #14b8a6 0%, #0f766e 100%)",
     instructor: {
       name: "Dr. Maya Patel",
@@ -770,7 +778,8 @@ resource "aws_eks_cluster" "primary" {
     studentsCount: 1740,
     rating: 4.93,
     reviewsCount: 310,
-    price: 95,
+    price: 0,
+    thumbnailUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
     bannerGradient: "linear-gradient(135deg, #f97316 0%, #c2410c 100%)",
     instructor: {
       name: "Marcus Brody",
@@ -807,21 +816,27 @@ export function CourseProvider({ children }: { children: ReactNode }) {
   
   const [courses, setCourses] = useState<Course[]>(() => {
     const saved = localStorage.getItem("astra_courses_db");
+    const initialMap = new Map(INITIAL_COURSES.map(c => [c.id, c]));
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length >= INITIAL_COURSES.length) {
-          return parsed;
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          const existingIds = new Set(parsed.map((c: Course) => c.id));
+          const merged = parsed.map((c: Course) => {
+            const init = initialMap.get(c.id);
+            return {
+              ...c,
+              price: 0,
+              thumbnailUrl: c.thumbnailUrl || init?.thumbnailUrl || "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=800&q=80",
+            };
+          });
+          INITIAL_COURSES.forEach((c) => {
+            if (!existingIds.has(c.id)) {
+              merged.push(c);
+            }
+          });
+          return merged;
         }
-        // Merge missing initial courses with any user-created courses
-        const existingIds = new Set(parsed.map((c: Course) => c.id));
-        const merged = [...parsed];
-        INITIAL_COURSES.forEach((c) => {
-          if (!existingIds.has(c.id)) {
-            merged.push(c);
-          }
-        });
-        return merged;
       } catch {
         return INITIAL_COURSES;
       }

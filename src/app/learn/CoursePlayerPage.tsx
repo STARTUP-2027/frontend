@@ -57,7 +57,6 @@ export default function CoursePlayerPage() {
   useEffect(() => {
     if (activeItem) {
       if (activeItem.type === "quiz") setActiveContentTab("quiz");
-      else if (activeItem.type === "lab") setActiveContentTab("lab");
       else if (activeItem.type === "reading") setActiveContentTab("reading");
       else setActiveContentTab("video");
     }

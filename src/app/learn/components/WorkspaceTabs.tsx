@@ -62,7 +62,6 @@ export default function WorkspaceTabs({
       badge: activeItem.timestamps?.length ? `${activeItem.timestamps.length} Ch` : undefined,
     },
     { id: "reading", label: "📄 Cisco Theory & Interactive Reading" },
-    { id: "lab", label: "🔬 Hands-on CLI & Sandbox Lab" },
     {
       id: "quiz",
       label: `🧠 Assessments (${activeItem.quizzes?.length || 1})`,
@@ -103,18 +102,6 @@ export default function WorkspaceTabs({
       {/* Tab Panels */}
       {activeTab === "video" && <VideoTab item={activeItem} />}
       {activeTab === "reading" && <ReadingTab item={activeItem} />}
-      {activeTab === "lab" && (
-        <LabTab
-          item={activeItem}
-          userCode={userCode}
-          setUserCode={setUserCode}
-          codeOutput={codeOutput}
-          isRunningCode={isRunningCode}
-          labPassed={labPassed}
-          onRunLabCode={onRunLabCode}
-          onResetStarter={onResetStarter}
-        />
-      )}
       {activeTab === "quiz" && <QuizTab item={activeItem} />}
       {activeTab === "flashcards" && <FlashcardsTab item={activeItem} />}
       {activeTab === "resources" && <ResourcesTab item={activeItem} />}

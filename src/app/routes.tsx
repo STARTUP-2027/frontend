@@ -7,7 +7,7 @@ import StudentDashboardPage from "./dashboard/StudentDashboardPage";
 import AdminCreatorHub from "./admin/AdminCreatorHub";
 import CoursePlayerPage from "./learn/CoursePlayerPage";
 import ContestArenaPage from "./contests/ContestArenaPage";
-import CodeSandboxPage from "./sandbox/CodeSandboxPage";
+import DsaSheetPage from "./sheet/DsaSheetPage";
 import CertificateVerifyPage from "./verify/CertificateVerifyPage";
 import StudentNotesHubPage from "./notes/StudentNotesHubPage";
 
@@ -20,7 +20,10 @@ export const router = createBrowserRouter([
   { path: "/notes", Component: StudentNotesHubPage },
   { path: "/contests", Component: ContestArenaPage },
   { path: "/playground", Component: ContestArenaPage },
-  { path: "/sandbox", Component: CodeSandboxPage },
+  { path: "/dsa-sheet", Component: DsaSheetPage },
+  { path: "/sheet", Component: DsaSheetPage },
+  { path: "/sheets", Component: DsaSheetPage },
+  { path: "/sandbox", Component: DsaSheetPage },
   { path: "/verify", Component: CertificateVerifyPage },
   { path: "/verify/:credentialId", Component: CertificateVerifyPage },
   { path: "/admin", Component: AdminCreatorHub },

@@ -268,14 +268,14 @@ const domainShowcaseData: Record<
 };
 
 const testimonials = [
-  { quote: "Astra Academy is the gold standard for engineering masterclasses. The live sandbox exercises and RAG architecture modules helped our team build production agents in 2 weeks.", name: "Aris Vance", role: "Staff AI Researcher at Anthropic Alumni", initials: "AV", company: "ANTHROPIC" },
+  { quote: "Astra Academy is the gold standard for engineering masterclasses. The hands-on capstone projects and RAG architecture modules helped our team build production agents in 2 weeks.", name: "Aris Vance", role: "Staff AI Researcher at Anthropic Alumni", initials: "AV", company: "ANTHROPIC" },
   { quote: "The hands-on curriculum is miles ahead of generic video courses. I went from junior full-stack to leading systems architecture within 9 months.", name: "Jordan Bell", role: "Principal Engineer at Arc Cloud", initials: "JB", company: "ARC SYSTEMS" },
   { quote: "We upskilled our entire backend team on Rust and Zero-Trust networks. The visual course creation studio also lets our senior staff publish internal masterclasses easily.", name: "Priya Shah", role: "VP Engineering at Northstar", initials: "PS", company: "NORTHSTAR" },
 ];
 
 const pricing = [
-  { name: "Starter Pass", copy: "For self-paced developers starting their tech journey.", monthly: 19, features: ["Access to 10 foundational courses", "Interactive in-browser code sandboxes", "Community Discord access", "Course completion certificates"] },
-  { name: "Pro All-Access", copy: "For ambitious engineers advancing to Senior/Staff roles.", monthly: 49, popular: true, features: ["Unlimited access to all 50+ masterclasses", "Advanced AI & Rust projects", "Verified industry certificates", "Direct mentor feedback & office hours", "Private GitHub starter repositories"] },
+  { name: "Starter Pass", copy: "For self-paced developers starting their tech journey.", monthly: 19, features: ["Access to 10 foundational courses", "Curated Pattern-Wise DSA Sheets", "Community Discord access", "Course completion certificates"] },
+  { name: "Pro All-Access", copy: "For ambitious engineers advancing to Senior/Staff roles.", monthly: 49, popular: true, features: ["Unlimited access to all 50+ masterclasses", "Full 380+ DSA problem solutions", "Verified industry certificates", "Direct mentor feedback & office hours", "Private GitHub starter repositories"] },
   { name: "Team & Enterprise", copy: "For engineering orgs scaling technical excellence.", monthly: 99, features: ["Everything in Pro All-Access", "Custom internal Course Creator Studio", "Team skill analytics & progress reports", "SSO & corporate billing", "Dedicated curriculum advisor"] },
 ];
 
@@ -330,42 +330,42 @@ export function SiteNav() {
                 <div className="mega-menu solutions-menu">
                   <div className="mega-main">
                     <span className="mega-label">Hands-on Practice</span>
+                    <Link to="/dsa-sheet"><i><Icon name="layers" /></i><span><b>DSA Problem Sheets</b><small>Pattern-wise, Last Minute 100 & SBC Sheet</small></span></Link>
                     <Link to="/contests"><i><Icon name="bolt" /></i><span><b>Contest Arena & Daily Quizzes</b><small>Timed challenges & 1v1 Battle Mode</small></span></Link>
-                    <Link to="/sandbox"><i><Icon name="code" /></i><span><b>Code Sandbox</b><small>Multi-lang compiler (TS, Python, Rust, SQL, Go)</small></span></Link>
                     <Link to="/verify"><i><Icon name="check" /></i><span><b>Credential Verification</b><small>Public verified certificates & LinkedIn badge</small></span></Link>
                     <Link to="/courses"><i><Icon name="chart" /></i><span><b>Full Catalog</b><small>All 50+ interactive courses</small></span></Link>
                   </div>
                   <div className="mega-links">
                     <span className="mega-label">Highlights</span>
+                    <Link to="/dsa-sheet">Pattern-Wise DSA Sheet <Icon name="arrow" size={14} /></Link>
                     <Link to="/contests">Weekly Speed Hackathon <Icon name="arrow" size={14} /></Link>
-                    <Link to="/sandbox">Cloud Code Runner <Icon name="arrow" size={14} /></Link>
                     <Link to="/pricing">All-Access Pass <Icon name="arrow" size={14} /></Link>
                   </div>
                 </div>
               </div>
 
               <Link to="/courses">Courses</Link>
+              <Link to="/dsa-sheet" className="flex items-center gap-1 font-semibold text-[var(--accent)]">
+                <span>🧠</span> DSA Sheet
+              </Link>
               <Link to="/contests" className="flex items-center gap-1">
                 <span>⚡</span> Arena
-              </Link>
-              <Link to="/sandbox" className="flex items-center gap-1">
-                <span>💻</span> Sandbox
               </Link>
               <Link to="/pricing">Pricing</Link>
             </>
           ) : user?.role === "admin" ? (
             <>
               <Link to="/admin" className="font-bold text-[var(--accent)]">🛠️ Creator Studio</Link>
+              <Link to="/dsa-sheet" className="flex items-center gap-1 font-semibold"><span>🧠</span> DSA Sheet</Link>
               <Link to="/contests">⚡ Arena</Link>
-              <Link to="/sandbox">💻 Sandbox</Link>
               <Link to="/courses">Catalog</Link>
               <Link to="/dashboard">Student View</Link>
             </>
           ) : (
             <>
               <Link to="/dashboard" className="font-bold text-[var(--accent)]">🎓 My Learning</Link>
+              <Link to="/dsa-sheet" className="flex items-center gap-1 font-semibold text-[var(--accent)]"><span>🧠</span> DSA Sheet</Link>
               <Link to="/contests">⚡ Arena</Link>
-              <Link to="/sandbox">💻 Sandbox</Link>
               <Link to="/notes">📑 Notes</Link>
               <Link to="/courses">Catalog</Link>
             </>
@@ -413,8 +413,8 @@ export function SiteNav() {
                   <Link to="/contests" onClick={() => setProfileOpen(false)} className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold">
                     <span>⚡</span> Contest Arena & Quizzes
                   </Link>
-                  <Link to="/sandbox" onClick={() => setProfileOpen(false)} className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold">
-                    <span>💻</span> Code Sandbox
+                  <Link to="/dsa-sheet" onClick={() => setProfileOpen(false)} className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold">
+                    <span>🧠</span> DSA Problem Sheets
                   </Link>
                   <Link to="/verify" onClick={() => setProfileOpen(false)} className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold">
                     <span>🏆</span> Verified Credentials
@@ -560,7 +560,7 @@ export function SiteFooter() {
             <ul className="space-y-2 text-[var(--muted)]">
               <li><Link to="/contests" className="hover:text-[var(--text)] transition-colors flex items-center gap-1.5"><span>⚡</span> Contest Arena</Link></li>
               <li><Link to="/contests" className="hover:text-[var(--text)] transition-colors flex items-center gap-1.5"><span>⚔️</span> 1v1 Battle Duels</Link></li>
-              <li><Link to="/sandbox" className="hover:text-[var(--text)] transition-colors flex items-center gap-1.5"><span>💻</span> Code Sandbox (5 Langs)</Link></li>
+              <li><Link to="/dsa-sheet" className="hover:text-[var(--text)] transition-colors flex items-center gap-1.5"><span>🧠</span> DSA Sheets (Pattern-Wise & SBC)</Link></li>
               <li><Link to="/notes" className="hover:text-[var(--text)] transition-colors flex items-center gap-1.5"><span>📑</span> Notes & Flashcards</Link></li>
               <li><Link to="/verify" className="hover:text-[var(--text)] transition-colors flex items-center gap-1.5"><span>🏆</span> Credential Hub</Link></li>
             </ul>
@@ -718,12 +718,12 @@ export default function App() {
           <div className="hero-copy">
             <Pill><span className="live-dot" /> Master Autonomous AI & Engineering <Icon name="arrow" size={14} /></Pill>
             <h1>Master in-demand tech skills <span>through interactive building.</span></h1>
-            <p>Astra Academy combines project-based masterclasses with live in-browser code sandboxes, autonomous agent pipelines, and verified certifications.</p>
+            <p>Astra Academy combines project-based masterclasses with curated pattern-wise DSA sheets, autonomous agent pipelines, and verified certifications.</p>
             <div className="hero-actions">
               <button className="button button-lg" onClick={() => navigate("/signup")}>Start Learning Free <Icon name="arrow" /></button>
               <button className="button-secondary button-lg" onClick={() => navigate("/courses")}><span className="play"><Icon name="play" size={15} /></span> Explore 50+ Courses</button>
             </div>
-            <div className="micro-proof"><span><Icon name="check" size={14} /> Free Starter Courses</span><span><Icon name="check" size={14} /> Interactive Sandboxes</span><span><Icon name="check" size={14} /> Verified Certificates</span></div>
+            <div className="micro-proof"><span><Icon name="check" size={14} /> Free Starter Courses</span><span><Icon name="check" size={14} /> Pattern-Wise DSA Sheet</span><span><Icon name="check" size={14} /> Verified Certificates</span></div>
           </div>
 
           {/* Interactive Classroom Hero Sandbox Preview */}
@@ -757,57 +757,71 @@ export default function App() {
 
         {/* Featured Masterclasses Grid */}
         <section className="section features" id="features">
-          <SectionHeader eyebrow="Curated Masterclasses" title={<>Built by industry leaders. <span className="gradient-text">Mastered by you.</span></>} copy="Every course is packed with architectural diagrams, interactive code sandboxes, and portfolio-ready capstones." />
+          <SectionHeader eyebrow="Curated Masterclasses" title={<>Built by industry leaders. <span className="gradient-text">Mastered by you.</span></>} copy="Every course is packed with architectural diagrams, production-grade projects, and portfolio-ready capstones." />
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-4 max-w-7xl mx-auto">
             {courses.slice(0, 4).map((c) => (
               <article
                 key={c.id}
-                className="group relative rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] hover:border-[var(--accent)] shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col justify-between overflow-hidden text-left"
+                className="group relative rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] hover:border-[var(--accent)] shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col justify-between overflow-hidden text-left h-full"
               >
                 <div>
-                  {/* Top Gradient Banner */}
-                  <div
-                    className="relative h-32 p-3.5 flex flex-col justify-between text-white overflow-hidden"
-                    style={{ background: c.bannerGradient || "linear-gradient(135deg, #7c3aed 0%, #4338ca 100%)" }}
-                  >
-                    <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:12px_12px] pointer-events-none" />
+                  {/* Standardized Course Image Thumbnail */}
+                  <div className="relative h-40 w-full overflow-hidden bg-[var(--surface-soft)]">
+                    {c.thumbnailUrl ? (
+                      <img
+                        src={c.thumbnailUrl}
+                        alt={c.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div
+                        className="w-full h-full"
+                        style={{ background: c.bannerGradient || "linear-gradient(135deg, #7c3aed 0%, #4338ca 100%)" }}
+                      />
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/35 pointer-events-none" />
                     
-                    <div className="relative z-10 flex items-center justify-between">
-                      <span className="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-black/40 backdrop-blur-md border border-white/20">
+                    <div className="relative z-10 p-3 flex items-center justify-between">
+                      <span className="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-black/60 text-white backdrop-blur-md border border-white/20">
                         {c.categoryLabel}
                       </span>
                       {c.bestseller && (
-                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-amber-400 text-black">
+                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-amber-400 text-black shadow-md">
                           ★ BESTSELLER
                         </span>
                       )}
                     </div>
 
-                    <div className="relative z-10 flex items-end justify-between">
-                      <span className="text-lg font-black">{c.price === 0 ? "FREE" : `$${c.price}`}</span>
-                      <span className="text-[10px] text-white/80 font-mono">⏱ {c.duration}</span>
+                    <div className="absolute bottom-2.5 left-3 right-3 z-10 flex items-center justify-between text-white text-[10px]">
+                      <span className="bg-black/60 backdrop-blur-md px-2 py-0.5 rounded-md font-mono text-white/90">
+                        ⏱ {c.duration}
+                      </span>
+                      <span className="text-amber-300 bg-black/60 backdrop-blur-md px-2 py-0.5 rounded-md font-bold">
+                        ★ {c.rating}
+                      </span>
                     </div>
                   </div>
 
                   {/* Body Content */}
-                  <div className="p-4 space-y-3">
+                  <div className="p-4 space-y-2.5">
                     <div className="flex items-center justify-between text-[10px] text-[var(--muted)] font-semibold">
-                      <span className="flex items-center gap-1">
-                        <span className="w-1.5 h-1.5 rounded-full bg-purple-400 inline-block" />
+                      <span className="flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full bg-purple-400 inline-block" />
                         {c.level}
                       </span>
-                      <span className="text-amber-400 font-bold">★ {c.rating}</span>
+                      <span>{c.studentsCount.toLocaleString()} enrolled</span>
                     </div>
 
                     <h3 className="text-sm font-extrabold text-[var(--text)] group-hover:text-[var(--accent)] transition-colors line-clamp-1 leading-snug">
                       {c.title}
                     </h3>
-                    <p className="text-xs text-[var(--muted)] line-clamp-2 leading-relaxed">
+                    <p className="text-xs text-[var(--muted)] line-clamp-2 leading-relaxed min-h-[2.5rem]">
                       {c.tagline}
                     </p>
 
-                    <div className="flex flex-wrap gap-1 pt-1">
+                    <div className="flex flex-wrap gap-1 pt-1 min-h-[1.75rem]">
                       {c.skills.slice(0, 2).map((skill) => (
                         <span
                           key={skill}
@@ -826,7 +840,7 @@ export default function App() {
                 </div>
 
                 {/* Footer Action */}
-                <div className="p-4 pt-2.5 border-t border-[var(--border-soft)] bg-[var(--surface-soft)]/30 flex items-center justify-between gap-2">
+                <div className="p-4 pt-2.5 border-t border-[var(--border-soft)] bg-[var(--surface-soft)]/30 flex items-center justify-between gap-2 mt-auto">
                   <div className="flex items-center gap-2 min-w-0">
                     <div className="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 font-bold text-[9px] flex items-center justify-center shrink-0">
                       {c.instructor.avatar}
@@ -838,9 +852,9 @@ export default function App() {
 
                   <button
                     onClick={() => navigate(`/learn/${c.id}`)}
-                    className="button button-sm text-[11px] py-1 px-2.5 font-bold shrink-0"
+                    className="button button-sm text-[11px] py-1 px-3 font-bold shrink-0"
                   >
-                    View →
+                    Start Learning →
                   </button>
                 </div>
               </article>
@@ -853,7 +867,7 @@ export default function App() {
           <SectionHeader
             eyebrow="Domain Specializations"
             title={<>Deep dive into <span className="gradient-text">cutting-edge tech.</span></>}
-            copy="Select a specialization to see hands-on curriculum breakdowns, module roadmaps, and sandbox projects."
+            copy="Select a specialization to see hands-on curriculum breakdowns, module roadmaps, and production projects."
           />
           <div className="tabs" role="tablist">
             {courseTabs.map((tab) => (
@@ -875,7 +889,7 @@ export default function App() {
                   <span className="font-bold">{domain.label} Masterclass Track</span>
                   <small className="font-bold flex items-center gap-1">
                     <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block animate-pulse" />
-                    Interactive Syllabus & Sandbox
+                    Interactive Syllabus & Capstones
                   </small>
                 </div>
 
@@ -1007,7 +1021,7 @@ export default function App() {
                 <input type="email" placeholder="Enter your email address" aria-label="Email" required />
                 <button className="button">Enroll Free <Icon name="arrow" /></button>
               </form>
-              <div className="cta-proof"><span><Icon name="check" /> Free Starter Tier</span><span><Icon name="check" /> No credit card</span><span><Icon name="check" /> Self-paced</span></div>
+              <div className="cta-proof"><span><Icon name="check" /> 3-Day Free Trial</span><span><Icon name="check" /> No credit card</span><span><Icon name="check" /> Full DSA Sheets</span></div>
             </div>
             <div className="cta-float"><span className="ai-mark"><Icon name="sparkles" /></span><div><b>Certificate Unlocked</b><small>AI Agent Systems Architect</small></div><span className="done"><Icon name="check" size={13} /></span></div>
           </div>

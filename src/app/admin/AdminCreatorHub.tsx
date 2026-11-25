@@ -40,7 +40,6 @@ export default function AdminCreatorHub() {
   const [categoryLabel, setCategoryLabel] = useState("Full-Stack & Systems");
   const [level, setLevel] = useState<"Beginner" | "Intermediate" | "Advanced" | "All Levels">("Intermediate");
   const [duration, setDuration] = useState("14.5 Hours");
-  const [price, setPrice] = useState(49);
   const [instructorName, setInstructorName] = useState(user?.name || "Dr. Sarah Chen");
   const [instructorRole, setInstructorRole] = useState("Principal Distributed Systems Engineer");
   const [skills, setSkills] = useState("Golang, gRPC, Protocol Buffers, Docker, Microservices");
@@ -168,7 +167,6 @@ export default function AdminCreatorHub() {
     setCategoryLabel(course.categoryLabel);
     setLevel(course.level);
     setDuration(course.duration);
-    setPrice(course.price);
     setInstructorName(course.instructor.name);
     setInstructorRole(course.instructor.role);
     setSkills(course.skills.join(", "));
@@ -188,7 +186,6 @@ export default function AdminCreatorHub() {
     setCategoryLabel("AI & Machine Learning");
     setLevel("Advanced");
     setDuration("16.0 Hours");
-    setPrice(79);
     setInstructorName(user?.name || "Dr. Aris Vance");
     setInstructorRole("Lead AI Architect");
     setSkills("LangGraph, Vector DBs, Claude 3.7, Python 3.12, RAG");
@@ -277,12 +274,12 @@ export default function AdminCreatorHub() {
     const targetMod = modules[modIndex];
     const newLesson: Lesson = {
       id: `les-${Date.now()}`,
-      title: `Lesson ${targetMod.lessons.length + 1}: Hands-on Implementation & Sandbox`,
+      title: `Lesson ${targetMod.lessons.length + 1}: Hands-on Project Implementation`,
       duration: "20 min",
-      type: "code",
-      summary: "Interactive coding and verification in sandbox.",
+      type: "reading",
+      summary: "Comprehensive architectural breakdown and implementation.",
       notes: "# Hands-on Exercise\n\nFollow step-by-step instructions to verify behavior.",
-      codeSnippet: `// Sandbox exercise starter code\nconsole.log("Interactive Lesson Sandbox Active");`
+      codeSnippet: `// Starter project code\nconsole.log("Interactive Lesson Active");`
     };
     const updated = [...modules];
     updated[modIndex].lessons.push(newLesson);
@@ -317,7 +314,7 @@ export default function AdminCreatorHub() {
         level,
         duration,
         lessonsCount: totalLessons,
-        price: Number(price),
+        price: 0,
         bannerGradient,
         thumbnailUrl: thumbnailUrl || undefined,
         instructor: {
@@ -348,7 +345,7 @@ export default function AdminCreatorHub() {
         level,
         duration,
         lessonsCount: totalLessons,
-        price: Number(price),
+        price: 0,
         bannerGradient,
         thumbnailUrl: thumbnailUrl || undefined,
         instructor: {
@@ -566,12 +563,12 @@ export default function AdminCreatorHub() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold mb-1">Course Price ($ USD, 0 for Free)</label>
+                    <label className="block text-xs font-bold mb-1">Estimated Duration</label>
                     <input
-                      type="number"
-                      min="0"
-                      value={price}
-                      onChange={(e) => setPrice(Number(e.target.value))}
+                      type="text"
+                      value={duration}
+                      onChange={(e) => setDuration(e.target.value)}
+                      placeholder="e.g. 18.5 Hours"
                       className="w-full p-3 rounded-xl bg-[var(--surface-soft)] border border-[var(--border)] text-xs font-bold"
                     />
                   </div>
@@ -785,7 +782,7 @@ export default function AdminCreatorHub() {
                                     className="p-1 rounded-md bg-[var(--surface-soft)] border border-[var(--border)] text-[10px] font-bold"
                                   >
                                     <option value="video">🎥 Video & Notes</option>
-                                    <option value="code">💻 Code Sandbox</option>
+                                    <option value="reading">📄 Theory & Reading</option>
                                     <option value="quiz">📝 Quiz Assessment</option>
                                   </select>
                                   <button
@@ -928,7 +925,7 @@ export default function AdminCreatorHub() {
                       </span>
                     </div>
                     <div className="relative z-10 flex items-end justify-between">
-                      <span className="text-xl font-black tracking-tight">{price === 0 ? "FREE" : `$${price}`}</span>
+                      <span className="text-xs font-extrabold uppercase tracking-wider px-2 py-0.5 rounded bg-black/40 backdrop-blur-md">Full Access</span>
                       <span className="text-[11px] font-mono text-white/90">⏱ {duration}</span>
                     </div>
                   </div>
@@ -1052,7 +1049,7 @@ export default function AdminCreatorHub() {
                           <span>•</span>
                           <span>⭐ {c.rating}</span>
                           <span>•</span>
-                          <span className="font-bold text-[var(--accent)]">{c.price === 0 ? "Free" : `$${c.price}`}</span>
+                          <span className="font-bold text-[var(--accent)]">Full Access</span>
                         </div>
                       </div>
                     </div>

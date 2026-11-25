@@ -90,6 +90,32 @@ export default function StudentDashboardPage() {
           </div>
         </div>
 
+        {/* 3-Day Free Trial Active Status Banner */}
+        <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-500/10 via-teal-500/10 to-purple-500/10 border border-emerald-500/30 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs shadow-md">
+          <div className="flex items-center gap-2.5">
+            <span className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 font-black flex items-center justify-center text-sm">
+              🎁
+            </span>
+            <div>
+              <p className="font-extrabold text-[var(--text)] flex items-center gap-2">
+                <span>3-Day Full Access Free Trial Active</span>
+                <span className="px-2 py-0.5 rounded-full bg-emerald-500 text-black text-[10px] font-black uppercase">
+                  3 Days Remaining
+                </span>
+              </p>
+              <p className="text-[11px] text-[var(--muted)]">
+                You have unrestricted access to all masterclasses, pattern-wise DSA sheets, and verified certifications.
+              </p>
+            </div>
+          </div>
+          <Link
+            to="/dsa-sheet"
+            className="px-3 py-1.5 rounded-xl font-bold bg-emerald-500 text-black hover:bg-emerald-400 transition-colors shrink-0 shadow-sm"
+          >
+            Practice DSA Sheets →
+          </Link>
+        </div>
+
         {/* Quick Role Switcher Banner (for Development & Testing) */}
         <div className="p-4 rounded-2xl bg-[var(--surface)] border border-[var(--border-soft)] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
           <div className="flex items-center gap-2">
@@ -120,15 +146,15 @@ export default function StudentDashboardPage() {
           </Link>
 
           <Link
-            to="/sandbox"
-            className="p-4 rounded-2xl bg-[var(--surface)] border border-[var(--border-soft)] hover:border-purple-400/50 transition-all flex items-center gap-3 group shadow-sm"
+            to="/dsa-sheet"
+            className="p-4 rounded-2xl bg-[var(--surface)] border border-[var(--border-soft)] hover:border-emerald-400/50 transition-all flex items-center gap-3 group shadow-sm"
           >
-            <span className="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
-              💻
+            <span className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
+              🧠
             </span>
             <div>
-              <h4 className="text-xs font-extrabold group-hover:text-purple-400 transition-colors">Code Sandbox</h4>
-              <p className="text-[10px] text-[var(--muted)]">Multi-Lang Runner</p>
+              <h4 className="text-xs font-extrabold group-hover:text-emerald-400 transition-colors">DSA Sheets</h4>
+              <p className="text-[10px] text-[var(--muted)]">380+ Pattern Problems</p>
             </div>
           </Link>
 
@@ -208,7 +234,7 @@ export default function StudentDashboardPage() {
               <h3 className="text-sm font-extrabold uppercase tracking-wider text-[var(--accent)] flex items-center gap-2">
                 <span>📊</span> Daily Study & Coding Activity (52-Week Matrix)
               </h3>
-              <p className="text-[11px] text-[var(--muted)] mt-0.5">324 lessons and sandbox exercises completed over the past year.</p>
+              <p className="text-[11px] text-[var(--muted)] mt-0.5">324 lessons and hands-on exercises completed over the past year.</p>
             </div>
             <div className="flex items-center gap-2 text-[10px] text-[var(--muted)] font-medium">
               <span>Less</span>
@@ -306,7 +332,7 @@ export default function StudentDashboardPage() {
                     <h4 className="text-base font-extrabold leading-snug">{c.title}</h4>
                     <p className="text-xs text-[var(--muted)] line-clamp-2">{c.description}</p>
                     <div className="flex items-center gap-2 text-xs font-bold text-[var(--accent)]">
-                      <span>Price: {c.price === 0 ? "Free" : `$${c.price}`}</span>
+                      <span>Full Access Included</span>
                       <span>•</span>
                       <span>⭐ {c.rating}</span>
                     </div>

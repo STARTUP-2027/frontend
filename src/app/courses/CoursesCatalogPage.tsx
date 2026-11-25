@@ -7,11 +7,10 @@ import { SiteNav, SiteFooter, Icon } from "../../App";
 interface FilterState {
   category: string[];
   level: string[];
-  priceRange: "all" | "free" | "under50" | "50to100" | "above100";
   minRating: number;
   duration: string[];
   skills: string[];
-  features: string[]; // "sandbox", "certificate", "bestseller", "featured"
+  features: string[]; // "certificate", "bestseller", "featured"
 }
 
 const CATEGORY_OPTIONS = [
@@ -33,14 +32,6 @@ const RATING_OPTIONS = [
   { value: 3.5, label: "3.5★ & above" },
 ];
 
-const PRICE_OPTIONS = [
-  { id: "all", label: "All Prices" },
-  { id: "free", label: "100% Free (0$)" },
-  { id: "under50", label: "Under $50" },
-  { id: "50to100", label: "$50 - $100" },
-  { id: "above100", label: "Above $100" },
-];
-
 const DURATION_OPTIONS = [
   { id: "short", label: "Under 15 Hours" },
   { id: "medium", label: "15 - 25 Hours" },
@@ -48,7 +39,6 @@ const DURATION_OPTIONS = [
 ];
 
 const FEATURE_OPTIONS = [
-  { id: "sandbox", label: "Interactive Code Sandbox" },
   { id: "certificate", label: "Verified Certificate" },
   { id: "bestseller", label: "Bestseller Masterclass" },
   { id: "featured", label: "Featured Curriculum" },
@@ -79,7 +69,7 @@ export default function CoursesCatalogPage() {
 
   // Search & Sorting state
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [sortBy, setSortBy] = useState<"popular" | "rating" | "price-low" | "price-high" | "newest">("popular");
+  const [sortBy, setSortBy] = useState<"popular" | "rating" | "newest">("popular");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
@@ -89,7 +79,6 @@ export default function CoursesCatalogPage() {
   // Collapsible section state for Flipkart-style accordions
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
     categories: true,
-    price: true,
     rating: true,
     level: true,
     features: true,
@@ -101,7 +90,6 @@ export default function CoursesCatalogPage() {
   const [filters, setFilters] = useState<FilterState>({
     category: [],
     level: [],
-    priceRange: "all",
     minRating: 0,
     duration: [],
     skills: [],
@@ -173,7 +161,6 @@ export default function CoursesCatalogPage() {
     setFilters({
       category: [],
       level: [],
-      priceRange: "all",
       minRating: 0,
       duration: [],
       skills: [],
@@ -187,7 +174,6 @@ export default function CoursesCatalogPage() {
   const hasActiveFilters =
     filters.category.length > 0 ||
     filters.level.length > 0 ||
-    filters.priceRange !== "all" ||
     filters.minRating > 0 ||
     filters.duration.length > 0 ||
     filters.skills.length > 0 ||
@@ -206,12 +192,6 @@ export default function CoursesCatalogPage() {
       if (filters.level.length > 0 && !filters.level.includes(c.level)) {
         return false;
       }
-
-      // Price Filter
-      if (filters.priceRange === "free" && c.price !== 0) return false;
-      if (filters.priceRange === "under50" && (c.price === 0 || c.price >= 50)) return false;
-      if (filters.priceRange === "50to100" && (c.price < 50 || c.price > 100)) return false;
-      if (filters.priceRange === "above100" && c.price <= 100) return false;
 
       // Rating Filter
       if (filters.minRating > 0 && c.rating < filters.minRating) {
@@ -243,7 +223,6 @@ export default function CoursesCatalogPage() {
       if (filters.features.length > 0) {
         if (filters.features.includes("bestseller") && !c.bestseller) return false;
         if (filters.features.includes("featured") && !c.featured) return false;
-        // All Astra courses include sandbox and certificate by default
       }
 
       // Search Query Filter
@@ -267,10 +246,6 @@ export default function CoursesCatalogPage() {
       list.sort((a, b) => b.studentsCount - a.studentsCount);
     } else if (sortBy === "rating") {
       list.sort((a, b) => b.rating - a.rating);
-    } else if (sortBy === "price-low") {
-      list.sort((a, b) => a.price - b.price);
-    } else if (sortBy === "price-high") {
-      list.sort((a, b) => b.price - a.price);
     } else if (sortBy === "newest") {
       list.sort((a, b) => b.lessonsCount - a.lessonsCount);
     }
@@ -312,16 +287,16 @@ export default function CoursesCatalogPage() {
               Masterclasses & Engineering Hub
             </h1>
             <p className="text-xs sm:text-sm text-[var(--muted)] mt-1">
-              Explore 50+ deep-dive curriculum tracks with in-browser sandboxes, hands-on architectural challenges, and verified credentials.
+              Explore 50+ deep-dive curriculum tracks with pattern-wise DSA sheets, hands-on architectural challenges, and verified credentials.
             </p>
           </div>
 
           <div className="flex items-center gap-3">
             <Link
-              to="/sandbox"
-              className="px-4 py-2 rounded-2xl text-xs font-extrabold bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg shadow-purple-500/20 hover:scale-102 transition-all flex items-center gap-2"
+              to="/dsa-sheet"
+              className="px-4 py-2 rounded-2xl text-xs font-extrabold bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-lg shadow-emerald-500/20 hover:scale-102 transition-all flex items-center gap-2"
             >
-              <span>⚡</span> Launch Interactive Sandbox
+              <span>🧠</span> Explore DSA Sheets
             </Link>
             <Link
               to="/contests"
@@ -523,38 +498,7 @@ export default function CoursesCatalogPage() {
               )}
             </div>
 
-            {/* Accordion 2: Price Bracket (Flipkart Style) */}
-            <div className="border-b border-[var(--border-soft)]">
-              <button
-                onClick={() => toggleSection("price")}
-                className="w-full px-4 py-3.5 flex items-center justify-between text-xs font-black uppercase tracking-wider text-[var(--text)] hover:bg-[var(--surface-soft)]/50 transition-colors"
-              >
-                <span>Price & Access</span>
-                <span className="text-[var(--muted)]">{expandedSections.price ? "−" : "+"}</span>
-              </button>
-              {expandedSections.price && (
-                <div className="px-4 pb-3.5 space-y-2">
-                  {PRICE_OPTIONS.map((p) => {
-                    const checked = filters.priceRange === p.id;
-                    return (
-                      <label
-                        key={p.id}
-                        className="flex items-center gap-2 text-xs font-medium text-[var(--text)] hover:text-[var(--accent)] cursor-pointer select-none"
-                      >
-                        <input
-                          type="radio"
-                          name="price-filter"
-                          checked={checked}
-                          onChange={() => setFilters((prev) => ({ ...prev, priceRange: p.id as any }))}
-                          className="text-[var(--accent)] focus:ring-[var(--accent)] cursor-pointer"
-                        />
-                        <span className={checked ? "font-bold text-[var(--accent)]" : ""}>{p.label}</span>
-                      </label>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
+
 
             {/* Accordion 3: Customer Ratings (Flipkart Green Star Badges) */}
             <div className="border-b border-[var(--border-soft)]">
@@ -769,8 +713,6 @@ export default function CoursesCatalogPage() {
                 {[
                   { id: "popular", label: "Popularity" },
                   { id: "rating", label: "Highest Rated" },
-                  { id: "price-low", label: "Price: Low to High" },
-                  { id: "price-high", label: "Price: High to Low" },
                   { id: "newest", label: "Newest / Extensive" },
                 ].map((s) => {
                   const active = sortBy === s.id;
@@ -814,8 +756,6 @@ export default function CoursesCatalogPage() {
                 {filteredCourses.map((c) => {
                   const enrolled = isEnrolled(c.id);
                   const progress = getCourseProgress(c.id);
-                  const originalPrice = c.price === 0 ? 0 : Math.round(c.price * 1.5);
-                  const discountPercent = c.price === 0 ? "100% OFF" : "33% OFF";
 
                   return (
                     <article
@@ -824,16 +764,26 @@ export default function CoursesCatalogPage() {
                     >
                       <div className="flex flex-col flex-1 justify-between">
                         <div>
-                          {/* Vibrant Header Banner */}
-                          <div
-                            className="relative h-44 p-4 flex flex-col justify-between text-white overflow-hidden shrink-0"
-                            style={{ background: c.bannerGradient || "linear-gradient(135deg, #7c3aed 0%, #4338ca 100%)" }}
-                          >
-                            <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
+                          {/* Standardized Course Image Thumbnail */}
+                          <div className="relative h-44 w-full overflow-hidden bg-[var(--surface-soft)] shrink-0">
+                            {c.thumbnailUrl ? (
+                              <img
+                                src={c.thumbnailUrl}
+                                alt={c.title}
+                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                loading="lazy"
+                              />
+                            ) : (
+                              <div
+                                className="w-full h-full"
+                                style={{ background: c.bannerGradient || "linear-gradient(135deg, #7c3aed 0%, #4338ca 100%)" }}
+                              />
+                            )}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/35 pointer-events-none" />
 
                             {/* Top Badges */}
-                            <div className="relative z-10 flex items-center justify-between gap-2">
-                              <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 shadow-sm">
+                            <div className="absolute top-3 left-3 right-3 z-10 flex items-center justify-between gap-2">
+                              <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-black/60 text-white backdrop-blur-md border border-white/20 shadow-sm">
                                 {c.categoryLabel}
                               </span>
 
@@ -851,26 +801,11 @@ export default function CoursesCatalogPage() {
                               </div>
                             </div>
 
-                            {/* Price & Sandbox Badge */}
-                            <div className="relative z-10 flex items-end justify-between">
-                              <div>
-                                <div className="flex items-baseline gap-2">
-                                  <span className="text-2xl font-black drop-shadow-md">
-                                    {c.price === 0 ? "FREE" : `$${c.price}`}
-                                  </span>
-                                  {c.price > 0 && (
-                                    <span className="text-xs text-white/70 line-through">
-                                      ${originalPrice}
-                                    </span>
-                                  )}
-                                  <span className="text-[10px] font-black text-emerald-300 bg-emerald-950/60 px-1.5 py-0.5 rounded">
-                                    {discountPercent}
-                                  </span>
-                                </div>
-                                <span className="block text-[10px] text-white/80 font-medium">
-                                  Lifetime Access • Sandboxes Included
-                                </span>
-                              </div>
+                            {/* Bottom Overlay on Thumbnail */}
+                            <div className="absolute bottom-3 left-3 right-3 z-10 flex items-center justify-between">
+                              <span className="text-[11px] font-mono text-white/90 bg-black/60 backdrop-blur-md px-2 py-0.5 rounded-md font-semibold">
+                                ⏱ {c.duration} • {c.lessonsCount} units
+                              </span>
 
                               <Link
                                 to={`/learn/${c.id}`}
@@ -884,7 +819,7 @@ export default function CoursesCatalogPage() {
 
                           {/* Card Content Body */}
                           <div className="p-4 sm:p-5 space-y-3">
-                            {/* Flipkart Rating & Meta Row */}
+                            {/* Rating & Level Meta Row */}
                             <div className="flex items-center justify-between text-[11px]">
                               <div className="flex items-center gap-1.5">
                                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-emerald-500 text-white font-extrabold text-[11px] shadow-sm">
@@ -921,19 +856,19 @@ export default function CoursesCatalogPage() {
                               </p>
                             </div>
 
-                            {/* Flipkart Style Feature Bullets */}
+                            {/* Standard Feature Bullets */}
                             <div className="space-y-1 pt-1 text-[11px] text-[var(--muted)] border-t border-[var(--border-soft)]">
                               <div className="flex items-center gap-1.5">
                                 <span className="text-purple-400 font-bold">✓</span>
-                                <span className="truncate">⏱ {c.duration} of interactive lessons ({c.lessonsCount} units)</span>
+                                <span className="truncate">⏱ {c.duration} of interactive masterclasses</span>
                               </div>
                               <div className="flex items-center gap-1.5">
                                 <span className="text-emerald-400 font-bold">✓</span>
-                                <span className="truncate">In-browser IDE & instant compilation</span>
+                                <span className="truncate">Production projects & architectural capstones</span>
                               </div>
                               <div className="flex items-center gap-1.5">
                                 <span className="text-sky-400 font-bold">✓</span>
-                                <span className="truncate">Verified Industry Certificate on pass</span>
+                                <span className="truncate">Verified Industry Certificate on completion</span>
                               </div>
                             </div>
 
@@ -1004,7 +939,7 @@ export default function CoursesCatalogPage() {
                                 }}
                                 className="button button-sm text-xs font-bold shadow-md inline-flex items-center gap-1"
                               >
-                                {c.price === 0 ? "Enroll Free" : "Enroll Now"}
+                                Start Learning →
                               </button>
                             )}
                           </div>
@@ -1015,31 +950,45 @@ export default function CoursesCatalogPage() {
                 })}
               </div>
             ) : (
-              /* ================= LIST VIEW (FLIPKART E-COMMERCE STYLE) ================= */
+              /* ================= LIST VIEW ================= */
               <div className="space-y-4">
                 {filteredCourses.map((c) => {
                   const enrolled = isEnrolled(c.id);
                   const progress = getCourseProgress(c.id);
-                  const originalPrice = c.price === 0 ? 0 : Math.round(c.price * 1.5);
-                  const discountPercent = c.price === 0 ? "100% OFF" : "33% OFF";
 
                   return (
                     <article
                       key={c.id}
                       className="group rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] hover:border-[var(--accent)] shadow-lg hover:shadow-2xl transition-all duration-300 p-5 grid grid-cols-1 md:grid-cols-12 gap-5 items-center"
                     >
-                      {/* Left Gradient Thumbnail (3 cols) */}
-                      <div
-                        className="md:col-span-3 h-44 rounded-2xl p-4 flex flex-col justify-between text-white relative overflow-hidden"
-                        style={{ background: c.bannerGradient || "linear-gradient(135deg, #7c3aed 0%, #4338ca 100%)" }}
-                      >
-                        <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
-                        <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-black/40 w-fit backdrop-blur-md">
-                          {c.categoryLabel}
-                        </span>
-                        <div>
-                          <span className="text-xl font-black">{c.price === 0 ? "FREE" : `$${c.price}`}</span>
-                          <span className="block text-[10px] text-white/80">Interactive Sandbox</span>
+                      {/* Left Image Thumbnail (3 cols) */}
+                      <div className="md:col-span-3 h-44 rounded-2xl relative overflow-hidden bg-[var(--surface-soft)]">
+                        {c.thumbnailUrl ? (
+                          <img
+                            src={c.thumbnailUrl}
+                            alt={c.title}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            loading="lazy"
+                          />
+                        ) : (
+                          <div
+                            className="w-full h-full"
+                            style={{ background: c.bannerGradient || "linear-gradient(135deg, #7c3aed 0%, #4338ca 100%)" }}
+                          />
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/35 pointer-events-none" />
+                        <div className="absolute top-3 left-3 z-10">
+                          <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-black/60 text-white backdrop-blur-md">
+                            {c.categoryLabel}
+                          </span>
+                        </div>
+                        <div className="absolute bottom-3 left-3 right-3 z-10 flex items-center justify-between text-white text-[10px]">
+                          <span className="font-mono bg-black/60 backdrop-blur-md px-2 py-0.5 rounded-md">
+                            ⏱ {c.duration}
+                          </span>
+                          <span className="text-amber-300 font-bold bg-black/60 backdrop-blur-md px-2 py-0.5 rounded-md">
+                            ★ {c.rating}
+                          </span>
                         </div>
                       </div>
 
@@ -1080,7 +1029,7 @@ export default function CoursesCatalogPage() {
                         <ul className="text-[11px] text-[var(--muted)] space-y-1">
                           <li className="flex items-center gap-1.5">
                             <span className="text-purple-400">⚡</span>
-                            <span>Includes live isolated WebAssembly & Cloud compiler runtime</span>
+                            <span>Comprehensive syllabus with hands-on capstone architecture</span>
                           </li>
                           <li className="flex items-center gap-1.5">
                             <span className="text-emerald-400">📜</span>
@@ -1101,25 +1050,18 @@ export default function CoursesCatalogPage() {
                         </div>
                       </div>
 
-                      {/* Right Pricing & CTAs (3 cols) */}
+                      {/* Right CTAs (3 cols) */}
                       <div className="md:col-span-3 md:border-l border-[var(--border-soft)] md:pl-5 space-y-3 flex flex-col justify-between h-full">
                         <div>
-                          <div className="flex items-baseline gap-2">
-                            <span className="text-2xl font-black text-[var(--text)]">
-                              {c.price === 0 ? "FREE" : `$${c.price}`}
-                            </span>
-                            {c.price > 0 && (
-                              <span className="text-xs text-[var(--muted)] line-through">
-                                ${originalPrice}
-                              </span>
-                            )}
-                          </div>
-                          <span className="text-[11px] font-bold text-emerald-400 block">
-                            {discountPercent} special deal
+                          <span className="text-xs font-bold text-[var(--accent)] block">
+                            Full Access Included
                           </span>
                           <span className="text-[10px] text-[var(--muted)] block mt-0.5">
-                            Full Lifetime Access
+                            Complete Masterclass & Certificate
                           </span>
+                          <div className="mt-2 text-xs text-[var(--muted)]">
+                            Instructor: <strong className="text-[var(--text)]">{c.instructor.name}</strong>
+                          </div>
                         </div>
 
                         <div className="space-y-2">
@@ -1138,7 +1080,7 @@ export default function CoursesCatalogPage() {
                               }}
                               className="button button-sm w-full text-xs font-bold text-center block shadow-md"
                             >
-                              {c.price === 0 ? "Enroll Free" : "Enroll Now"}
+                              Start Learning →
                             </button>
                           )}
                           <Link

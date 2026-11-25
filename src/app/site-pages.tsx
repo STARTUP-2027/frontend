@@ -83,14 +83,14 @@ export function AuthPage({ mode }: { mode: "signin" | "signup" }) {
             <p>
               {isSignup
                 ? "Join 150,000+ developers mastering AI systems, modern cloud, and full-stack engineering."
-                : "Continue where you left off. Your code sandboxes, project builds, and certificates are waiting."}
+                : "Continue where you left off. Your masterclasses, DSA sheets, project builds, and certificates are waiting."}
             </p>
             <div className="story-proof">
               <div className="story-avatars"><i>AV</i><i>JB</i><i>MS</i><i>+15K</i></div>
               <span><b>4.95 out of 5</b><small>from 15,000+ engineers at OpenAI, Google & Stripe</small></span>
             </div>
             <blockquote>
-              “Astra Academy replaced 5 scattered bootcamps. The interactive RAG sandboxes and agentic modules helped me land a Staff AI role.”
+              “Astra Academy replaced 5 scattered bootcamps. The hands-on RAG architectures and agentic modules helped me land a Staff AI role.”
               <footer><i>AV</i><span><b>Aris Vance</b><small>AI Engineer at Anthropic Alumni</small></span></footer>
             </blockquote>
           </div>
@@ -98,8 +98,13 @@ export function AuthPage({ mode }: { mode: "signin" | "signup" }) {
         <section className="auth-panel">
           <div className="auth-card">
             <span className="mobile-mark"><Mark /></span>
-            <h2>{isSignup ? "Create your free account" : "Sign in to Astra Academy"}</h2>
-            <p>{isSignup ? "Start learning in less than two minutes." : "Access your student dashboard and courses."}</p>
+            {isSignup && (
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-bold mb-2">
+                <span>🎁</span> 3-Day Full-Access Free Trial
+              </div>
+            )}
+            <h2>{isSignup ? "Start your 3-day free trial" : "Sign in to Astra Academy"}</h2>
+            <p>{isSignup ? "Get instant, unrestricted access to all courses and DSA sheets. No credit card required." : "Access your student dashboard and courses."}</p>
 
             {/* Test Credentials Box */}
             <div className="p-3.5 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border)] text-xs space-y-2 mb-4">
@@ -161,7 +166,7 @@ export function AuthPage({ mode }: { mode: "signin" | "signup" }) {
                 <button type="button" onClick={() => setVisible(!visible)}>{visible ? "Hide" : "Show"}</button>
               </label>
               {!isSignup && <label className="remember"><input type="checkbox" defaultChecked /> Keep me signed in</label>}
-              <button className="auth-submit">{isSignup ? "Create free student account" : "Sign in to Academy"} <Arrow /></button>
+              <button className="auth-submit">{isSignup ? "Start 3-day free trial" : "Sign in to Academy"} <Arrow /></button>
               {isSignup && <small className="terms">By creating an account, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</small>}
             </form>
 

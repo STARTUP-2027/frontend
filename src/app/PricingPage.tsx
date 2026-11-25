@@ -17,12 +17,12 @@ export default function PricingPage() {
       monthly: 19,
       features: [
         "Access to 10 foundational courses",
-        "Interactive in-browser code sandboxes",
+        "Curated Pattern-Wise DSA Sheets (380+ problems)",
         "Community Discord access",
         "Course completion certificates",
         "Standard support",
       ],
-      cta: "Start free learning",
+      cta: "Start 3-Day Free Trial",
       popular: false,
     },
     {
@@ -66,8 +66,8 @@ export default function PricingPage() {
       a: "Yes, you can upgrade, downgrade, or cancel your subscription whenever you want with no hidden fees or contracts. If you cancel, your account remains active until the end of your billing cycle.",
     },
     {
-      q: "How does the 14-day free trial work?",
-      a: "You get full access to the Pro plan for 14 days without entering a credit card. At the end of the trial, you can choose to upgrade or automatically stay on our free sandbox tier.",
+      q: "How does the 3-day free trial work?",
+      a: "On signup, you get unrestricted full access to all masterclasses, comprehensive DSA sheets, practice tests, and verified certificates for 3 days without entering a credit card.",
     },
     {
       q: "What payment methods do you accept?",
@@ -85,7 +85,7 @@ export default function PricingPage() {
 
   const featureMatrix = [
     { name: "Course Library Access", starter: "10 Foundational", pro: "All 50+ Masterclasses", enterprise: "Unlimited + Private Tracks" },
-    { name: "Interactive Sandboxes", starter: "Standard (Node/Py)", pro: "Advanced (GPU + Rust)", enterprise: "Custom Sandboxes & Clusters" },
+    { name: "DSA Sheet Solutions", starter: "All 380+ Problems", pro: "Pattern + SBC + Last Minute 100", enterprise: "Full Access + Custom Paths" },
     { name: "AI Code Assistant", starter: "Basic Hints", pro: "Real-time AI Copilot", enterprise: "Custom Org Fine-Tuning" },
     { name: "Verified Certificates", starter: "Standard", pro: "LinkedIn Shareable", enterprise: "Accredited Org Badges" },
     { name: "Course Creator Studio", starter: "—", pro: "—", enterprise: "Included (Full Creator Hub)" },
@@ -113,7 +113,7 @@ export default function PricingPage() {
           </h1>
 
           <p className="product-hero-subtitle">
-            Start learning with in-browser sandboxes and interactive masterclasses. 
+            Start learning with hands-on masterclasses and curated DSA problem sheets. 
             Upgrade to Pro All-Access or Team Licensing whenever you're ready.
           </p>
 
@@ -191,7 +191,7 @@ export default function PricingPage() {
           </div>
 
           <p className="pricing-note">
-            All plans include interactive sandbox access, certificate verification, and Discord community support.
+            All plans include full curriculum access, pattern-wise DSA sheets, certificate verification, and Discord community support.
           </p>
         </section>
 
@@ -258,7 +258,7 @@ export default function PricingPage() {
         <section className="product-cta-banner">
           <div className="cta-banner-content">
             <h2>Ready to unlock exponential engineering momentum?</h2>
-            <p>Start learning today with free project-based sandboxes. No credit card required.</p>
+            <p>Start learning today with a 3-day full-access free trial. No credit card required.</p>
             <div className="banner-actions">
               <Link to="/signup" className="product-primary-btn">
                 Enroll free now

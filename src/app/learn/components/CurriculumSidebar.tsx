@@ -22,7 +22,6 @@ const FILTER_OPTIONS: Array<{ id: SyllabusTypeFilter; label: string }> = [
   { id: "all", label: "All" },
   { id: "video", label: "🎥 Video" },
   { id: "reading", label: "📄 Theory" },
-  { id: "lab", label: "🔬 Lab" },
   { id: "quiz", label: "🧠 Quiz" },
 ];
 

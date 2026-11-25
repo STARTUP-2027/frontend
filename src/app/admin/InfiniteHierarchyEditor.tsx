@@ -69,7 +69,7 @@ export default function InfiniteHierarchyEditor({ items, onChange }: InfiniteHie
     const newChildId = `node-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
     const newChild: HierarchyItem = {
       id: newChildId,
-      title: childType === "quiz" ? "Assessment Checkpoint" : childType === "lab" ? "Hands-on Sandbox Lab" : childType === "video" ? "Video Lecture" : childType === "reading" ? "Cisco Theory Reading" : "New Submodule / Topic",
+      title: childType === "quiz" ? "Assessment Checkpoint" : childType === "video" ? "Video Lecture" : childType === "reading" ? "Cisco Theory Reading" : "New Submodule / Topic",
       type: childType,
       duration: "20 min",
       summary: "In-depth concept breakdown, operational guidelines, and architectural verification.",
@@ -81,7 +81,7 @@ export default function InfiniteHierarchyEditor({ items, onChange }: InfiniteHie
         { time: "05:15", seconds: 315, label: "Core Protocol & State Flow" },
         { time: "12:40", seconds: 760, label: "Interactive Code Walkthrough" },
       ],
-      codeSnippet: `// Live Execution Sandbox\nfunction executeWorkflow() {\n  return { status: "Verified", passedTests: 5 };\n}\nconsole.log(executeWorkflow());`,
+      codeSnippet: `// Live Code Walkthrough\nfunction executeWorkflow() {\n  return { status: "Verified", passedTests: 5 };\n}\nconsole.log(executeWorkflow());`,
       labObjective: "Implement the required handler function and execute the test harness to pass all 5 verification suites.",
       expectedOutput: "Status: Verified | 5/5 tests passed.",
       quizzes: [],
@@ -465,7 +465,6 @@ export default function InfiniteHierarchyEditor({ items, onChange }: InfiniteHie
                     <option value="submodule">📂 Submodule</option>
                     <option value="video">🎥 Video Lecture</option>
                     <option value="reading">📄 Cisco Reading / Theory</option>
-                    <option value="lab">🔬 Hands-on CLI Lab</option>
                     <option value="quiz">🧠 Assessment Quiz</option>
                   </select>
                 </div>
@@ -488,7 +487,6 @@ export default function InfiniteHierarchyEditor({ items, onChange }: InfiniteHie
                   {[
                     { id: "theory", label: "📄 Theory / Reading" },
                     { id: "video", label: "🎥 Video & Chapters" },
-                    { id: "lab", label: "🔬 Hands-on Lab" },
                     { id: "quizzes", label: `🧠 Quizzes (${selectedNode.quizzes?.length || 0})` },
                     { id: "flashcards", label: `💡 Flashcards (${selectedNode.flashcards?.length || 0})` },
                     { id: "resources", label: `📑 Resources (${selectedNode.resources?.length || 0})` },
@@ -623,42 +621,7 @@ export default function InfiniteHierarchyEditor({ items, onChange }: InfiniteHie
                     </div>
                   )}
 
-                  {/* TAB 3: HANDS-ON LAB */}
-                  {activeTab === "lab" && (
-                    <div className="space-y-4 text-xs">
-                      <div>
-                        <label className="block font-bold text-[var(--muted)] mb-1">Lab Objective & Tasks:</label>
-                        <input
-                          type="text"
-                          value={selectedNode.labObjective || ""}
-                          onChange={(e) => handleFieldChange("labObjective", e.target.value)}
-                          className="w-full px-3 py-1.5 rounded-lg bg-[var(--surface)] border border-[var(--border-soft)] text-[var(--text)] font-semibold"
-                          placeholder="Task requirements and verification instructions..."
-                        />
-                      </div>
 
-                      <div>
-                        <label className="block font-bold text-[var(--muted)] mb-1">Starter Sandbox Code / CLI Commands:</label>
-                        <textarea
-                          rows={7}
-                          value={selectedNode.codeSnippet || ""}
-                          onChange={(e) => handleFieldChange("codeSnippet", e.target.value)}
-                          className="w-full p-3 rounded-lg font-mono bg-[#0b0a14] text-[#93c5fd] border border-[var(--border-soft)]"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block font-bold text-[var(--muted)] mb-1">Expected Test Harness Output:</label>
-                        <input
-                          type="text"
-                          value={selectedNode.expectedOutput || ""}
-                          onChange={(e) => handleFieldChange("expectedOutput", e.target.value)}
-                          className="w-full px-3 py-1.5 rounded-lg font-mono bg-[var(--surface)] border border-[var(--border-soft)] text-emerald-400"
-                          placeholder="e.g. 5/5 test suites passed."
-                        />
-                      </div>
-                    </div>
-                  )}
 
                   {/* TAB 4: QUIZZES */}
                   {activeTab === "quizzes" && (
