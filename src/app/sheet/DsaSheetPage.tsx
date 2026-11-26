@@ -283,15 +283,10 @@ export default function DsaSheetPage() {
     return sheets.find((s) => s.slug === activeSheetSlug) || sheets[0] || { topics: [] };
   }, [sheets, activeSheetSlug]);
 
-  // Set initial expanded topic when sheet changes
+  // Topics and patterns start closed/collapsed by default
   useEffect(() => {
-    if (currentSheet.topics && currentSheet.topics.length > 0) {
-      const firstTopicId = currentSheet.topics[0].id;
-      setExpandedTopics({ [firstTopicId]: true });
-      if (currentSheet.topics[0].patterns && currentSheet.topics[0].patterns.length > 0) {
-        setExpandedPatterns({ [currentSheet.topics[0].patterns[0].id]: true });
-      }
-    }
+    setExpandedTopics({});
+    setExpandedPatterns({});
   }, [activeSheetSlug]);
 
   // Stats across sheets
@@ -528,19 +523,17 @@ export default function DsaSheetPage() {
               <div
                 key={card.slug}
                 onClick={() => setActiveSheetSlug(card.slug)}
-                className={`cursor-pointer rounded-2xl p-5 transition-all flex flex-col justify-between border shadow-xs hover:shadow-md hover:-translate-y-0.5 ${
-                  active
+                className={`cursor-pointer rounded-2xl p-5 transition-all flex flex-col justify-between border shadow-xs hover:shadow-md hover:-translate-y-0.5 ${active
                     ? "bg-emerald-500/[0.07] border-emerald-500 ring-2 ring-emerald-500/20"
                     : "bg-[var(--surface)] border-[var(--border)] hover:border-emerald-500/40"
-                }`}
+                  }`}
               >
                 <div className="flex items-center gap-3.5 mb-3">
                   <div
-                    className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl text-sm font-extrabold transition-colors ${
-                      active
+                    className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl text-sm font-extrabold transition-colors ${active
                         ? "bg-emerald-600 text-white shadow-xs"
                         : "bg-[var(--surface-soft)] text-[var(--muted)] border border-[var(--border)]"
-                    }`}
+                      }`}
                   >
                     {card.number}
                   </div>
@@ -645,11 +638,10 @@ export default function DsaSheetPage() {
                       setDifficultyFilter("ALL");
                       setShowDifficultyDropdown(false);
                     }}
-                    className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-colors ${
-                      difficultyFilter === "ALL"
+                    className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-colors ${difficultyFilter === "ALL"
                         ? "bg-emerald-500/15 text-emerald-400"
                         : "text-[var(--muted)] hover:bg-[var(--surface-soft)] hover:text-[var(--text)]"
-                    }`}
+                      }`}
                   >
                     <span>All Difficulties</span>
                     <span className="font-mono text-[10px]">{diffCounts.total}</span>
@@ -659,11 +651,10 @@ export default function DsaSheetPage() {
                       setDifficultyFilter("EASY");
                       setShowDifficultyDropdown(false);
                     }}
-                    className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-colors ${
-                      difficultyFilter === "EASY"
+                    className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-colors ${difficultyFilter === "EASY"
                         ? "bg-emerald-500/15 text-emerald-400"
                         : "text-emerald-400 hover:bg-[var(--surface-soft)]"
-                    }`}
+                      }`}
                   >
                     <span>Easy</span>
                     <span className="font-mono text-[10px] text-[var(--muted)]">{diffCounts.easy}</span>
@@ -673,11 +664,10 @@ export default function DsaSheetPage() {
                       setDifficultyFilter("MEDIUM");
                       setShowDifficultyDropdown(false);
                     }}
-                    className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-colors ${
-                      difficultyFilter === "MEDIUM"
+                    className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-colors ${difficultyFilter === "MEDIUM"
                         ? "bg-amber-500/15 text-amber-400"
                         : "text-amber-400 hover:bg-[var(--surface-soft)]"
-                    }`}
+                      }`}
                   >
                     <span>Medium</span>
                     <span className="font-mono text-[10px] text-[var(--muted)]">{diffCounts.medium}</span>
@@ -687,11 +677,10 @@ export default function DsaSheetPage() {
                       setDifficultyFilter("HARD");
                       setShowDifficultyDropdown(false);
                     }}
-                    className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-colors ${
-                      difficultyFilter === "HARD"
+                    className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-colors ${difficultyFilter === "HARD"
                         ? "bg-rose-500/15 text-rose-400"
                         : "text-rose-400 hover:bg-[var(--surface-soft)]"
-                    }`}
+                      }`}
                   >
                     <span>Hard</span>
                     <span className="font-mono text-[10px] text-[var(--muted)]">{diffCounts.hard}</span>
@@ -703,11 +692,10 @@ export default function DsaSheetPage() {
             {/* Bookmarked Filter Button */}
             <button
               onClick={() => setOnlyBookmarked(!onlyBookmarked)}
-              className={`flex items-center gap-2 rounded-2xl border px-4 py-2.5 text-xs sm:text-sm font-bold transition-all cursor-pointer ${
-                onlyBookmarked
+              className={`flex items-center gap-2 rounded-2xl border px-4 py-2.5 text-xs sm:text-sm font-bold transition-all cursor-pointer ${onlyBookmarked
                   ? "border-amber-400/50 bg-amber-400/15 text-amber-400 shadow-sm"
                   : "border-[var(--border)] bg-[var(--surface-soft)] text-[var(--muted)] hover:text-[var(--text)]"
-              }`}
+                }`}
             >
               <BookmarkIcon size={15} fill={onlyBookmarked ? "currentColor" : "none"} />
               <span>Bookmarked</span>
@@ -738,7 +726,7 @@ export default function DsaSheetPage() {
               </div>
             ) : (
               filteredTopics.map((topic) => {
-                const isTopicOpen = expandedTopics[topic.id] !== false;
+                const isTopicOpen = searchQuery.trim() ? true : !!expandedTopics[topic.id];
 
                 return (
                   <div
@@ -789,7 +777,7 @@ export default function DsaSheetPage() {
                     {isTopicOpen && (
                       <div className="p-4 sm:p-6 space-y-6">
                         {(topic.patterns || []).map((pattern) => {
-                          const isPatternOpen = expandedPatterns[pattern.id] !== false;
+                          const isPatternOpen = searchQuery.trim() ? true : !!expandedPatterns[pattern.id];
                           const patternTotal = pattern.patternTotal || (pattern.problems || []).length;
                           const patternSolved = pattern.patternSolved || 0;
                           const isAllPatternDone = patternTotal > 0 && patternSolved === patternTotal;
@@ -802,11 +790,10 @@ export default function DsaSheetPage() {
                               {/* Pattern Accordion Bar */}
                               <div
                                 onClick={() => togglePatternExpand(pattern.id)}
-                                className={`p-4 flex items-center justify-between gap-3 cursor-pointer select-none transition-colors ${
-                                  isAllPatternDone
+                                className={`p-4 flex items-center justify-between gap-3 cursor-pointer select-none transition-colors ${isAllPatternDone
                                     ? "bg-emerald-500/[0.04]"
                                     : "bg-[var(--surface-soft)]/50 hover:bg-[var(--surface-soft)]"
-                                }`}
+                                  }`}
                               >
                                 <div className="flex items-center gap-2.5 min-w-0">
                                   {isPatternOpen ? (
@@ -867,11 +854,10 @@ export default function DsaSheetPage() {
                                       return (
                                         <div
                                           key={prob.id}
-                                          className={`rounded-2xl border transition-all p-3.5 ${
-                                            isSolved
+                                          className={`rounded-2xl border transition-all p-3.5 ${isSolved
                                               ? "bg-emerald-500/[0.03] border-emerald-500/25"
                                               : "bg-[var(--surface)] border-[var(--border-soft)] hover:border-[var(--border)] hover:bg-[var(--surface-soft)]/40"
-                                          }`}
+                                            }`}
                                         >
                                           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                                             {/* Left: Checkbox, Number, Title, Difficulty, Companies */}
@@ -901,24 +887,22 @@ export default function DsaSheetPage() {
                                                 href={problemUrl}
                                                 target="_blank"
                                                 rel="noreferrer"
-                                                className={`text-xs sm:text-sm font-bold hover:text-emerald-400 transition-colors truncate max-w-xs sm:max-w-md ${
-                                                  isSolved
+                                                className={`text-xs sm:text-sm font-bold hover:text-emerald-400 transition-colors truncate max-w-xs sm:max-w-md ${isSolved
                                                     ? "line-through text-[var(--muted)]"
                                                     : "text-[var(--text)]"
-                                                }`}
+                                                  }`}
                                               >
                                                 {prob.title}
                                               </a>
 
                                               {/* Difficulty Badge */}
                                               <span
-                                                className={`rounded-full px-2 py-0.5 text-[9px] font-mono font-black uppercase tracking-wider shrink-0 ${
-                                                  diff === "EASY"
+                                                className={`rounded-full px-2 py-0.5 text-[9px] font-mono font-black uppercase tracking-wider shrink-0 ${diff === "EASY"
                                                     ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30"
                                                     : diff === "MEDIUM"
-                                                    ? "bg-amber-500/15 text-amber-400 border border-amber-500/30"
-                                                    : "bg-rose-500/15 text-rose-400 border border-rose-500/30"
-                                                }`}
+                                                      ? "bg-amber-500/15 text-amber-400 border border-amber-500/30"
+                                                      : "bg-rose-500/15 text-rose-400 border border-rose-500/30"
+                                                  }`}
                                               >
                                                 {prob.difficulty}
                                               </span>
@@ -949,11 +933,10 @@ export default function DsaSheetPage() {
                                               {(prob.hints?.length || prob.notes) && (
                                                 <button
                                                   onClick={() => toggleHintExpand(prob.id)}
-                                                  className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
-                                                    isHintOpen
+                                                  className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer ${isHintOpen
                                                       ? "bg-amber-400/20 text-amber-400"
                                                       : "text-[var(--muted)] hover:bg-[var(--surface-soft)] hover:text-[var(--text)]"
-                                                  }`}
+                                                    }`}
                                                   title="Toggle Hints"
                                                 >
                                                   <LightbulbIcon size={15} />
@@ -976,11 +959,10 @@ export default function DsaSheetPage() {
                                               {/* Notes Modal Button */}
                                               <button
                                                 onClick={() => setActiveNoteProblem(prob)}
-                                                className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer relative ${
-                                                  hasNote
+                                                className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer relative ${hasNote
                                                     ? "bg-blue-500/10 text-blue-600 dark:text-blue-400"
                                                     : "text-[var(--muted)] hover:bg-[var(--surface-soft)] hover:text-[var(--text)]"
-                                                }`}
+                                                  }`}
                                                 title={hasNote ? "Edit your note" : "Add personal note"}
                                               >
                                                 <FileTextIcon size={15} />
@@ -992,11 +974,10 @@ export default function DsaSheetPage() {
                                               {/* Bookmark Button */}
                                               <button
                                                 onClick={() => toggleBookmark(prob.id)}
-                                                className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
-                                                  isBookmarked
+                                                className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer ${isBookmarked
                                                     ? "text-amber-400 bg-amber-400/10"
                                                     : "text-[var(--muted)] hover:bg-[var(--surface-soft)] hover:text-[var(--text)]"
-                                                }`}
+                                                  }`}
                                                 title={isBookmarked ? "Remove Bookmark" : "Bookmark Problem"}
                                               >
                                                 <BookmarkIcon

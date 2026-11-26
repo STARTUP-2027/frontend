@@ -11,6 +11,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const [dark, setDark] = useState(() => localStorage.getItem("astra-theme") === "dark");
 
   useEffect(() => {
+    document.documentElement.classList.toggle("dark", dark);
     document.documentElement.style.colorScheme = dark ? "dark" : "light";
     localStorage.setItem("astra-theme", dark ? "dark" : "light");
   }, [dark]);

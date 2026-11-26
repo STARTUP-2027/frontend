@@ -1,23 +1,41 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap");
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
   font-family: "Inter", sans-serif;
   color: #0f172a;
-  background: #f8fafc;
+  background: #f6f5fb;
   font-synthesis: none;
-  --bg: #f8fafc;
+  --bg: #f6f5fb;
   --surface: #ffffff;
-  --surface-soft: #f1f5f9;
+  --surface-soft: #f1effa;
   --text: #0f172a;
   --muted: #64748b;
   --accent: #2563eb;
   --accent-bright: #1d4ed8;
   --accent-soft: #eff6ff;
-  --border: #e2e8f0;
-  --border-soft: #f1f5f9;
+  --border: #e6e2f2;
+  --border-soft: #edeaf7;
   --shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
-  --nav-bg: rgba(255, 255, 255, 0.88);
+  --nav-bg: rgba(255, 255, 255, 0.92);
+}
+
+:root.dark,
+.dark,
+.app.dark {
+  --bg: #0b0f19;
+  --surface: #111827;
+  --surface-soft: #1e293b;
+  --text: #f8fafc;
+  --muted: #94a3b8;
+  --accent: #3b82f6;
+  --accent-bright: #60a5fa;
+  --accent-soft: rgba(59, 130, 246, 0.15);
+  --border: #1f2937;
+  --border-soft: #283548;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --nav-bg: rgba(17, 24, 39, 0.92);
 }
 
 * {
@@ -97,7 +115,7 @@ h3,
 .nav-wrap {
   position: fixed;
   top: 18px;
-  z-index: 20;
+  z-index: 50;
   width: 100%;
   padding: 0 24px;
 }
@@ -134,8 +152,15 @@ h3,
   height: 27px;
   place-items: center;
   border-radius: 8px;
-  background: var(--accent);
-  box-shadow: 0 2px 6px rgba(37, 99, 235, .25);
+  background: linear-gradient(135deg, #ede9fe 0%, #e0e7ff 100%);
+  border: 1px solid rgba(129, 140, 248, 0.45);
+  box-shadow: 0 2px 6px rgba(99, 102, 241, 0.12);
+}
+
+.dark .logo-mark {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(139, 92, 246, 0.25) 100%);
+  border: 1px solid rgba(165, 180, 252, 0.35);
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.15);
 }
 
 .logo-mark::before,
@@ -144,8 +169,13 @@ h3,
   position: absolute;
   width: 11px;
   height: 5px;
-  border: 2px solid white;
+  border: 2px solid #6366f1;
   border-radius: 4px 4px 2px 2px;
+}
+
+.dark .logo-mark::before,
+.dark .logo-mark span {
+  border-color: #a5b4fc;
 }
 
 .logo-mark span {
@@ -2857,8 +2887,15 @@ h3,
   height: 27px;
   place-items: center;
   border-radius: 8px;
-  background: var(--accent);
-  box-shadow: 0 2px 6px rgba(37, 99, 235, .25);
+  background: linear-gradient(135deg, #ede9fe 0%, #e0e7ff 100%);
+  border: 1px solid rgba(129, 140, 248, 0.45);
+  box-shadow: 0 2px 6px rgba(99, 102, 241, 0.12);
+}
+
+.dark .page-logo-mark {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(139, 92, 246, 0.25) 100%);
+  border: 1px solid rgba(165, 180, 252, 0.35);
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.15);
 }
 
 .page-logo-mark::before,
@@ -2867,8 +2904,13 @@ h3,
   position: absolute;
   width: 11px;
   height: 5px;
-  border: 2px solid white;
+  border: 2px solid #6366f1;
   border-radius: 4px 4px 2px 2px;
+}
+
+.dark .page-logo-mark::before,
+.dark .page-logo-mark i {
+  border-color: #a5b4fc;
 }
 
 .page-logo-mark i {

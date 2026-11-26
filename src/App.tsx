@@ -2,11 +2,14 @@ import { useState, type ReactNode } from "react";
 import { Link, useNavigate } from "react-router";
 import { useTheme } from "./app/theme";
 import { useAuth } from "./app/context/AuthContext";
-import { useCourses } from "./app/context/CourseContext";
+import { useCourses, type Course } from "./app/context/CourseContext";
 import StudentDashboardPage from "./app/dashboard/StudentDashboardPage";
 import AdminCreatorHub from "./app/admin/AdminCreatorHub";
 import HeroInteractiveGraph from "./app/components/HeroInteractiveGraph";
 import AlumniMarquee from "./app/components/AlumniMarquee";
+import CourseCard from "./app/courses/CourseCard";
+import CoursePreviewModal from "./app/courses/CoursePreviewModal";
+import AstraPlatformWidget from "./app/components/AstraPlatformWidget";
 
 type IconName =
   | "arrow"
@@ -715,6 +718,9 @@ export function SiteFooter() {
           </button>
         </div>
       </div>
+
+      {/* Global Interactive Astra Platform Widget */}
+      <AstraPlatformWidget />
     </footer>
   );
 }
@@ -741,6 +747,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState("ai");
   const [annual, setAnnual] = useState(true);
   const [testimonial, setTestimonial] = useState(0);
+  const [previewCourse, setPreviewCourse] = useState<Course | null>(null);
 
   // If logged in, automatically show the appropriate dashboard view!
   if (isLoggedIn) {
@@ -806,103 +813,19 @@ export default function App() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-4 max-w-7xl mx-auto">
             {courses.slice(0, 4).map((c) => (
-              <article
+              <CourseCard
                 key={c.id}
-                className="group relative rounded-2xl bg-[var(--surface)] border border-[var(--border)] hover:border-blue-500/50 shadow-xs hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden text-left h-full"
-              >
-                <div>
-                  {/* Standardized Course Image Thumbnail */}
-                  <div className="relative h-44 w-full overflow-hidden bg-[var(--surface-soft)] shrink-0">
-                    {c.thumbnailUrl ? (
-                      <img
-                        src={c.thumbnailUrl}
-                        alt={c.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        loading="lazy"
-                      />
-                    ) : (
-                      <div
-                        className="w-full h-full"
-                        style={{ background: c.bannerGradient || "linear-gradient(135deg, #1e293b 0%, #334155 100%)" }}
-                      />
-                    )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30 pointer-events-none" />
-
-                    <div className="relative z-10 p-3 flex items-center justify-between">
-                      <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-slate-900/80 text-white backdrop-blur-md border border-white/10 shadow-sm">
-                        {c.categoryLabel}
-                      </span>
-                      {c.bestseller && (
-                        <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-amber-400 text-slate-950 shadow-sm flex items-center gap-1">
-                          ★ BESTSELLER
-                        </span>
-                      )}
-                    </div>
-
-                    <div className="absolute bottom-2.5 left-3 right-3 z-10 flex items-center justify-between text-white text-[11px]">
-                      <span className="bg-slate-900/80 backdrop-blur-md px-2 py-0.5 rounded-md font-mono text-white/90 border border-white/10">
-                        ⏱ {c.duration}
-                      </span>
-                      <span className="text-amber-300 bg-slate-900/80 backdrop-blur-md px-2 py-0.5 rounded-md font-bold border border-white/10 flex items-center gap-1">
-                        ★ {c.rating}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Body Content */}
-                  <div className="p-4 sm:p-5 space-y-3">
-                    <div className="flex items-center justify-between text-[11px] text-[var(--muted)] font-semibold">
-                      <span className="flex items-center gap-1.5">
-                        <span className="w-2 h-2 rounded-full bg-blue-500 inline-block" />
-                        {c.level}
-                      </span>
-                      <span>{c.studentsCount.toLocaleString()} enrolled</span>
-                    </div>
-
-                    <h3 className="text-sm font-bold text-[var(--text)] group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-1 leading-snug">
-                      {c.title}
-                    </h3>
-                    <p className="text-xs text-[var(--muted)] line-clamp-2 leading-relaxed min-h-[2.5rem]">
-                      {c.tagline}
-                    </p>
-
-                    <div className="flex flex-wrap gap-1.5 pt-1 min-h-[1.75rem]">
-                      {c.skills.slice(0, 2).map((skill) => (
-                        <span
-                          key={skill}
-                          className="px-2 py-0.5 rounded-md bg-[var(--surface-soft)] border border-[var(--border-soft)] text-[10px] font-medium text-[var(--text)]"
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                      {c.skills.length > 2 && (
-                        <span className="text-[10px] text-[var(--muted)] self-center font-semibold">
-                          +{c.skills.length - 2}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Footer Action */}
-                <div className="p-4 sm:p-5 pt-3 border-t border-[var(--border-soft)] bg-[var(--surface-soft)]/40 flex items-center justify-between gap-2 mt-auto">
-                  <div className="flex items-center gap-2 min-w-0">
-                    <div className="w-7 h-7 rounded-full bg-blue-600/10 text-blue-600 dark:text-blue-400 font-bold text-[10px] flex items-center justify-center shrink-0 border border-blue-500/20">
-                      {c.instructor.avatar}
-                    </div>
-                    <span className="text-xs font-semibold text-[var(--text)] truncate max-w-[90px]">
-                      {c.instructor.name}
-                    </span>
-                  </div>
-
-                  <button
-                    onClick={() => navigate(`/learn/${c.id}`)}
-                    className="button button-sm text-xs py-1.5 px-3.5 font-bold shrink-0 shadow-xs hover:shadow-sm"
-                  >
-                    Start Learning →
-                  </button>
-                </div>
-              </article>
+                course={c}
+                isEnrolled={isEnrolled(c.id)}
+                onPreview={(course) => setPreviewCourse(course)}
+                onStartLearning={(course) => {
+                  if (isEnrolled(course.id)) {
+                    navigate(`/learn/${course.id}`);
+                  } else {
+                    setPreviewCourse(course);
+                  }
+                }}
+              />
             ))}
           </div>
         </section>
@@ -1091,6 +1014,17 @@ export default function App() {
           </div>
         </section>
       </main>
+
+      {/* Course Preview Modal for Unenrolled Users */}
+      <CoursePreviewModal
+        course={previewCourse}
+        isOpen={!!previewCourse}
+        onClose={() => setPreviewCourse(null)}
+        onEnroll={(courseId) => {
+          enrollInCourse(courseId);
+          navigate(`/learn/${courseId}`);
+        }}
+      />
 
       <SiteFooter />
     </div>
