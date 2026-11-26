@@ -192,7 +192,7 @@ export default function StudentNotesHubPage() {
                     </div>
 
                     <div className="pt-4 border-t border-[var(--border-soft)] flex items-center justify-between">
-                      {bm.courseId !== "sandbox-code" && bm.courseId !== "custom-notes" ? (
+                      {bm.courseId !== "custom-notes" ? (
                         <Link to={`/learn/${bm.courseId}`} className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline">
                           Jump to Lesson →
                         </Link>

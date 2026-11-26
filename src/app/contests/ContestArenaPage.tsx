@@ -853,13 +853,13 @@ export default function ContestArenaPage() {
                     ))}
                   </div>
 
-                  {/* Sandbox CTA */}
+                  {/* DSA Sheet CTA */}
                   <div className="pt-2 border-t border-[var(--border-soft)]">
                     <Link
-                      to="/sandbox"
-                      className="button button-sm w-full text-xs font-black text-center block shadow-md"
+                      to="/dsa-sheet"
+                      className="button button-sm w-full text-xs font-bold text-center block shadow-xs"
                     >
-                      ⚡ Open Interactive Code Sandbox
+                      🧠 Practice Pattern DSA Sheets →
                     </Link>
                   </div>
                 </div>
@@ -898,10 +898,10 @@ export default function ContestArenaPage() {
 
                 <div className="flex flex-col gap-3 shrink-0">
                   <button
-                    onClick={() => navigate("/sandbox")}
-                    className="button py-3.5 px-8 text-xs font-black shadow-xl hover:scale-105 transition-transform flex items-center justify-center gap-2"
+                    onClick={() => setActiveMainTab("duel")}
+                    className="button py-3.5 px-8 text-xs font-bold shadow-xs hover:scale-102 transition-transform flex items-center justify-center gap-2"
                   >
-                    <span>🚀</span> Enter Hackathon Arena & Open Sandbox
+                    <span>⚔️</span> Join 1v1 Battle Arena Duel
                   </button>
                   <span className="text-[10px] text-center text-[var(--muted)]">342 active contestants online</span>
                 </div>
