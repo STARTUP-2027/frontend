@@ -350,22 +350,20 @@ export default function CoursesCatalogPage() {
               <button
                 onClick={() => setViewMode("grid")}
                 title="Grid View"
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
-                  viewMode === "grid"
-                    ? "bg-[var(--surface)] text-[var(--accent)] shadow-sm font-extrabold"
-                    : "text-[var(--muted)] hover:text-[var(--text)]"
-                }`}
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${viewMode === "grid"
+                  ? "bg-[var(--surface)] text-[var(--accent)] shadow-sm font-extrabold"
+                  : "text-[var(--muted)] hover:text-[var(--text)]"
+                  }`}
               >
                 <span>⊞</span> Grid
               </button>
               <button
                 onClick={() => setViewMode("list")}
                 title="List View"
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
-                  viewMode === "list"
-                    ? "bg-[var(--surface)] text-[var(--accent)] shadow-sm font-extrabold"
-                    : "text-[var(--muted)] hover:text-[var(--text)]"
-                }`}
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${viewMode === "list"
+                  ? "bg-[var(--surface)] text-[var(--accent)] shadow-sm font-extrabold"
+                  : "text-[var(--muted)] hover:text-[var(--text)]"
+                  }`}
               >
                 <span>☰</span> List
               </button>
@@ -378,9 +376,8 @@ export default function CoursesCatalogPage() {
 
           {/* ================= LEFT SIDEBAR FILTERS (FLIPKART STYLE) ================= */}
           <aside
-            className={`lg:col-span-3 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs overflow-hidden sticky top-24 z-20 ${
-              isMobileFilterOpen ? "block fixed inset-4 z-50 overflow-y-auto bg-[var(--surface)]" : "hidden lg:block"
-            }`}
+            className={`lg:col-span-3 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs overflow-hidden sticky top-24 z-20 ${isMobileFilterOpen ? "block fixed inset-4 z-50 overflow-y-auto bg-[var(--surface)]" : "hidden lg:block"
+              }`}
           >
             {/* Sidebar Top Header */}
             <div className="p-4 border-b border-[var(--border-soft)] flex items-center justify-between bg-[var(--surface-soft)]/50">
@@ -720,11 +717,10 @@ export default function CoursesCatalogPage() {
                     <button
                       key={s.id}
                       onClick={() => setSortBy(s.id as any)}
-                      className={`px-3 py-1.5 rounded-xl text-xs transition-all whitespace-nowrap ${
-                        active
-                          ? "bg-[var(--accent)] text-white font-black shadow-sm"
-                          : "text-[var(--muted)] hover:text-[var(--text)] hover:bg-[var(--surface-soft)]"
-                      }`}
+                      className={`px-3 py-1.5 rounded-xl text-xs transition-all whitespace-nowrap ${active
+                        ? "bg-[var(--accent)] text-white font-black shadow-sm"
+                        : "text-[var(--muted)] hover:text-[var(--text)] hover:bg-[var(--surface-soft)]"
+                        }`}
                     >
                       {s.label}
                     </button>
@@ -832,13 +828,12 @@ export default function CoursesCatalogPage() {
 
                               <span className="flex items-center gap-1.5 text-[var(--muted)] font-semibold">
                                 <span
-                                  className={`w-2 h-2 rounded-full inline-block ${
-                                    c.level === "Beginner"
-                                      ? "bg-emerald-500"
-                                      : c.level === "Intermediate"
+                                  className={`w-2 h-2 rounded-full inline-block ${c.level === "Beginner"
+                                    ? "bg-emerald-500"
+                                    : c.level === "Intermediate"
                                       ? "bg-amber-500"
                                       : "bg-rose-500"
-                                  }`}
+                                    }`}
                                 />
                                 {c.level}
                               </span>

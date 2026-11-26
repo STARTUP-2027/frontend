@@ -290,6 +290,7 @@ export function Logo() {
 
 export function SiteNav() {
   const { user, isLoggedIn, logout, switchRole } = useAuth();
+  const { courses } = useCourses();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
@@ -404,33 +405,77 @@ export function SiteNav() {
                     </span>
                   </div>
 
-                  <Link to="/dashboard" onClick={() => setProfileOpen(false)} className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold">
-                    <span>🎓</span> My Learning Dashboard
-                  </Link>
-                  <Link to="/notes" onClick={() => setProfileOpen(false)} className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold">
-                    <span>📑</span> Saved Notes & Flashcards
-                  </Link>
-                  <Link to="/contests" onClick={() => setProfileOpen(false)} className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold">
-                    <span>⚡</span> Contest Arena & Quizzes
-                  </Link>
-                  <Link to="/dsa-sheet" onClick={() => setProfileOpen(false)} className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold">
-                    <span>🧠</span> DSA Problem Sheets
-                  </Link>
-                  <Link to="/verify" onClick={() => setProfileOpen(false)} className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold">
-                    <span>🏆</span> Verified Credentials
-                  </Link>
-
+                  {/* Admin Specific Studio Options (Moved from horizontal bar) */}
                   {user?.role === "admin" ? (
-                    <>
-                      <Link to="/admin" onClick={() => setProfileOpen(false)} className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold text-blue-600 dark:text-blue-400">
-                        <span>✨</span> Creator Studio & Editor
+                    <div className="space-y-1">
+                      <div className="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[var(--accent)]">
+                        Admin &amp; Curriculum Studio
+                      </div>
+                      <Link
+                        to="/admin?tab=studio"
+                        onClick={() => setProfileOpen(false)}
+                        className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold text-[var(--foreground)] transition-colors"
+                      >
+                        <span>✏️</span> Dynamic Course Studio
                       </Link>
-                      <button onClick={() => { switchRole("student"); setProfileOpen(false); navigate("/dashboard"); }} className="w-full text-left flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] text-[var(--muted)] font-semibold">
-                        <span>🎓</span> Switch to Student View
-                      </button>
-                    </>
-                  ) : (
-                    <button onClick={() => { switchRole("admin"); setProfileOpen(false); navigate("/admin"); }} className="w-full text-left flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] text-blue-600 dark:text-blue-400 font-semibold">
+                      <Link
+                        to="/admin?tab=courses"
+                        onClick={() => setProfileOpen(false)}
+                        className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold text-[var(--foreground)] transition-colors"
+                      >
+                        <span>📚</span> Manage Catalog ({courses.length})
+                      </Link>
+                      <Link
+                        to="/admin?tab=students"
+                        onClick={() => setProfileOpen(false)}
+                        className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold text-[var(--foreground)] transition-colors"
+                      >
+                        <span>👥</span> Manage All Students
+                      </Link>
+                      <Link
+                        to="/admin?tab=analytics"
+                        onClick={() => setProfileOpen(false)}
+                        className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold text-[var(--foreground)] transition-colors"
+                      >
+                        <span>📊</span> Customizable Analytics Dashboard
+                      </Link>
+                      <Link
+                        to="/admin?tab=hackathons"
+                        onClick={() => setProfileOpen(false)}
+                        className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold text-[var(--foreground)] transition-colors"
+                      >
+                        <span>🏆</span> Hackathons &amp; Arenas
+                      </Link>
+                    </div>
+                  ) : null}
+
+                  {/* Non-duplicated utility items */}
+                  <div className="pt-2 border-t border-[var(--border-soft)] space-y-1">
+                    <Link
+                      to="/notes"
+                      onClick={() => setProfileOpen(false)}
+                      className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold text-[var(--foreground)]"
+                    >
+                      <span>📑</span> Saved Notes &amp; Flashcards
+                    </Link>
+                    <Link
+                      to="/verify"
+                      onClick={() => setProfileOpen(false)}
+                      className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold text-[var(--foreground)]"
+                    >
+                      <span>📜</span> Verified Credentials
+                    </Link>
+                  </div>
+
+                  {user?.role !== "admin" && (
+                    <button
+                      onClick={() => {
+                        switchRole("admin");
+                        setProfileOpen(false);
+                        navigate("/admin");
+                      }}
+                      className="w-full text-left flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] text-blue-600 dark:text-blue-400 font-semibold"
+                    >
                       <span>👑</span> Switch to Admin Creator View
                     </button>
                   )}

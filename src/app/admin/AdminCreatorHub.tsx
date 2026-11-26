@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useSearchParams } from "react-router";
 import { useCourses, type Course } from "../context/CourseContext";
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../theme";
@@ -13,20 +13,27 @@ export default function AdminCreatorHub() {
   const { dark } = useTheme();
   const { user, switchRole } = useAuth();
   const { courses, deleteCourse } = useCourses();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  // Active Tab: studio | courses | students | analytics | hackathons
-  const [activeTab, setActiveTab] = useState<"studio" | "courses" | "students" | "analytics" | "hackathons">("studio");
+  // Active Tab from URL query params (controlled via Profile Dropdown & URL): studio | courses | students | analytics | hackathons
+  const tabFromUrl = searchParams.get("tab") as "studio" | "courses" | "students" | "analytics" | "hackathons" | null;
+  const activeTab = tabFromUrl || "studio";
+
+  const setActiveTab = (newTab: "studio" | "courses" | "students" | "analytics" | "hackathons") => {
+    setSearchParams({ tab: newTab });
+  };
+
   const [editingCourseId, setEditingCourseId] = useState<string | null>(null);
   const [catalogSearch, setCatalogSearch] = useState("");
 
   const handleEditCourse = (courseId: string) => {
     setEditingCourseId(courseId);
-    setActiveTab("studio");
+    setSearchParams({ tab: "studio" });
   };
 
   const handleCreateNewCourse = () => {
     setEditingCourseId(null);
-    setActiveTab("studio");
+    setSearchParams({ tab: "studio" });
   };
 
   return (
@@ -37,19 +44,23 @@ export default function AdminCreatorHub() {
         {/* Admin Hub Header Banner */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border)] shadow-xs relative overflow-hidden">
           <div className="space-y-1 relative z-10">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[var(--accent)] text-white shadow-xs">
                 Admin &amp; Instructor Console
               </span>
-              {editingCourseId ? (
-                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-500 border border-amber-500/20">
-                  Editing Course: #{editingCourseId}
-                </span>
-              ) : (
-                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
-                  Universal Multi-Domain Platform
-                </span>
-              )}
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[var(--surface-soft)] text-[var(--accent)] border border-[var(--border)]">
+                {activeTab === "studio"
+                  ? editingCourseId
+                    ? `Editing Course #${editingCourseId}`
+                    : "✏️ Dynamic Course Studio"
+                  : activeTab === "courses"
+                  ? `📚 Catalog Directory (${courses.length})`
+                  : activeTab === "students"
+                  ? "👥 Manage All Students"
+                  : activeTab === "analytics"
+                  ? "📊 Analytics Dashboard"
+                  : "🏆 Hackathons & Arenas"}
+              </span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
               Astra Curriculum &amp; Platform Studio
@@ -60,12 +71,19 @@ export default function AdminCreatorHub() {
           </div>
 
           <div className="flex items-center gap-2.5 shrink-0 relative z-10 flex-wrap">
-            {activeTab !== "studio" && (
+            {activeTab !== "studio" ? (
               <button
                 onClick={handleCreateNewCourse}
                 className="px-3.5 py-2 rounded-xl text-xs font-bold bg-[var(--accent)] text-white hover:opacity-90 transition-all flex items-center gap-1.5 shadow-xs"
               >
                 <span>➕</span> Create Course
+              </button>
+            ) : (
+              <button
+                onClick={() => setActiveTab("courses")}
+                className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-[var(--surface-soft)] border border-[var(--border)] hover:border-[var(--accent)] text-[var(--foreground)] transition-all flex items-center gap-1.5"
+              >
+                <span>📚</span> Manage Catalog ({courses.length})
               </button>
             )}
 
@@ -85,65 +103,7 @@ export default function AdminCreatorHub() {
           </div>
         </div>
 
-        {/* Primary Navigation Tabs */}
-        <div className="flex border-b border-[var(--border-soft)] gap-2 overflow-x-auto pb-0.5">
-          <button
-            onClick={() => setActiveTab("studio")}
-            className={`pb-3 px-4 text-xs font-bold transition-all border-b-2 flex items-center gap-2 shrink-0 ${activeTab === "studio"
-                ? "border-[var(--accent)] text-[var(--accent)]"
-                : "border-transparent text-[var(--muted)] hover:text-[var(--foreground)]"
-              }`}
-          >
-            <span>✏️</span>
-            <span>{editingCourseId ? "Course Studio (Editing)" : "Dynamic Course Studio"}</span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab("courses")}
-            className={`pb-3 px-4 text-xs font-bold transition-all border-b-2 flex items-center gap-2 shrink-0 ${activeTab === "courses"
-                ? "border-[var(--accent)] text-[var(--accent)]"
-                : "border-transparent text-[var(--muted)] hover:text-[var(--foreground)]"
-              }`}
-          >
-            <span>📚</span>
-            <span>Manage Catalog ({courses.length})</span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab("students")}
-            className={`pb-3 px-4 text-xs font-bold transition-all border-b-2 flex items-center gap-2 shrink-0 ${activeTab === "students"
-                ? "border-[var(--accent)] text-[var(--accent)]"
-                : "border-transparent text-[var(--muted)] hover:text-[var(--foreground)]"
-              }`}
-          >
-            <span>👥</span>
-            <span>Manage All Students</span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab("analytics")}
-            className={`pb-3 px-4 text-xs font-bold transition-all border-b-2 flex items-center gap-2 shrink-0 ${activeTab === "analytics"
-                ? "border-[var(--accent)] text-[var(--accent)]"
-                : "border-transparent text-[var(--muted)] hover:text-[var(--foreground)]"
-              }`}
-          >
-            <span>📊</span>
-            <span>Customizable Analytics Dashboard</span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab("hackathons")}
-            className={`pb-3 px-4 text-xs font-bold transition-all border-b-2 flex items-center gap-2 shrink-0 ${activeTab === "hackathons"
-                ? "border-[var(--accent)] text-[var(--accent)]"
-                : "border-transparent text-[var(--muted)] hover:text-[var(--foreground)]"
-              }`}
-          >
-            <span>🏆</span>
-            <span>Hackathons &amp; Arenas</span>
-          </button>
-        </div>
-
-        {/* TAB 1: DYNAMIC COURSE STUDIO WITH STUDENT PREVIEW */}
+        {/* SECTION 1: DYNAMIC COURSE STUDIO WITH STUDENT PREVIEW */}
         {activeTab === "studio" && (
           <AdminCourseStudio
             key={editingCourseId || "new"}
@@ -158,7 +118,7 @@ export default function AdminCreatorHub() {
           />
         )}
 
-        {/* TAB 2: MANAGE ALL COURSES IN CATALOG */}
+        {/* SECTION 2: MANAGE ALL COURSES IN CATALOG */}
         {activeTab === "courses" && (
           <div className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border)] shadow-xs space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[var(--border)]">
@@ -266,13 +226,13 @@ export default function AdminCreatorHub() {
           </div>
         )}
 
-        {/* TAB 3: MANAGE ALL STUDENTS ON PLATFORM */}
+        {/* SECTION 3: MANAGE ALL STUDENTS ON PLATFORM */}
         {activeTab === "students" && <AdminStudentManagement />}
 
-        {/* TAB 4: CUSTOMIZABLE ANALYTICS & COMING SOON DASHBOARD */}
+        {/* SECTION 4: CUSTOMIZABLE ANALYTICS & COMING SOON DASHBOARD */}
         {activeTab === "analytics" && <AdminCustomizableDashboard />}
 
-        {/* TAB 5: HACKATHONS & TEST CASES */}
+        {/* SECTION 5: HACKATHONS & TEST CASES */}
         {activeTab === "hackathons" && <AdminHackathonStudio />}
       </main>
 

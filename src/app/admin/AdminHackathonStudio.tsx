@@ -290,11 +290,10 @@ export default function AdminHackathonStudio() {
             key={t.id}
             type="button"
             onClick={() => setActiveTab(t.id as any)}
-            className={`pb-3 px-3 text-xs font-bold transition-all border-b-2 flex items-center gap-2 ${
-              activeTab === t.id
-                ? "border-[var(--accent)] text-[var(--accent)]"
-                : "border-transparent text-[var(--muted)] hover:text-[var(--text)]"
-            }`}
+            className={`pb-3 px-3 text-xs font-bold transition-all border-b-2 flex items-center gap-2 ${activeTab === t.id
+              ? "border-[var(--accent)] text-[var(--accent)]"
+              : "border-transparent text-[var(--muted)] hover:text-[var(--text)]"
+              }`}
           >
             <span>{t.icon}</span>
             <span>{t.label}</span>
