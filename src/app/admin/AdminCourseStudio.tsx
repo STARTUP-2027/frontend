@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useCourses, type Course, type Module, type Lesson } from "../context/CourseContext";
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../theme";
+import { astraApi } from "../../lib/api";
 
 export type ContentBlockType =
   | "video"
@@ -1018,6 +1019,7 @@ export default function AdminCourseStudio({ initialCourseId, onSaved, onCancel }
             .filter(Boolean)
             .join("\n\n"),
           codeSnippet: codeBlock?.codeSnippet || "",
+          blocks: les.blocks,
           quiz: quizBlock
             ? {
                 question: quizBlock.quizQuestion || "",
@@ -1074,10 +1076,12 @@ export default function AdminCourseStudio({ initialCourseId, onSaved, onCancel }
     };
 
     if (existingCourse) {
-      updateCourse(courseData);
+      updateCourse(courseData.id, courseData);
     } else {
       createCourse(courseData);
     }
+
+    astraApi.saveCourse(courseData).catch(() => {});
 
     showToast(`Published "${courseDraft.title}" to catalog successfully!`);
     setTimeout(() => {

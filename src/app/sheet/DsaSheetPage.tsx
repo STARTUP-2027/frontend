@@ -1,7 +1,11 @@
+"use client";
+
 import React, { useState, useEffect, useMemo } from "react";
 import sheetsRawData from "../data/sheetsData.json";
 import { useTheme } from "../theme";
 import { SiteNav, SiteFooter } from "../../App";
+import { astraApi } from "../../lib/api";
+import SubscriptionUpgradeModal from "../components/SubscriptionUpgradeModal";
 import {
   SearchIcon,
   ChevronDownIcon,
@@ -213,12 +217,39 @@ function NotesModal({
 /* ===================== MAIN DSA SHEET PAGE ===================== */
 export default function DsaSheetPage() {
   const { dark } = useTheme();
-  const sheets: Sheet[] = (sheetsRawData as any).sheets || [];
+  const fallbackSheets: Sheet[] = (sheetsRawData as any).sheets || [];
+  const [sheets, setSheets] = useState<Sheet[]>(fallbackSheets);
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
 
   // Active sheet selection: 'pattern-wise-sheet' | 'last-minute-100' | 'sbc'
   const [activeSheetSlug, setActiveSheetSlug] = useState<string>(() => {
-    return localStorage.getItem("rb_active_sheet") || "pattern-wise-sheet";
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("rb_active_sheet") || "pattern-wise-sheet";
+    }
+    return "pattern-wise-sheet";
   });
+
+  // Dynamic fetch of current sheet from Node.js backend
+  useEffect(() => {
+    astraApi
+      .getDsaSheetBySlug(activeSheetSlug)
+      .then((res) => {
+        if (res?.sheet) {
+          setSheets((prev) => {
+            const index = prev.findIndex((s) => s.slug === activeSheetSlug);
+            if (index >= 0) {
+              const updated = [...prev];
+              updated[index] = res.sheet;
+              return updated;
+            }
+            return [...prev, res.sheet];
+          });
+        }
+      })
+      .catch(() => {
+        // graceful offline fallback
+      });
+  }, [activeSheetSlug]);
 
   // Solved state: Map of problemId -> boolean
   const [solvedMap, setSolvedMap] = useState<Record<string, boolean>>(() => {
@@ -279,8 +310,8 @@ export default function DsaSheetPage() {
   }, [notesMap]);
 
   // Current active sheet object
-  const currentSheet = useMemo(() => {
-    return sheets.find((s) => s.slug === activeSheetSlug) || sheets[0] || { topics: [] };
+  const currentSheet: Sheet = useMemo(() => {
+    return sheets.find((s) => s.slug === activeSheetSlug) || sheets[0] || ({ slug: "", name: "DSA Sheet", description: "", topics: [] } as Sheet);
   }, [sheets, activeSheetSlug]);
 
   // Topics and patterns start closed/collapsed by default
@@ -316,8 +347,20 @@ export default function DsaSheetPage() {
     return { totalAll, solvedAll, sheetCounts };
   }, [sheets, solvedMap]);
 
-  const toggleSolved = (id: string) => {
-    setSolvedMap((prev) => ({ ...prev, [id]: !prev[id] }));
+  const toggleSolved = async (id: string) => {
+    const willBeSolved = !solvedMap[id];
+    if (willBeSolved) {
+      try {
+        const res = await astraApi.recordProblemSolved(id);
+        if (res && (res as any).success === false) {
+          setShowUpgradeModal(true);
+          return;
+        }
+      } catch {
+        // safe local fallback
+      }
+    }
+    setSolvedMap((prev) => ({ ...prev, [id]: willBeSolved }));
   };
 
   const toggleBookmark = (id: string) => {
@@ -433,11 +476,11 @@ export default function DsaSheetPage() {
       : 0;
 
   return (
-    <div className={`subpage app ${dark ? "dark" : ""}`}>
+    <div className={`subpage app ${dark ? "dark" : ""} min-h-screen flex flex-col bg-[var(--bg)] text-[var(--text)] transition-colors duration-200`}>
       <div className="subpage-noise" />
       <SiteNav />
 
-      <main className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-32 sm:pt-36 pb-36 space-y-8">
         {/* ===================== HERO BANNER ===================== */}
         <section className="relative p-6 sm:p-8 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs overflow-hidden">
           <div className="relative z-10 flex flex-col lg:flex-row lg:items-end justify-between gap-6">
@@ -907,6 +950,17 @@ export default function DsaSheetPage() {
                                                 {prob.difficulty}
                                               </span>
 
+                                              {/* Pro Lock Badge if server locked */}
+                                              {(prob as any).isLocked && (
+                                                <button
+                                                  type="button"
+                                                  onClick={() => setShowUpgradeModal(true)}
+                                                  className="cursor-pointer rounded-full px-2 py-0.5 text-[9px] font-mono font-black uppercase tracking-wider shrink-0 bg-purple-500/20 text-purple-400 border border-purple-500/40 flex items-center gap-1 hover:scale-105 transition-all"
+                                                >
+                                                  <span>🔒</span> PRO
+                                                </button>
+                                              )}
+
                                               {/* Top Company Tags */}
                                               {prob.companies && prob.companies.length > 0 && (
                                                 <div className="hidden lg:flex items-center gap-1 shrink-0">
@@ -1058,6 +1112,13 @@ export default function DsaSheetPage() {
           initialNote={notesMap[activeNoteProblem.id] || ""}
         />
       )}
+
+      {/* Subscription Upgrade Modal */}
+      <SubscriptionUpgradeModal
+        isOpen={showUpgradeModal}
+        onClose={() => setShowUpgradeModal(false)}
+        courseTitle="Astra Pro Algorithmic Access"
+      />
 
       <SiteFooter />
     </div>

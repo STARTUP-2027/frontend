@@ -61,7 +61,7 @@ export default function WorkspaceTabs({
       label: "🎥 Video Lecture",
       badge: activeItem.timestamps?.length ? `${activeItem.timestamps.length} Ch` : undefined,
     },
-    { id: "reading", label: "📄 Cisco Theory & Interactive Reading" },
+    { id: "reading", label: "📄 Interactive Lesson & Architecture" },
     {
       id: "quiz",
       label: `🧠 Assessments (${activeItem.quizzes?.length || 1})`,

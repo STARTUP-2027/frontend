@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useRef, useEffect } from "react";
 import { type Course, useCourses } from "../context/CourseContext";
 import { useAuth } from "../context/AuthContext";

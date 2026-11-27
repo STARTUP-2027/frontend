@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, type ReactNode } from "react";
 import { Link, useNavigate } from "react-router";
 import { useTheme } from "./app/theme";

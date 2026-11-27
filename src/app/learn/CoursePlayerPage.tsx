@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router";
 import { useCourses } from "../context/CourseContext";
@@ -14,7 +16,8 @@ import WorkspaceTabs from "./components/WorkspaceTabs";
 import CertificateModal from "./components/CertificateModal";
 
 export default function CoursePlayerPage() {
-  const { courseId } = useParams();
+  const { courseId } = useParams<{ courseId: string }>();
+  const activeCourseId = typeof courseId === "string" ? courseId : Array.isArray(courseId) ? (courseId as string[])[0] : "";
   const navigate = useNavigate();
   const { dark, setDark } = useTheme();
   const { user } = useAuth();
@@ -30,7 +33,7 @@ export default function CoursePlayerPage() {
     claimCertificate,
   } = useCourses();
 
-  const course = getCourseById(courseId || "");
+  const course = getCourseById(activeCourseId || "");
   const navigableItems = useNavigableHierarchy(course);
 
   // Active Item Navigation State

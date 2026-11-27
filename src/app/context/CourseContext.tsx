@@ -1,6 +1,49 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
 import { useAuth } from "./AuthContext";
 
+export type ContentBlockType =
+  | "video"
+  | "rich_text"
+  | "image"
+  | "diagram"
+  | "code"
+  | "callout"
+  | "quiz"
+  | "checklist"
+  | "animation"
+  | "resources";
+
+export interface ContentBlock {
+  id: string;
+  type: ContentBlockType;
+  title?: string;
+  videoUrl?: string;
+  videoDuration?: string;
+  videoProvider?: "youtube" | "vimeo" | "mp4" | "stream";
+  timestamps?: Array<{ time: string; label: string; seconds?: number }>;
+  transcript?: string;
+  content?: string;
+  imageUrl?: string;
+  imageCaption?: string;
+  imageLayout?: "full" | "contained" | "side";
+  diagramType?: "flowchart" | "architecture" | "sequence" | "state" | "pipeline";
+  diagramCode?: string;
+  codeLanguage?: string;
+  codeSnippet?: string;
+  codeOutput?: string;
+  calloutTone?: "tip" | "warning" | "info" | "success" | "protip";
+  calloutMessage?: string;
+  quizQuestion?: string;
+  quizOptions?: string[];
+  quizCorrectIndex?: number;
+  quizExplanation?: string;
+  quizPoints?: number;
+  checklistItems?: Array<{ id: string; text: string; done?: boolean }>;
+  embedUrl?: string;
+  animationType?: "lottie" | "codepen" | "figma" | "interactive";
+  resourceFiles?: Array<{ name: string; url: string; size: string; type: string }>;
+}
+
 export interface QuizQuestion {
   id: string;
   question: string;
@@ -41,6 +84,7 @@ export interface HierarchyItem {
   quizzes?: QuizQuestion[];
   resources?: CourseResource[];
   flashcards?: Array<{ front: string; back: string }>;
+  blocks?: ContentBlock[];
   children?: HierarchyItem[];
 }
 
@@ -57,6 +101,7 @@ export interface Lesson {
   codeSnippet?: string;
   labObjective?: string;
   expectedOutput?: string;
+  blocks?: ContentBlock[];
   quiz?: {
     question: string;
     options: string[];
@@ -815,55 +860,63 @@ export function CourseProvider({ children }: { children: ReactNode }) {
   const { user, updateUserStats } = useAuth();
   
   const [courses, setCourses] = useState<Course[]>(() => {
-    const saved = localStorage.getItem("astra_courses_db");
-    const initialMap = new Map(INITIAL_COURSES.map(c => [c.id, c]));
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          const existingIds = new Set(parsed.map((c: Course) => c.id));
-          const merged = parsed.map((c: Course) => {
-            const init = initialMap.get(c.id);
-            return {
-              ...c,
-              price: 0,
-              thumbnailUrl: c.thumbnailUrl || init?.thumbnailUrl || "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=800&q=80",
-            };
-          });
-          INITIAL_COURSES.forEach((c) => {
-            if (!existingIds.has(c.id)) {
-              merged.push(c);
-            }
-          });
-          return merged;
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("astra_courses_db");
+      const initialMap = new Map(INITIAL_COURSES.map(c => [c.id, c]));
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            const existingIds = new Set(parsed.map((c: Course) => c.id));
+            const merged: Course[] = parsed.map((c: Course): Course => {
+              const init = initialMap.get(c.id);
+              return {
+                ...c,
+                price: 0,
+                thumbnailUrl: c.thumbnailUrl || init?.thumbnailUrl || "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=800&q=80",
+              };
+            });
+            INITIAL_COURSES.forEach((c) => {
+              if (!existingIds.has(c.id)) {
+                merged.push(c);
+              }
+            });
+            return merged;
+          }
+        } catch {
+          return INITIAL_COURSES;
         }
-      } catch {
-        return INITIAL_COURSES;
       }
     }
     return INITIAL_COURSES;
   });
 
   const [enrolledCourseIds, setEnrolledCourseIds] = useState<string[]>(() => {
-    const saved = localStorage.getItem("astra_enrolled_courses");
-    if (saved) {
-      try { return JSON.parse(saved); } catch { return ["ai-agents-masterclass", "fullstack-react-nextjs"]; }
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("astra_enrolled_courses");
+      if (saved) {
+        try { return JSON.parse(saved); } catch { return ["ai-agents-masterclass", "fullstack-react-nextjs"]; }
+      }
     }
     return user ? user.enrolledCourseIds : ["ai-agents-masterclass", "fullstack-react-nextjs"];
   });
 
   const [completedLessonIds, setCompletedLessonIds] = useState<string[]>(() => {
-    const saved = localStorage.getItem("astra_completed_lessons");
-    if (saved) {
-      try { return JSON.parse(saved); } catch { return ["ai-1-1", "fs-1-1"]; }
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("astra_completed_lessons");
+      if (saved) {
+        try { return JSON.parse(saved); } catch { return ["ai-1-1", "fs-1-1"]; }
+      }
     }
     return user ? user.completedLessonIds : ["ai-1-1", "fs-1-1"];
   });
 
   const [certificates, setCertificates] = useState<Certificate[]>(() => {
-    const saved = localStorage.getItem("astra_certificates");
-    if (saved) {
-      try { return JSON.parse(saved); } catch { return []; }
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("astra_certificates");
+      if (saved) {
+        try { return JSON.parse(saved); } catch { return []; }
+      }
     }
     return [
       {
@@ -880,9 +933,11 @@ export function CourseProvider({ children }: { children: ReactNode }) {
   });
 
   const [bookmarks, setBookmarks] = useState<BookmarkNote[]>(() => {
-    const saved = localStorage.getItem("astra_bookmarks");
-    if (saved) {
-      try { return JSON.parse(saved); } catch { return []; }
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("astra_bookmarks");
+      if (saved) {
+        try { return JSON.parse(saved); } catch { return []; }
+      }
     }
     return [
       {
@@ -911,9 +966,11 @@ export function CourseProvider({ children }: { children: ReactNode }) {
   });
 
   const [flashcards, setFlashcards] = useState<Flashcard[]>(() => {
-    const saved = localStorage.getItem("astra_flashcards");
-    if (saved) {
-      try { return JSON.parse(saved); } catch { return []; }
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("astra_flashcards");
+      if (saved) {
+        try { return JSON.parse(saved); } catch { return []; }
+      }
     }
     return [
       {
@@ -953,27 +1010,39 @@ export function CourseProvider({ children }: { children: ReactNode }) {
 
   // Persist courses when updated or created
   useEffect(() => {
-    localStorage.setItem("astra_courses_db", JSON.stringify(courses));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("astra_courses_db", JSON.stringify(courses));
+    }
   }, [courses]);
 
   useEffect(() => {
-    localStorage.setItem("astra_enrolled_courses", JSON.stringify(enrolledCourseIds));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("astra_enrolled_courses", JSON.stringify(enrolledCourseIds));
+    }
   }, [enrolledCourseIds]);
 
   useEffect(() => {
-    localStorage.setItem("astra_completed_lessons", JSON.stringify(completedLessonIds));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("astra_completed_lessons", JSON.stringify(completedLessonIds));
+    }
   }, [completedLessonIds]);
 
   useEffect(() => {
-    localStorage.setItem("astra_certificates", JSON.stringify(certificates));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("astra_certificates", JSON.stringify(certificates));
+    }
   }, [certificates]);
 
   useEffect(() => {
-    localStorage.setItem("astra_bookmarks", JSON.stringify(bookmarks));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("astra_bookmarks", JSON.stringify(bookmarks));
+    }
   }, [bookmarks]);
 
   useEffect(() => {
-    localStorage.setItem("astra_flashcards", JSON.stringify(flashcards));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("astra_flashcards", JSON.stringify(flashcards));
+    }
   }, [flashcards]);
 
   const getCourseById = (idOrSlug: string) => {

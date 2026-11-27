@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { useParams, Link } from "react-router";
 import { useCourses } from "../context/CourseContext";

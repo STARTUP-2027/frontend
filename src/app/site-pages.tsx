@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, type FormEvent, type ReactNode } from "react";
 import { Link, useNavigate } from "react-router";
 import { SiteFooter, SiteNav } from "../App";
