@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { Link, useSearchParams, useNavigate } from "react-router";
 import { useCourses, type Course } from "../context/CourseContext";
 import { useTheme } from "../theme";
@@ -84,6 +84,20 @@ export default function CoursesCatalogPage() {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const [previewCourse, setPreviewCourse] = useState<Course | null>(null);
+
+  // Category dropdown state
+  const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
+  const categoryDropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (categoryDropdownRef.current && !categoryDropdownRef.current.contains(e.target as Node)) {
+        setShowCategoryDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   // Skill search inside filter sidebar
   const [skillSearch, setSkillSearch] = useState("");
@@ -280,106 +294,165 @@ export default function CoursesCatalogPage() {
     s.toLowerCase().includes(skillSearch.toLowerCase())
   );
 
+  const activeCategoryLabel =
+    filters.category.length === 1
+      ? CATEGORY_OPTIONS.find((c) => c.id === filters.category[0])?.label || "Category"
+      : filters.category.length > 1
+        ? `${filters.category.length} Categories`
+        : "All Categories";
+
   return (
     <div className={`subpage app ${dark ? "dark" : ""} min-h-screen flex flex-col bg-[var(--bg)] text-[var(--text)] transition-colors duration-200`}>
       <div className="subpage-noise" />
       <SiteNav />
 
-        <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-32 sm:pt-36 pb-36 space-y-6">
+        <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 pb-32 space-y-6">
 
-          {/* BREADCRUMB & HEADER */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-2 border-b border-[var(--border-soft)]">
-            <div>
-              <div className="flex items-center gap-2 text-xs font-semibold text-[var(--muted)]">
-                <Link to="/" className="hover:text-[var(--accent)] transition-colors">Home</Link>
-                <span>/</span>
-                <span className="text-[var(--text)] font-bold">Courses Directory</span>
-                <span>/</span>
-                <span className="text-[var(--accent)] font-bold">Interactive Catalog</span>
+          {/* ================= SLEEK & MODERN HERO HEADER (MATCHING REFERENCE DESIGN) ================= */}
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-[var(--border-soft)]">
+            {/* Left: Sparkle Badge + Heading + Subtitle */}
+            <div className="space-y-1.5 max-w-2xl">
+              {/* Top Sparkles & "Your Learning Journey" Badge */}
+              <div className="flex items-center gap-2">
+                <span className="text-purple-500 dark:text-purple-400 text-xs font-mono font-bold select-none tracking-tighter">
+                  \ | /
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-purple-50 dark:bg-purple-950/60 border border-purple-200/80 dark:border-purple-800/60 text-purple-600 dark:text-purple-400 text-xs font-extrabold shadow-2xs">
+                  <span>★</span>
+                  <span>Your Learning Journey</span>
+                </span>
               </div>
-              <h1 className="text-2xl sm:text-4xl font-black tracking-tight mt-2 text-[var(--text)]">
-                Masterclasses & Engineering Hub
+
+              {/* Title */}
+              <h1 className="text-3xl sm:text-4xl font-black text-[var(--text)] tracking-tight">
+                Explore Our Courses
               </h1>
-              <p className="text-xs sm:text-sm text-[var(--muted)] mt-1">
-                Explore 50+ deep-dive curriculum tracks with pattern-wise DSA sheets, hands-on architectural challenges, and verified credentials.
+
+              {/* Subtitle */}
+              <p className="text-xs sm:text-sm text-[var(--muted)] leading-relaxed">
+                Build in-demand skills with expertly curated courses and hands-on projects.
               </p>
             </div>
 
-            <div className="flex items-center gap-3">
-              <Link
-                to="/dsa-sheet"
-                className="px-4 py-2 rounded-2xl text-xs font-extrabold bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-lg shadow-emerald-500/20 hover:scale-102 transition-all flex items-center gap-2"
-              >
-                <span>🧠</span> Explore DSA Sheets
-              </Link>
-              <Link
-                to="/contests"
-                className="px-4 py-2 rounded-2xl text-xs font-bold border border-[var(--border)] bg-[var(--surface)] text-[var(--text)] hover:border-[var(--accent)] transition-all flex items-center gap-2"
-              >
-                <span>🏆</span> Code Arena & Quizzes
-              </Link>
-            </div>
-          </div>
-
-          {/* SEARCH & MOBILE FILTER TRIGGER BAR */}
-          <div className="p-3 sm:p-4 rounded-2xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-md flex flex-col md:flex-row items-center justify-between gap-3">
-            {/* Search Input */}
-            <div className="relative w-full md:max-w-xl">
-              <div className="absolute left-3.5 top-3 text-[var(--muted)] pointer-events-none">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <circle cx="11" cy="11" r="8" strokeWidth="2" />
-                  <path d="m21 21-4.3-4.3" strokeWidth="2" strokeLinecap="round" />
-                </svg>
+            {/* Right: Integrated Controls (Search Pill + Category Dropdown + Grid/List) */}
+            <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 w-full lg:w-auto">
+              {/* Search Pill */}
+              <div className="relative flex-1 sm:w-64 sm:flex-initial">
+                <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--muted)] pointer-events-none">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="8" strokeWidth="2" />
+                    <path d="m21 21-4.3-4.3" strokeWidth="2" strokeLinecap="round" />
+                  </svg>
+                </div>
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search courses..."
+                  className="w-full pl-9 pr-8 py-2.5 rounded-full bg-[var(--surface-soft)] border border-[var(--border)] text-xs sm:text-sm text-[var(--text)] placeholder-[var(--muted)] focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all font-medium shadow-2xs"
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery("")}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--muted)] hover:text-[var(--text)] p-0.5 rounded-full text-xs cursor-pointer"
+                    title="Clear search"
+                  >
+                    ✕
+                  </button>
+                )}
               </div>
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search masterclasses, topics, skills (e.g. LangGraph, React, Rust, Kubernetes)..."
-                className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-[var(--surface-soft)] border border-[var(--border)] text-xs text-[var(--text)] placeholder-[var(--muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] transition-all font-medium"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery("")}
-                  className="absolute right-3.5 top-2.5 text-[var(--muted)] hover:text-[var(--text)] p-0.5 rounded-full hover:bg-[var(--surface)] transition-colors text-xs"
-                  title="Clear search"
-                >
-                  ✕
-                </button>
-              )}
-            </div>
 
-            {/* Mobile Filter Button */}
-            <div className="flex items-center gap-2 w-full md:w-auto justify-between md:justify-end">
+              {/* Category Pill Dropdown */}
+              <div ref={categoryDropdownRef} className="relative">
+                <button
+                  type="button"
+                  onClick={() => setShowCategoryDropdown(!showCategoryDropdown)}
+                  className="px-4 py-2.5 rounded-full bg-[var(--surface-soft)] hover:bg-[var(--surface)] border border-[var(--border)] text-xs font-semibold text-[var(--text)] flex items-center gap-2 transition-all shadow-2xs cursor-pointer whitespace-nowrap"
+                >
+                  <span>{activeCategoryLabel}</span>
+                  <svg
+                    className={`w-3.5 h-3.5 text-[var(--muted)] transition-transform ${showCategoryDropdown ? "rotate-180" : ""}`}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                {showCategoryDropdown && (
+                  <div className="absolute right-0 top-full mt-2 w-60 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xl py-1.5 z-50 animate-scale-in text-xs font-medium">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setFilters((prev) => ({ ...prev, category: [] }));
+                        setShowCategoryDropdown(false);
+                      }}
+                      className={`w-full text-left px-3.5 py-2 hover:bg-[var(--surface-soft)] flex items-center justify-between transition-colors cursor-pointer ${
+                        filters.category.length === 0 ? "text-blue-600 dark:text-blue-400 font-bold" : "text-[var(--text)]"
+                      }`}
+                    >
+                      <span>All Categories</span>
+                      {filters.category.length === 0 && <span>✓</span>}
+                    </button>
+                    {CATEGORY_OPTIONS.map((cat) => {
+                      const isSelected = filters.category.includes(cat.id);
+                      return (
+                        <button
+                          key={cat.id}
+                          type="button"
+                          onClick={() => {
+                            setFilters((prev) => ({ ...prev, category: [cat.id] }));
+                            setShowCategoryDropdown(false);
+                          }}
+                          className={`w-full text-left px-3.5 py-2 hover:bg-[var(--surface-soft)] flex items-center justify-between transition-colors cursor-pointer ${
+                            isSelected ? "text-blue-600 dark:text-blue-400 font-bold" : "text-[var(--text)]"
+                          }`}
+                        >
+                          <span>{cat.label}</span>
+                          {isSelected && <span>✓</span>}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+
+              {/* Mobile Filter Toggle */}
               <button
+                type="button"
                 onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
-                className="md:hidden px-4 py-2.5 rounded-xl bg-[var(--surface-soft)] border border-[var(--border)] text-xs font-bold flex items-center gap-2 text-[var(--text)] w-full justify-center"
+                className="lg:hidden px-3.5 py-2.5 rounded-full bg-[var(--surface-soft)] border border-[var(--border)] text-xs font-bold text-[var(--text)] flex items-center gap-1.5"
               >
-                <span>⚙️</span>
-                <span>Filters ({hasActiveFilters ? "Active" : "All"})</span>
+                <span>⚙️</span> Filters
               </button>
 
-              {/* View Mode Switcher (Grid vs List) */}
-              <div className="hidden sm:flex items-center bg-[var(--surface-soft)] border border-[var(--border)] rounded-xl p-1 shrink-0">
+              {/* Grid / List Switcher */}
+              <div className="hidden sm:flex items-center bg-[var(--surface-soft)] border border-[var(--border)] rounded-full p-0.5">
                 <button
+                  type="button"
                   onClick={() => setViewMode("grid")}
+                  className={`px-2.5 py-1.5 rounded-full text-xs font-bold transition-all flex items-center gap-1 cursor-pointer ${
+                    viewMode === "grid"
+                      ? "bg-[var(--surface)] text-blue-600 dark:text-blue-400 shadow-xs"
+                      : "text-[var(--muted)] hover:text-[var(--text)]"
+                  }`}
                   title="Grid View"
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${viewMode === "grid"
-                    ? "bg-[var(--surface)] text-[var(--accent)] shadow-sm font-extrabold"
-                    : "text-[var(--muted)] hover:text-[var(--text)]"
-                    }`}
                 >
-                  <span>⊞</span> Grid
+                  <span>⊞</span>
                 </button>
                 <button
+                  type="button"
                   onClick={() => setViewMode("list")}
+                  className={`px-2.5 py-1.5 rounded-full text-xs font-bold transition-all flex items-center gap-1 cursor-pointer ${
+                    viewMode === "list"
+                      ? "bg-[var(--surface)] text-blue-600 dark:text-blue-400 shadow-xs"
+                      : "text-[var(--muted)] hover:text-[var(--text)]"
+                  }`}
                   title="List View"
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${viewMode === "list"
-                    ? "bg-[var(--surface)] text-[var(--accent)] shadow-sm font-extrabold"
-                    : "text-[var(--muted)] hover:text-[var(--text)]"
-                    }`}
                 >
-                  <span>☰</span> List
+                  <span>☰</span>
                 </button>
               </div>
             </div>
@@ -786,145 +859,28 @@ export default function CoursesCatalogPage() {
                   })}
                 </div>
               ) : (
-                /* ================= LIST VIEW ================= */
+                /* ================= LIST VIEW (MATCHING GRID DESIGN) ================= */
                 <div className="space-y-4">
                   {filteredCourses.map((c) => {
                     const enrolled = isEnrolled(c.id);
                     const progress = getCourseProgress(c.id);
 
                     return (
-                      <article
+                      <CourseCard
                         key={c.id}
-                        className="group rounded-2xl bg-[var(--surface)] border border-[var(--border)] hover:border-blue-500/50 shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 p-5 grid grid-cols-1 md:grid-cols-12 gap-5 items-center"
-                      >
-                        {/* Left Image Thumbnail (3 cols) */}
-                        <div className="md:col-span-3 h-44 rounded-xl relative overflow-hidden bg-[var(--surface-soft)]">
-                          {c.thumbnailUrl ? (
-                            <img
-                              src={c.thumbnailUrl}
-                              alt={c.title}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                              loading="lazy"
-                            />
-                          ) : (
-                            <div
-                              className="w-full h-full"
-                              style={{ background: c.bannerGradient || "linear-gradient(135deg, #1e293b 0%, #334155 100%)" }}
-                            />
-                          )}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30 pointer-events-none" />
-                          <div className="absolute top-3 left-3 z-10">
-                            <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-slate-900/80 text-white backdrop-blur-md border border-white/10 shadow-sm">
-                              {c.categoryLabel}
-                            </span>
-                          </div>
-                          <div className="absolute bottom-3 left-3 right-3 z-10 flex items-center justify-between text-white text-[11px]">
-                            <span className="font-mono bg-slate-900/80 backdrop-blur-md px-2.5 py-0.5 rounded-md border border-white/10">
-                              ⏱ {c.duration}
-                            </span>
-                            <span className="text-amber-300 font-bold bg-slate-900/80 backdrop-blur-md px-2.5 py-0.5 rounded-md border border-white/10 flex items-center gap-1">
-                              ★ {c.rating}
-                            </span>
-                          </div>
-                        </div>
-
-                        {/* Middle Highlights & Specs (6 cols) */}
-                        <div className="md:col-span-6 space-y-2.5">
-                          <div className="flex items-center gap-2">
-                            <Link to={`/learn/${c.id}`}>
-                              <h3 className="text-base font-bold text-[var(--text)] group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                                {c.title}
-                              </h3>
-                            </Link>
-                            {c.bestseller && (
-                              <span className="text-[9px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-amber-400 text-slate-950 shadow-xs">
-                                Bestseller
-                              </span>
-                            )}
-                          </div>
-
-                          {/* Rating Row */}
-                          <div className="flex items-center gap-2 text-xs">
-                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-emerald-600 text-white font-bold text-[11px] shadow-xs">
-                              {c.rating} ★
-                            </span>
-                            <span className="text-[var(--muted)] font-semibold">
-                              ({c.studentsCount.toLocaleString()} learners)
-                            </span>
-                            <span className="text-[var(--muted)]">•</span>
-                            <span className="text-[var(--muted)] font-semibold">{c.level}</span>
-                            <span className="text-[var(--muted)]">•</span>
-                            <span className="text-[var(--muted)] font-semibold">{c.duration}</span>
-                          </div>
-
-                          <p className="text-xs text-[var(--muted)] line-clamp-2">
-                            {c.tagline}
-                          </p>
-
-                          {/* Highlights List */}
-                          <ul className="text-[11px] text-[var(--muted)] space-y-1">
-                            <li className="flex items-center gap-1.5">
-                              <span className="text-blue-600 dark:text-blue-400 font-bold">⚡</span>
-                              <span>Comprehensive syllabus with hands-on capstone architecture</span>
-                            </li>
-                            <li className="flex items-center gap-1.5">
-                              <span className="text-emerald-500 font-bold">📜</span>
-                              <span>Cryptographically verifiable completion certificate</span>
-                            </li>
-                          </ul>
-
-                          {/* Skills */}
-                          <div className="flex flex-wrap gap-1.5 pt-1">
-                            {c.skills.map((s) => (
-                              <span
-                                key={s}
-                                className="px-2 py-0.5 rounded-md bg-[var(--surface-soft)] border border-[var(--border-soft)] text-[10px] font-medium text-[var(--text)]"
-                              >
-                                {s}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-
-                        {/* Right CTAs (3 cols) */}
-                        <div className="md:col-span-3 md:border-l border-[var(--border-soft)] md:pl-5 space-y-3 flex flex-col justify-between h-full">
-                          <div>
-                            <span className="text-xs font-bold text-[var(--accent)] block">
-                              Full Access Included
-                            </span>
-                            <span className="text-[10px] text-[var(--muted)] block mt-0.5">
-                              Complete Masterclass & Certificate
-                            </span>
-                            <div className="mt-2 text-xs text-[var(--muted)]">
-                              Instructor: <strong className="text-[var(--text)]">{c.instructor.name}</strong>
-                            </div>
-                          </div>
-
-                          <div className="space-y-2">
-                            {enrolled ? (
-                              <Link
-                                to={`/learn/${c.id}`}
-                                className="button button-sm w-full text-xs font-bold text-center block shadow-md"
-                              >
-                                Continue Learning →
-                              </Link>
-                            ) : (
-                              <button
-                                onClick={() => setPreviewCourse(c)}
-                                className="button button-sm w-full text-xs font-bold text-center block shadow-md cursor-pointer"
-                              >
-                                Preview & Enroll →
-                              </button>
-                            )}
-                            <button
-                              onClick={() => setPreviewCourse(c)}
-                              className="w-full text-center block text-xs text-[var(--muted)] hover:text-[var(--text)] font-semibold cursor-pointer"
-                            >
-                              View Syllabus & Preview
-                            </button>
-                          </div>
-                        </div>
-                      </article>
+                        course={c}
+                        isEnrolled={enrolled}
+                        progressPercent={progress?.percentage || 0}
+                        layout="list"
+                        onPreview={(course) => setPreviewCourse(course)}
+                        onStartLearning={(course) => {
+                          if (enrolled) {
+                            navigate(`/learn/${course.id}`);
+                          } else {
+                            setPreviewCourse(course);
+                          }
+                        }}
+                      />
                     );
                   })}
                 </div>

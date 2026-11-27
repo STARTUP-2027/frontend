@@ -1,1 +1,11 @@
-{"version":4,"routes":{"/learn/ai-agents-masterclass":{},"/learn/fullstack-react-nextjs":{},"/learn/rust-systems":{},"/learn/cloud-devops-k8s":{},"/learn/cybersecurity-zero-trust":{},"/learn/design-systems-tailwindcss":{},"/learn/python-core-data-structures":{},"/learn/nextjs-fullstack-architecture":{},"/learn/docker-kubernetes-gitops":{}},"dynamicRoutes":{"/learn/[courseId]":{"dataRoute":null,"dataRouteRegex":null,"fallback":null,"fallbackRevalidate":false,"fallbackSourceRoute":"/learn/[courseId]","routeRegex":"^\\/learn\\/([^/]+?)(?:\\/)?$","allowHeader":[]}},"notFoundRoutes":[],"preview":{"previewModeId":"df7e2c85593a578e3a9a2f9fa6da6335","previewModeSigningKey":"62d13b5086cfd039db05feb86c50607613ab4921e27d1eb6771039c438d6e228","previewModeEncryptionKey":"4f9c571d886dbc0856c2b1f4b24122b52d97a7f1c68d54cd89ffa6e0e705c0ed"}}
+{
+  "version": 4,
+  "routes": {},
+  "dynamicRoutes": {},
+  "notFoundRoutes": [],
+  "preview": {
+    "previewModeId": "800f66563aadfd17ccedaa737c5c61f6",
+    "previewModeSigningKey": "e92ee72c73164b0b24667b010f4fefa8a61be587cb64e2cdc6b4f1e142d12ff3",
+    "previewModeEncryptionKey": "1f1303a7c7cf3ac2d270190a14dfc791615755a30e8cec5fde4273b9dfb87690"
+  }
+}
