@@ -480,19 +480,17 @@ export default function AstraPlatformWidget() {
   const [inputVal, setInputVal] = useState("");
   const [isTyping, setIsTyping] = useState(false);
 
-  // Position & Dragging State for Circular Floating Button
-  const [iconPos, setIconPos] = useState<{ x: number; y: number }>(() => {
+  // Position & Dragging State for Circular Floating Button (defaults to bottom-right corner)
+  const [iconPos, setIconPos] = useState<{ x: number; y: number } | null>(null);
+
+  // Clear any legacy saved position on mount so widget always loads at bottom-right corner
+  useEffect(() => {
     try {
-      const saved = localStorage.getItem("astra_chat_icon_pos");
-      if (saved) return JSON.parse(saved);
+      localStorage.removeItem("astra_chat_icon_pos");
     } catch {
       // ignore
     }
-    return {
-      x: typeof window !== "undefined" ? Math.max(20, window.innerWidth - 76) : 1000,
-      y: typeof window !== "undefined" ? Math.max(20, window.innerHeight - 84) : 800,
-    };
-  });
+  }, []);
 
   // Position & Dragging State for Chat Window
   const [windowPos, setWindowPos] = useState<{ x: number; y: number } | null>(null);
@@ -557,10 +555,13 @@ export default function AstraPlatformWidget() {
   // Adjust icon position and window position if viewport resizes
   useEffect(() => {
     const handleResize = () => {
-      setIconPos((prev) => ({
-        x: Math.min(prev.x, Math.max(20, window.innerWidth - 76)),
-        y: Math.min(prev.y, Math.max(20, window.innerHeight - 84)),
-      }));
+      setIconPos((prev) => {
+        if (!prev) return null;
+        return {
+          x: Math.min(prev.x, Math.max(20, window.innerWidth - 76)),
+          y: Math.min(prev.y, Math.max(20, window.innerHeight - 84)),
+        };
+      });
 
       setWindowPos((prev) => {
         if (!prev) return null;
@@ -581,14 +582,15 @@ export default function AstraPlatformWidget() {
   const dragStartRef = useRef({ startX: 0, startY: 0, initialX: 0, initialY: 0 });
   const hasMovedRef = useRef(false);
 
-  const handleIconPointerDown = (clientX: number, clientY: number) => {
+  const handleIconPointerDown = (clientX: number, clientY: number, target: HTMLElement) => {
     isDraggingIconRef.current = true;
     hasMovedRef.current = false;
+    const rect = target.getBoundingClientRect();
     dragStartRef.current = {
       startX: clientX,
       startY: clientY,
-      initialX: iconPos.x,
-      initialY: iconPos.y,
+      initialX: iconPos ? iconPos.x : rect.left,
+      initialY: iconPos ? iconPos.y : rect.top,
     };
 
     const handlePointerMove = (e: MouseEvent | TouchEvent) => {
@@ -615,15 +617,6 @@ export default function AstraPlatformWidget() {
       window.removeEventListener("mouseup", handlePointerUp);
       window.removeEventListener("touchmove", handlePointerMove);
       window.removeEventListener("touchend", handlePointerUp);
-
-      setIconPos((finalPos) => {
-        try {
-          localStorage.setItem("astra_chat_icon_pos", JSON.stringify(finalPos));
-        } catch {
-          // ignore
-        }
-        return finalPos;
-      });
 
       // Tap without drag toggles chat open/close
       if (!hasMovedRef.current) {
@@ -783,22 +776,31 @@ export default function AstraPlatformWidget() {
       {/* =================================================================== */}
       {!isOpen && (
         <div
-          style={{
-            position: "fixed",
-            left: `${iconPos.x}px`,
-            top: `${iconPos.y}px`,
-            zIndex: 60,
-          }}
+          style={
+            iconPos
+              ? {
+                  position: "fixed",
+                  left: `${iconPos.x}px`,
+                  top: `${iconPos.y}px`,
+                  zIndex: 60,
+                }
+              : {
+                  position: "fixed",
+                  right: "24px",
+                  bottom: "24px",
+                  zIndex: 60,
+                }
+          }
           className="select-none print:hidden touch-none"
         >
           <div
             onMouseDown={(e) => {
               e.preventDefault();
-              handleIconPointerDown(e.clientX, e.clientY);
+              handleIconPointerDown(e.clientX, e.clientY, e.currentTarget);
             }}
             onTouchStart={(e) => {
               const touch = e.touches[0];
-              handleIconPointerDown(touch.clientX, touch.clientY);
+              handleIconPointerDown(touch.clientX, touch.clientY, e.currentTarget);
             }}
             title="Astra AI Guide"
             className="group relative w-14 h-14 rounded-full bg-blue-600 hover:bg-blue-700 text-white shadow-xl shadow-blue-600/35 hover:scale-105 active:scale-95 transition-all flex items-center justify-center cursor-grab active:cursor-grabbing border-2 border-white/40"

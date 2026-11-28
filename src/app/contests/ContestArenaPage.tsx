@@ -513,13 +513,13 @@ function ArenaThumbnailGraphic({ type }: { type?: string }) {
             <g transform="translate(160, 48)">
               <path d="M-45 16 V28 Q-45 42 0 42 Q45 42 45 28 V16 Z" fill="url(#dbDiskGrad)" stroke="#6366f1" strokeWidth="1.5" />
               <ellipse cx="0" cy="16" rx="45" ry="14" fill="#a5b4fc" stroke="#c7d2fe" strokeWidth="1.5" />
-              
+
               <path d="M-45 40 V52 Q-45 66 0 66 Q45 66 45 52 V40 Z" fill="url(#dbDiskGrad)" stroke="#6366f1" strokeWidth="1.5" />
               <ellipse cx="0" cy="40" rx="45" ry="14" fill="#818cf8" stroke="#a5b4fc" strokeWidth="1.5" />
-              
+
               <path d="M-45 64 V76 Q-45 90 0 90 Q45 90 45 76 V64 Z" fill="url(#dbDiskGrad)" stroke="#4f46e5" strokeWidth="1.5" />
               <ellipse cx="0" cy="64" rx="45" ry="14" fill="#6366f1" stroke="#818cf8" strokeWidth="1.5" />
-              
+
               <circle cx="-25" cy="28" r="2" fill="#38bdf8" />
               <circle cx="-25" cy="52" r="2" fill="#10b981" />
               <circle cx="-25" cy="76" r="2" fill="#38bdf8" />
@@ -763,75 +763,73 @@ export default function ContestArenaPage() {
       <div className="subpage-noise" />
       <SiteNav />
 
-        <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-32 sm:pt-36 pb-36 space-y-8">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-32 sm:pt-36 pb-36 space-y-8">
 
-          {/* HERO ARENA HEADER */}
-          <div className="relative overflow-hidden p-6 sm:p-8 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
-              <div className="space-y-2 max-w-2xl">
-                <div className="flex items-center gap-3">
-                  <span className="px-3 py-1 rounded-full text-[11px] font-extrabold tracking-wider bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 uppercase flex items-center gap-1.5 shadow-sm">
-                    <span>⚡</span> Live Coding & Contest Arena
-                  </span>
-                  <span className="text-xs text-[var(--muted)] font-mono">Season 4 Active</span>
-                </div>
-                <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-[var(--text)]">
-                  Quiz Playground & Hackathon Arena
-                </h1>
-                <p className="text-xs sm:text-sm text-[var(--muted)] leading-relaxed">
-                  Compete in daily architectural benchmark quizzes, timed code challenges, and real-time 1v1 code duels to climb the global leaderboard.
-                </p>
+        {/* HERO ARENA HEADER */}
+        <div className="relative overflow-hidden p-6 sm:p-8 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
+            <div className="space-y-2 max-w-2xl">
+              <div className="flex items-center gap-3">
+                <span className="px-3 py-1 rounded-full text-[11px] font-extrabold tracking-wider bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 uppercase flex items-center gap-1.5 shadow-sm">
+                  <span>⚡</span> Live Coding & Contest Arena
+                </span>
+                <span className="text-xs text-[var(--muted)] font-mono">Season 4 Active</span>
               </div>
+              <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-[var(--text)]">
+                Quiz Playground & Hackathon Arena
+              </h1>
+              <p className="text-xs sm:text-sm text-[var(--muted)] leading-relaxed">
+                Compete in daily architectural benchmark quizzes, timed code challenges, and real-time 1v1 code duels to climb the global leaderboard.
+              </p>
+            </div>
 
-              {/* Quick Stats Pill */}
-              <div className="flex items-center justify-between sm:justify-start gap-2 sm:gap-3 bg-[var(--surface-soft)] p-3 sm:p-4 rounded-2xl border border-[var(--border-soft)] shadow-sm shrink-0 w-full sm:w-auto">
-                <div className="text-center px-2.5 sm:px-3 border-r border-[var(--border-soft)]">
-                  <span className="text-[10px] uppercase font-black text-[var(--muted)] tracking-wider">Your Rank</span>
-                  <p className="text-base sm:text-lg font-black text-amber-500">#4</p>
-                </div>
-                <div className="text-center px-2.5 sm:px-3 border-r border-[var(--border-soft)]">
-                  <span className="text-[10px] uppercase font-black text-[var(--muted)] tracking-wider">Contest XP</span>
-                  <p className="text-base sm:text-lg font-black text-blue-600 dark:text-blue-400">{user?.xp || 4900} XP</p>
-                </div>
-                <div className="text-center px-2.5 sm:px-3">
-                  <span className="text-[10px] uppercase font-black text-[var(--muted)] tracking-wider">Win Rate</span>
-                  <p className="text-base sm:text-lg font-black text-emerald-600 dark:text-emerald-400">85%</p>
-                </div>
+            {/* Quick Stats Pill */}
+            <div className="flex items-center gap-3 bg-[var(--surface-soft)] p-4 rounded-2xl border border-[var(--border-soft)] shadow-sm shrink-0">
+              <div className="text-center px-3 border-r border-[var(--border-soft)]">
+                <span className="text-[10px] uppercase font-black text-[var(--muted)] tracking-wider">Your Rank</span>
+                <p className="text-lg font-black text-amber-500">#4</p>
+              </div>
+              <div className="text-center px-3 border-r border-[var(--border-soft)]">
+                <span className="text-[10px] uppercase font-black text-[var(--muted)] tracking-wider">Contest XP</span>
+                <p className="text-lg font-black text-blue-600 dark:text-blue-400">{user?.xp || 4900} XP</p>
+              </div>
+              <div className="text-center px-3">
+                <span className="text-[10px] uppercase font-black text-[var(--muted)] tracking-wider">Win Rate</span>
+                <p className="text-lg font-black text-emerald-600 dark:text-emerald-400">85%</p>
               </div>
             </div>
           </div>
+        </div>
 
-          {/* ARENA MODE TABS */}
-          <div className="flex border-b border-[var(--border-soft)] gap-2 overflow-x-auto no-scrollbar">
-            <button
-              onClick={() => setActiveMainTab("catalog")}
-              className={`pb-3 px-4 text-xs font-bold transition-all border-b-2 flex items-center gap-2 whitespace-nowrap cursor-pointer ${
-                activeMainTab === "catalog"
-                  ? "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400 font-extrabold"
-                  : "border-transparent text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
+        {/* ARENA MODE TABS */}
+        <div className="flex border-b border-[var(--border-soft)] gap-2 overflow-x-auto no-scrollbar">
+          <button
+            onClick={() => setActiveMainTab("catalog")}
+            className={`pb-3 px-4 text-xs font-bold transition-all border-b-2 flex items-center gap-2 whitespace-nowrap cursor-pointer ${activeMainTab === "catalog"
+              ? "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400 font-extrabold"
+              : "border-transparent text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
               }`}
-            >
-              <span className="text-sm">🎯</span> Daily Quizzes & Benchmarks ({ALL_CHALLENGES.length})
-            </button>
+          >
+            <span className="text-sm">🎯</span> Daily Quizzes & Benchmarks ({ALL_CHALLENGES.length})
+          </button>
           <button
             onClick={() => setActiveMainTab("hackathon")}
-            className = {`pb-3 px-4 text-xs font-bold transition-all border-b-2 flex items-center gap-2 whitespace-nowrap cursor-pointer ${activeMainTab === "hackathon"
-                    ? "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400 font-extrabold"
-                    : "border-transparent text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
-                }`}
-            >
-              <span className="text-sm">🏆</span> Speed Hackathons & Scoreboard
-            </button>
-            <button
-              onClick={() => setActiveMainTab("duel")}
-              className={`pb-3 px-4 text-xs font-bold transition-all border-b-2 flex items-center gap-2 whitespace-nowrap cursor-pointer ${
-                activeMainTab === "duel"
-                  ? "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400 font-extrabold"
-                  : "border-transparent text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
+            className={`pb-3 px-4 text-xs font-bold transition-all border-b-2 flex items-center gap-2 whitespace-nowrap cursor-pointer ${activeMainTab === "hackathon"
+              ? "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400 font-extrabold"
+              : "border-transparent text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
               }`}
-            >
-              <span className="text-sm">⚔️</span> Battle Mode (1v1 AI Code Duel)
-            </button>
+          >
+            <span className="text-sm">🏆</span> Speed Hackathons & Scoreboard
+          </button>
+          <button
+            onClick={() => setActiveMainTab("duel")}
+            className={`pb-3 px-4 text-xs font-bold transition-all border-b-2 flex items-center gap-2 whitespace-nowrap cursor-pointer ${activeMainTab === "duel"
+              ? "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400 font-extrabold"
+              : "border-transparent text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
+              }`}
+          >
+            <span className="text-sm">⚔️</span> Battle Mode (1v1 AI Code Duel)
+          </button>
         </div>
 
         {/* ================= TAB 1: QUIZZES & BENCHMARKS CATALOG WITH FILTERS ================= */}
@@ -842,9 +840,9 @@ export default function ContestArenaPage() {
             <div className="sticky top-[86px] sm:top-[90px] z-30 p-4 sm:p-5 rounded-2xl bg-[var(--surface)]/95 backdrop-blur-xl border border-[var(--border)] shadow-sm space-y-4 transition-all">
 
               {/* Row 1: Search + Category + Difficulty + Type */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-3 items-center">
-                {/* Search Box (4 cols on md, full on mobile) */}
-                <div className="col-span-1 sm:col-span-2 md:col-span-4 relative">
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
+                {/* Search Box (5 cols) */}
+                <div className="md:col-span-4 relative">
                   <div className="absolute left-3.5 top-3 text-[var(--muted)] pointer-events-none">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <circle cx="11" cy="11" r="8" strokeWidth="2" />
@@ -868,8 +866,8 @@ export default function ContestArenaPage() {
                   )}
                 </div>
 
-                {/* Domain Selector (3 cols on md, 1 col on sm) */}
-                <div className="col-span-1 sm:col-span-1 md:col-span-3">
+                {/* Domain Selector (3 cols) */}
+                <div className="md:col-span-3">
                   <select
                     value={selectedCategory}
                     onChange={(e) => setSelectedCategory(e.target.value)}
@@ -885,8 +883,8 @@ export default function ContestArenaPage() {
                   </select>
                 </div>
 
-                {/* Difficulty Selector (3 cols on md, 1 col on sm) */}
-                <div className="col-span-1 sm:col-span-1 md:col-span-3">
+                {/* Difficulty Selector (3 cols) */}
+                <div className="md:col-span-3">
                   <select
                     value={selectedDifficulty}
                     onChange={(e) => setSelectedDifficulty(e.target.value)}
@@ -900,8 +898,8 @@ export default function ContestArenaPage() {
                   </select>
                 </div>
 
-                {/* Type Selector (2 cols on md, 2 cols on sm) */}
-                <div className="col-span-1 sm:col-span-2 md:col-span-2">
+                {/* Type Selector (2 cols) */}
+                <div className="md:col-span-2">
                   <select
                     value={selectedType}
                     onChange={(e) => setSelectedType(e.target.value)}
@@ -926,285 +924,281 @@ export default function ContestArenaPage() {
                     <button
                       key={tab.id}
                       onClick={() => setSelectedStatus(tab.id)}
-              className = {`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 cursor-pointer ${selectedStatus === tab.id
-                    ? "bg-blue-600 text-white shadow-sm font-black"
-                    : "bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 font-bold"
-                }`}
-                    >
-            {tab.label}
-          </button>
-                  ))}
-        </div>
-
-        {/* Filter Result Counter & Reset */}
-        <div className="flex items-center gap-3 text-[var(--muted)] font-semibold">
-          <span>Showing <strong className="text-[var(--text)]">{filteredChallenges.length}</strong> quizzes & challenges</span>
-          {hasActiveFilters && (
-            <button
-              onClick={handleClearFilters}
-              className="text-xs text-blue-600 dark:text-blue-400 hover:underline font-bold cursor-pointer"
-            >
-              Reset Filters ✕
-            </button>
-          )}
-        </div>
-    </div>
-            </div >
-
-    {/* TWO-COLUMN GRID: CARDS FEED (LEFT 8-9 COLS) + LEADERBOARD (RIGHT 3-4 COLS) */}
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-
-      {/* ================= CARDS FEED (8-9 COLS) ================= */}
-      <div className="lg:col-span-8 2xl:col-span-9 space-y-4">
-      {
-        filteredChallenges.length === 0 ? (
-          <div className="p-12 text-center rounded-2xl bg-[var(--surface)] border border-[var(--border)] space-y-4 shadow-xs">
-            <div className="w-16 h-16 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-3xl flex items-center justify-center mx-auto">
-              🔍
-            </div>
-            <h3 className="text-lg font-black">No quizzes match your filter criteria</h3>
-            <p className="text-xs text-[var(--muted)] max-w-md mx-auto">
-              Try resetting your domain or difficulty selection to discover exciting technical challenges.
-            </p>
-            <button
-              onClick={handleClearFilters}
-              className="button button-sm text-xs font-bold mx-auto mt-2 cursor-pointer"
-            >
-              Reset All Filters
-            </button>
-          </div>
-        ) : (
-          /* HIGH-IMPACT ARENA GRID: 2-column on laptops/tablets, 3-column on wide screens */
-          <div className="grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-3 gap-5 auto-rows-fr">
-            {filteredChallenges.map((ch) => {
-              const isSolved = solvedChallengeIds.includes(ch.id);
-              const isBookmarked = bookmarkedIds.includes(ch.id);
-
-              return (
-                <article
-                  key={ch.id}
-                  className="group relative rounded-2xl bg-[var(--surface)] border border-[var(--border)] hover:border-purple-400/40 dark:hover:border-purple-500/40 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden text-left h-full select-none"
-                >
-                  {/* Visual 3D / Cyber Thumbnail Banner - Matches CourseCard aspect-[16/10] */}
-                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-950 shrink-0">
-                    {/* Centered Glowing 3D Vector Illustration */}
-                    <ArenaThumbnailGraphic type={ch.iconType} />
-
-                    {/* Top-Left Category / Status Badge Pill */}
-                    <div className={`absolute top-3 left-3 z-20 flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black text-white shadow-md backdrop-blur-md bg-gradient-to-r ${ch.badgeConfig?.gradient || "from-blue-600 to-indigo-600"}`}>
-                      <span>{ch.badgeConfig?.icon}</span>
-                      <span>{ch.badgeConfig?.label}</span>
-                    </div>
-
-                    {/* Top-Right Heart Bookmark Button */}
-                    <button
-                      type="button"
-                      onClick={(e) => toggleBookmark(ch.id, e)}
-                      className={`absolute top-3 right-3 z-20 w-8 h-8 rounded-full border backdrop-blur-md flex items-center justify-center transition-all cursor-pointer ${
-                        isBookmarked
-                          ? "bg-rose-500/80 border-rose-400 text-white shadow-md shadow-rose-500/30 scale-105"
-                          : "bg-black/30 hover:bg-black/50 border-white/20 text-white hover:scale-105"
-                      }`}
-                      title={isBookmarked ? "Remove Bookmark" : "Bookmark Challenge"}
-                    >
-                      <svg className="w-4 h-4" fill={isBookmarked ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-                      </svg>
-                    </button>
-
-                    {/* Bottom-Right XP Badge inside banner */}
-                    <div className="absolute bottom-3 right-3 z-20 px-2.5 py-1 rounded-full text-[11px] font-black font-mono bg-slate-950/80 text-amber-300 border border-amber-400/30 backdrop-blur-md flex items-center gap-1 shadow-lg">
-                      <span>⭐</span>
-                      <span>+{ch.xp} XP</span>
-                    </div>
-
-                    {/* Bottom Organic Wave Curve Transition */}
-                    <div className="absolute -bottom-1 left-0 right-0 z-20 pointer-events-none text-[var(--surface)] fill-current">
-                      <svg viewBox="0 0 500 28" preserveAspectRatio="none" className="w-full h-5 sm:h-6 block">
-                        <path d="M0,6 C130,26 230,2 350,22 C420,30 470,16 500,24 L500,28 L0,28 Z" />
-                      </svg>
-                    </div>
-                  </div>
-
-                  {/* Card Content Body - Matching CourseCard Height Profile */}
-                  <div className="p-4 sm:p-5 flex flex-col flex-1 justify-between gap-3 bg-[var(--surface)]">
-                    <div className="space-y-2">
-                      <h3 className="text-base font-bold text-[var(--text)] group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2 leading-snug h-[2.85rem] overflow-hidden tracking-tight">
-                        {ch.title}
-                      </h3>
-
-                      <p className="text-xs text-[var(--muted)] line-clamp-2 leading-relaxed h-[2.5rem] overflow-hidden">
-                        {ch.question}
-                      </p>
-
-                      {/* Tech Tags - Single Row Never Wrapping */}
-                      <div className="flex items-center gap-1.5 pt-1 overflow-hidden h-[1.75rem] flex-nowrap">
-                        {ch.tags.slice(0, 3).map((tag) => (
-                          <span
-                            key={tag}
-                            className="px-2.5 py-0.5 rounded-md bg-[var(--surface-soft)] border border-[var(--border-soft)] text-[10px] font-medium text-[var(--muted)] hover:text-[var(--text)] whitespace-nowrap shrink-0"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                        {ch.tags.length > 3 && (
-                          <span className="px-1.5 py-0.5 rounded-md bg-[var(--surface-soft)] border border-[var(--border-soft)] text-[10px] text-[var(--muted)] font-semibold shrink-0">
-                            +{ch.tags.length - 3}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* 3-Column Metrics Row */}
-                    <div className="grid grid-cols-3 gap-1 py-2 px-3 rounded-xl bg-[var(--surface-soft)]/60 border border-[var(--border-soft)] text-center">
-                      <div className="flex flex-col items-center">
-                        <span className="text-[11px] font-bold text-[var(--text)] whitespace-nowrap">⏱ {Math.floor(ch.timeLimitSec / 60)} min</span>
-                        <span className="text-[9px] text-[var(--muted)] font-medium">Time</span>
-                      </div>
-                      <div className="flex flex-col items-center border-x border-[var(--border-soft)]">
-                        <span className="text-[11px] font-bold text-[var(--text)] whitespace-nowrap">👥 {ch.solvedCount.toLocaleString()}</span>
-                        <span className="text-[9px] text-[var(--muted)] font-medium">Attempts</span>
-                      </div>
-                      <div className="flex flex-col items-center">
-                        <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 font-mono whitespace-nowrap">📶 {ch.acceptanceRate}</span>
-                        <span className="text-[9px] text-[var(--muted)] font-medium">Accepted</span>
-                      </div>
-                    </div>
-
-                    {/* Card Footer: Difficulty + Fixed Single-Line Action CTA Button */}
-                    <div className="pt-2.5 border-t border-[var(--border-soft)] flex items-center justify-between gap-2 mt-auto">
-                      <span className={`px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider whitespace-nowrap shrink-0 ${
-                        ch.difficulty === "Beginner"
-                          ? "bg-blue-100 text-blue-900 border border-blue-200 dark:bg-blue-950/60 dark:text-blue-300 dark:border-blue-800"
-                          : ch.difficulty === "Intermediate"
-                          ? "bg-amber-100 text-amber-900 border border-amber-200 dark:bg-amber-950/60 dark:text-amber-300 dark:border-amber-800"
-                          : ch.difficulty === "Advanced"
-                          ? "bg-emerald-100 text-emerald-900 border border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-800"
-                          : "bg-purple-100 text-purple-900 border border-purple-200 dark:bg-purple-950/60 dark:text-purple-300 dark:border-purple-800"
-                      }`}>
-                        {ch.difficulty}
-                      </span>
-
-                      <button
-                        onClick={() => handleOpenChallenge(ch)}
-                        className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-xs whitespace-nowrap shrink-0 ${
-                          isSolved || ch.actionStyle === "secondary"
-                            ? "bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200 dark:bg-purple-950/40 dark:text-purple-300 dark:border-purple-800"
-                            : "bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-blue-500/20"
+                      className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 cursor-pointer ${selectedStatus === tab.id
+                        ? "bg-blue-600 text-white shadow-sm font-black"
+                        : "bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 font-bold"
                         }`}
-                      >
-                        <span>{isSolved ? "Retake" : ch.actionLabel || "Solve Challenge"}</span>
-                        <span>→</span>
-                      </button>
-                    </div>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-        )}
-      </div>
-
-      {/* ================= ARENA LEADERBOARD (ENHANCED DESIGN & SPACING) ================= */}
-      <aside className="lg:col-span-4 2xl:col-span-3 space-y-5 lg:sticky lg:top-[240px] lg:max-h-[calc(100vh-16rem)] lg:overflow-y-auto">
-        <div className="p-5 sm:p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] space-y-4 shadow-sm">
-          {/* Header */}
-          <div className="flex items-center justify-between border-b border-[var(--border-soft)] pb-3">
-            <div className="flex items-center gap-2">
-              <span className="text-xl">🏆</span>
-              <h3 className="text-xs sm:text-sm font-black uppercase tracking-wider text-[var(--text)]">
-                ARENA LEADERBOARD
-              </h3>
-            </div>
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              Live
-            </span>
-          </div>
-
-          {/* Timeframe Tabs: Weekly, Monthly, All Time */}
-          <div className="flex items-center p-1 rounded-xl bg-[var(--surface-soft)] border border-[var(--border-soft)] text-xs font-bold">
-            {(["Weekly", "Monthly", "All Time"] as const).map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setLeaderboardTimeframe(tab)}
-                className={`flex-1 py-1.5 rounded-lg text-center transition-all cursor-pointer text-xs ${
-                  leaderboardTimeframe === tab
-                    ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-extrabold shadow-sm"
-                    : "text-[var(--muted)] hover:text-[var(--text)] font-semibold"
-                }`}
-              >
-                {tab}
-              </button>
-            ))}
-          </div>
-
-          {/* Users List with Medals and Generous Horizontal Padding */}
-          <div className="divide-y divide-[var(--border-soft)]">
-            {displayedLeaderboard.map((usr) => (
-              <div
-                key={usr.rank}
-                className="py-3 px-2 flex items-center justify-between text-xs hover:bg-[var(--surface-soft)]/60 rounded-xl transition-colors"
-              >
-                <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
-                  <span className="w-6 text-center font-black text-sm shrink-0">
-                    {usr.rank === 1 ? (
-                      <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-amber-500/15 text-amber-500 text-xs font-black border border-amber-500/30">
-                        #1
-                      </span>
-                    ) : usr.rank === 2 ? (
-                      <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-slate-400/15 text-slate-400 text-xs font-black border border-slate-400/30">
-                        #2
-                      </span>
-                    ) : usr.rank === 3 ? (
-                      <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-amber-700/15 text-amber-600 text-xs font-black border border-amber-600/30">
-                        #3
-                      </span>
-                    ) : (
-                      <span className="text-[var(--muted)] text-xs font-bold">#{usr.rank}</span>
-                    )}
-                  </span>
-
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 text-white font-black text-xs flex items-center justify-center shrink-0 shadow-xs border border-white/20">
-                    {usr.avatar}
-                  </div>
-
-                  <div className="min-w-0 pr-1">
-                    <p className="font-extrabold text-[var(--text)] text-xs truncate">
-                      {usr.name}
-                    </p>
-                    <span className="text-[10px] text-[var(--muted)] font-medium block truncate">
-                      {usr.role}
-                    </span>
-                  </div>
+                    >
+                      {tab.label}
+                    </button>
+                  ))}
                 </div>
 
-                <div className="text-right shrink-0 pl-2">
-                  <span className="font-extrabold text-[var(--text)] text-xs block">
-                    {usr.xp.toLocaleString()} XP
-                  </span>
-                  <span className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-500 bg-amber-500/10 dark:bg-amber-500/15 px-1.5 py-0.5 rounded-md border border-amber-500/20 mt-0.5">
-                    <span>🔥</span>
-                    <span>{usr.streak}</span>
-                  </span>
+                {/* Filter Result Counter & Reset */}
+                <div className="flex items-center gap-3 text-[var(--muted)] font-semibold">
+                  <span>Showing <strong className="text-[var(--text)]">{filteredChallenges.length}</strong> quizzes & challenges</span>
+                  {hasActiveFilters && (
+                    <button
+                      onClick={handleClearFilters}
+                      className="text-xs text-blue-600 dark:text-blue-400 hover:underline font-bold cursor-pointer"
+                    >
+                      Reset Filters ✕
+                    </button>
+                  )}
                 </div>
               </div>
-            ))}
-          </div>
+            </div >
 
-          {/* Bottom Button */}
-          <div className="pt-2 border-t border-[var(--border-soft)]">
-            <Link
-              to="/contests?tab=hackathon"
-              className="w-full py-2.5 rounded-xl bg-purple-50 hover:bg-purple-100 dark:bg-purple-950/40 dark:hover:bg-purple-900/50 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800 text-xs font-black flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs"
-            >
-              <span>🏆</span>
-              <span>View Full Leaderboard →</span>
-            </Link>
-          </div>
-        </div>
-      </aside>
-    </div>
+            {/* TWO-COLUMN GRID: CARDS FEED (LEFT 8 COLS) + LEADERBOARD (RIGHT 4 COLS) */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+              {/* ================= CARDS FEED (8 COLS) ================= */}
+              <div className="lg:col-span-8 space-y-4">
+                {
+                  filteredChallenges.length === 0 ? (
+                    <div className="p-12 text-center rounded-2xl bg-[var(--surface)] border border-[var(--border)] space-y-4 shadow-xs">
+                      <div className="w-16 h-16 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-3xl flex items-center justify-center mx-auto">
+                        🔍
+                      </div>
+                      <h3 className="text-lg font-black">No quizzes match your filter criteria</h3>
+                      <p className="text-xs text-[var(--muted)] max-w-md mx-auto">
+                        Try resetting your domain or difficulty selection to discover exciting technical challenges.
+                      </p>
+                      <button
+                        onClick={handleClearFilters}
+                        className="button button-sm text-xs font-bold mx-auto mt-2 cursor-pointer"
+                      >
+                        Reset All Filters
+                      </button>
+                    </div>
+                  ) : (
+                    /* HIGH-IMPACT ARENA GRID: 2-column for spacious cards alongside 4-col leaderboard */
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 auto-rows-fr">
+                      {filteredChallenges.map((ch) => {
+                        const isSolved = solvedChallengeIds.includes(ch.id);
+                        const isBookmarked = bookmarkedIds.includes(ch.id);
+
+                        return (
+                          <article
+                            key={ch.id}
+                            className="group relative rounded-2xl bg-[var(--surface)] border border-[var(--border)] hover:border-purple-400/40 dark:hover:border-purple-500/40 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden text-left h-full select-none"
+                          >
+                            {/* Visual 3D / Cyber Thumbnail Banner - Matches CourseCard aspect-[16/10] */}
+                            <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-950 shrink-0">
+                              {/* Centered Glowing 3D Vector Illustration */}
+                              <ArenaThumbnailGraphic type={ch.iconType} />
+
+                              {/* Top-Left Category / Status Badge Pill */}
+                              <div className={`absolute top-3 left-3 z-20 flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black text-white shadow-md backdrop-blur-md bg-gradient-to-r ${ch.badgeConfig?.gradient || "from-blue-600 to-indigo-600"}`}>
+                                <span>{ch.badgeConfig?.icon}</span>
+                                <span>{ch.badgeConfig?.label}</span>
+                              </div>
+
+                              {/* Top-Right Heart Bookmark Button */}
+                              <button
+                                type="button"
+                                onClick={(e) => toggleBookmark(ch.id, e)}
+                                className={`absolute top-3 right-3 z-20 w-8 h-8 rounded-full border backdrop-blur-md flex items-center justify-center transition-all cursor-pointer ${isBookmarked
+                                  ? "bg-rose-500/80 border-rose-400 text-white shadow-md shadow-rose-500/30 scale-105"
+                                  : "bg-black/30 hover:bg-black/50 border-white/20 text-white hover:scale-105"
+                                  }`}
+                                title={isBookmarked ? "Remove Bookmark" : "Bookmark Challenge"}
+                              >
+                                <svg className="w-4 h-4" fill={isBookmarked ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                                </svg>
+                              </button>
+
+                              {/* Bottom-Right XP Badge inside banner */}
+                              <div className="absolute bottom-3 right-3 z-20 px-2.5 py-1 rounded-full text-[11px] font-black font-mono bg-slate-950/80 text-amber-300 border border-amber-400/30 backdrop-blur-md flex items-center gap-1 shadow-lg">
+                                <span>⭐</span>
+                                <span>+{ch.xp} XP</span>
+                              </div>
+
+                              {/* Bottom Organic Wave Curve Transition */}
+                              <div className="absolute -bottom-1 left-0 right-0 z-20 pointer-events-none text-[var(--surface)] fill-current">
+                                <svg viewBox="0 0 500 28" preserveAspectRatio="none" className="w-full h-5 sm:h-6 block">
+                                  <path d="M0,6 C130,26 230,2 350,22 C420,30 470,16 500,24 L500,28 L0,28 Z" />
+                                </svg>
+                              </div>
+                            </div>
+
+                            {/* Card Content Body - Matching CourseCard Height Profile */}
+                            <div className="p-4 sm:p-5 flex flex-col flex-1 justify-between gap-3 bg-[var(--surface)]">
+                              <div className="space-y-2">
+                                <h3 className="text-base font-bold text-[var(--text)] group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2 leading-snug h-[2.85rem] overflow-hidden tracking-tight">
+                                  {ch.title}
+                                </h3>
+
+                                <p className="text-xs text-[var(--muted)] line-clamp-2 leading-relaxed h-[2.5rem] overflow-hidden">
+                                  {ch.question}
+                                </p>
+
+                                {/* Tech Tags - Single Row Never Wrapping */}
+                                <div className="flex items-center gap-1.5 pt-1 overflow-hidden h-[1.75rem] flex-nowrap">
+                                  {ch.tags.slice(0, 3).map((tag) => (
+                                    <span
+                                      key={tag}
+                                      className="px-2.5 py-0.5 rounded-md bg-[var(--surface-soft)] border border-[var(--border-soft)] text-[10px] font-medium text-[var(--muted)] hover:text-[var(--text)] whitespace-nowrap shrink-0"
+                                    >
+                                      {tag}
+                                    </span>
+                                  ))}
+                                  {ch.tags.length > 3 && (
+                                    <span className="px-1.5 py-0.5 rounded-md bg-[var(--surface-soft)] border border-[var(--border-soft)] text-[10px] text-[var(--muted)] font-semibold shrink-0">
+                                      +{ch.tags.length - 3}
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+
+                              {/* 3-Column Metrics Row */}
+                              <div className="grid grid-cols-3 gap-1 py-2 px-3 rounded-xl bg-[var(--surface-soft)]/60 border border-[var(--border-soft)] text-center">
+                                <div className="flex flex-col items-center">
+                                  <span className="text-[11px] font-bold text-[var(--text)] whitespace-nowrap">⏱ {Math.floor(ch.timeLimitSec / 60)} min</span>
+                                  <span className="text-[9px] text-[var(--muted)] font-medium">Time</span>
+                                </div>
+                                <div className="flex flex-col items-center border-x border-[var(--border-soft)]">
+                                  <span className="text-[11px] font-bold text-[var(--text)] whitespace-nowrap">👥 {ch.solvedCount.toLocaleString()}</span>
+                                  <span className="text-[9px] text-[var(--muted)] font-medium">Attempts</span>
+                                </div>
+                                <div className="flex flex-col items-center">
+                                  <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 font-mono whitespace-nowrap">📶 {ch.acceptanceRate}</span>
+                                  <span className="text-[9px] text-[var(--muted)] font-medium">Accepted</span>
+                                </div>
+                              </div>
+
+                              {/* Card Footer: Difficulty + Fixed Single-Line Action CTA Button */}
+                              <div className="pt-2.5 border-t border-[var(--border-soft)] flex items-center justify-between gap-2 mt-auto">
+                                <span className={`px-2 py-0.5 rounded-md text-[10px] font-black uppercase tracking-wider whitespace-nowrap shrink-0 ${ch.difficulty === "Beginner"
+                                  ? "bg-blue-100 text-blue-900 border border-blue-200 dark:bg-blue-950/60 dark:text-blue-300 dark:border-blue-800"
+                                  : ch.difficulty === "Intermediate"
+                                    ? "bg-amber-100 text-amber-900 border border-amber-200 dark:bg-amber-950/60 dark:text-amber-300 dark:border-amber-800"
+                                    : ch.difficulty === "Advanced"
+                                      ? "bg-emerald-100 text-emerald-900 border border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-800"
+                                      : "bg-purple-100 text-purple-900 border border-purple-200 dark:bg-purple-950/60 dark:text-purple-300 dark:border-purple-800"
+                                  }`}>
+                                  {ch.difficulty}
+                                </span>
+
+                                <button
+                                  onClick={() => handleOpenChallenge(ch)}
+                                  className={`px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all inline-flex items-center justify-center gap-1.5 cursor-pointer shadow-xs whitespace-nowrap shrink-0 ${isSolved || ch.actionStyle === "secondary"
+                                    ? "bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200 dark:bg-purple-950/40 dark:text-purple-300 dark:border-purple-800"
+                                    : "bg-blue-600 hover:bg-blue-700 text-white shadow-sm shadow-blue-500/25 active:scale-95"
+                                    }`}
+                                >
+                                  <span>{isSolved ? "Retake" : ch.actionStyle === "secondary" ? "View Details" : "Solve Challenge"}</span>
+                                  <span>→</span>
+                                </button>
+                              </div>
+                            </div>
+                          </article>
+                        );
+                      })}
+                    </div>
+                  )}
+              </div>
+
+              {/* ================= ARENA LEADERBOARD (ENHANCED DESIGN & SPACING) ================= */}
+              <aside className="lg:col-span-4 space-y-5 lg:sticky lg:top-[240px] lg:max-h-[calc(100vh-16rem)] lg:overflow-y-auto">
+                <div className="p-5 sm:p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] space-y-4 shadow-sm">
+                  {/* Header */}
+                  <div className="flex items-center justify-between border-b border-[var(--border-soft)] pb-3">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xl">🏆</span>
+                      <h3 className="text-xs sm:text-sm font-black uppercase tracking-wider text-[var(--text)]">
+                        ARENA LEADERBOARD
+                      </h3>
+                    </div>
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                      Live
+                    </span>
+                  </div>
+
+                  {/* Timeframe Tabs: Weekly, Monthly, All Time */}
+                  <div className="flex items-center p-1 rounded-xl bg-[var(--surface-soft)] border border-[var(--border-soft)] text-xs font-bold">
+                    {(["Weekly", "Monthly", "All Time"] as const).map((tab) => (
+                      <button
+                        key={tab}
+                        onClick={() => setLeaderboardTimeframe(tab)}
+                        className={`flex-1 py-1.5 rounded-lg text-center transition-all cursor-pointer text-xs ${leaderboardTimeframe === tab
+                          ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-extrabold shadow-sm"
+                          : "text-[var(--muted)] hover:text-[var(--text)] font-semibold"
+                          }`}
+                      >
+                        {tab}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Users List with Medals and Generous Horizontal Padding */}
+                  <div className="divide-y divide-[var(--border-soft)]">
+                    {displayedLeaderboard.map((usr) => (
+                      <div
+                        key={usr.rank}
+                        className="py-3 px-2 flex items-center justify-between text-xs hover:bg-[var(--surface-soft)]/60 rounded-xl transition-colors"
+                      >
+                        <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+                          <span className="w-6 text-center font-black text-sm shrink-0">
+                            {usr.rank === 1 ? (
+                              <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-amber-500/15 text-amber-500 text-xs font-black border border-amber-500/30">
+                                #1
+                              </span>
+                            ) : usr.rank === 2 ? (
+                              <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-slate-400/15 text-slate-400 text-xs font-black border border-slate-400/30">
+                                #2
+                              </span>
+                            ) : usr.rank === 3 ? (
+                              <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-amber-700/15 text-amber-600 text-xs font-black border border-amber-600/30">
+                                #3
+                              </span>
+                            ) : (
+                              <span className="text-[var(--muted)] text-xs font-bold">#{usr.rank}</span>
+                            )}
+                          </span>
+
+                          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 text-white font-black text-xs flex items-center justify-center shrink-0 shadow-xs border border-white/20">
+                            {usr.avatar}
+                          </div>
+
+                          <div className="min-w-0 pr-1">
+                            <p className="font-extrabold text-[var(--text)] text-xs truncate">
+                              {usr.name}
+                            </p>
+                            <span className="text-[10px] text-[var(--muted)] font-medium block truncate">
+                              {usr.role}
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="text-right shrink-0 pl-2">
+                          <span className="font-extrabold text-[var(--text)] text-xs block">
+                            {usr.xp.toLocaleString()} XP
+                          </span>
+                          <span className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-500 bg-amber-500/10 dark:bg-amber-500/15 px-1.5 py-0.5 rounded-md border border-amber-500/20 mt-0.5">
+                            <span>🔥</span>
+                            <span>{usr.streak}</span>
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Bottom Button */}
+                  <div className="pt-2 border-t border-[var(--border-soft)]">
+                    <Link
+                      to="/contests?tab=hackathon"
+                      className="w-full py-2.5 rounded-xl bg-purple-50 hover:bg-purple-100 dark:bg-purple-950/40 dark:hover:bg-purple-900/50 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800 text-xs font-black flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs"
+                    >
+                      <span>🏆</span>
+                      <span>View Full Leaderboard →</span>
+                    </Link>
+                  </div>
+                </div>
+              </aside>
+            </div>
           </div>
         )}
 
@@ -1317,103 +1311,103 @@ export default function ContestArenaPage() {
                         key={optIdx}
                         onClick={() => !quizSubmitted && setQuizSelectedOption(optIdx)}
                         className={`w-full p-4 rounded-2xl border text-left text-xs transition-all flex items-start justify-between gap-3 ${btnStyle}`}
-                                  >
-                                    <span className="leading-relaxed">{opt}</span>
-                                    {quizSubmitted && optIdx === activeModalChallenge.correctIndex && (
-                                      <span className="text-emerald-400 font-bold shrink-0">✓ Correct</span>
-                                    )}
-                                  </button>
-                                );
-                              })}
+                      >
+                        <span className="leading-relaxed">{opt}</span>
+                        {quizSubmitted && optIdx === activeModalChallenge.correctIndex && (
+                          <span className="text-emerald-400 font-bold shrink-0">✓ Correct</span>
+                        )}
+                      </button>
+                    );
+                  })}
 
-            {!quizSubmitted ? (
-              <button
-                onClick={handleSubmitQuiz}
-                disabled={quizSelectedOption === null}
-                className="button button-sm w-full text-xs font-black py-3 mt-4 disabled:opacity-50"
-              >
-                Submit Verification Answer →
-              </button>
-            ) : (
-              <div className="p-4 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border-soft)] text-xs space-y-1 animate-fade-in">
-                <span className="font-extrabold text-[var(--accent)]">Architectural Explanation:</span>
-                <p className="text-[var(--muted)] leading-relaxed">{activeModalChallenge.explanation}</p>
-              </div>
-            )}
-          </div>
-        )}
+                  {!quizSubmitted ? (
+                    <button
+                      onClick={handleSubmitQuiz}
+                      disabled={quizSelectedOption === null}
+                      className="button button-sm w-full text-xs font-black py-3 mt-4 disabled:opacity-50"
+                    >
+                      Submit Verification Answer →
+                    </button>
+                  ) : (
+                    <div className="p-4 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border-soft)] text-xs space-y-1 animate-fade-in">
+                      <span className="font-extrabold text-[var(--accent)]">Architectural Explanation:</span>
+                      <p className="text-[var(--muted)] leading-relaxed">{activeModalChallenge.explanation}</p>
+                    </div>
+                  )}
+                </div>
+              )}
 
-        {/* CODE CHALLENGE MODE */}
-        {activeModalChallenge.type === "code" && (
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-[var(--muted)]">AST Code Solution Editor</span>
-              <button
-                onClick={handleRunCodeAssertions}
-                disabled={isRunningTests}
-                className="button button-sm text-xs flex items-center gap-2 shadow-md"
-              >
-                <span>⚡</span>
-                {isRunningTests ? "Running Benchmarks..." : "Run Test Suite"}
-              </button>
-            </div>
+              {/* CODE CHALLENGE MODE */}
+              {activeModalChallenge.type === "code" && (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-[var(--muted)]">AST Code Solution Editor</span>
+                    <button
+                      onClick={handleRunCodeAssertions}
+                      disabled={isRunningTests}
+                      className="button button-sm text-xs flex items-center gap-2 shadow-md"
+                    >
+                      <span>⚡</span>
+                      {isRunningTests ? "Running Benchmarks..." : "Run Test Suite"}
+                    </button>
+                  </div>
 
-            <textarea
-              rows={8}
-              value={codeEditorVal}
-              onChange={(e) => setCodeEditorVal(e.target.value)}
-              className="w-full p-4 rounded-2xl font-mono text-xs bg-[#0b0a14] text-[#93c5fd] border border-[var(--border)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] resize-none"
-            />
+                  <textarea
+                    rows={8}
+                    value={codeEditorVal}
+                    onChange={(e) => setCodeEditorVal(e.target.value)}
+                    className="w-full p-4 rounded-2xl font-mono text-xs bg-[#0b0a14] text-[#93c5fd] border border-[var(--border)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] resize-none"
+                  />
 
-            {testResults && (
-              <div className="p-4 rounded-2xl bg-[#06050b] border border-emerald-500/30 space-y-2 text-xs font-mono animate-fade-in">
-                <div className="flex items-center justify-between text-emerald-400 font-bold">
-                  <span>✅ All Assertions Passed! (100% Score)</span>
-                  <span className="text-[10px] bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
-                    Passing in 4.2ms
+                  {testResults && (
+                    <div className="p-4 rounded-2xl bg-[#06050b] border border-emerald-500/30 space-y-2 text-xs font-mono animate-fade-in">
+                      <div className="flex items-center justify-between text-emerald-400 font-bold">
+                        <span>✅ All Assertions Passed! (100% Score)</span>
+                        <span className="text-[10px] bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+                          Passing in 4.2ms
+                        </span>
+                      </div>
+                      <div className="divide-y divide-gray-800 space-y-1 pt-1 text-[11px] text-gray-300">
+                        {testResults.map((r, i) => (
+                          <div key={i} className="pt-1 text-emerald-300">
+                            {r.msg}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* XP Banner */}
+              {earnedXP && (
+                <div className="p-4 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-xs font-bold flex items-center justify-between text-blue-700 dark:text-blue-300 animate-fade-in">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xl">🎉</span>
+                    <span>Challenge Completed! +{earnedXP} XP added to your standing.</span>
+                  </div>
+                  <span className="px-2.5 py-1 rounded-full bg-blue-600 text-white text-[10px]">
+                    Streak +1 🔥
                   </span>
                 </div>
-                <div className="divide-y divide-gray-800 space-y-1 pt-1 text-[11px] text-gray-300">
-                  {testResults.map((r, i) => (
-                    <div key={i} className="pt-1 text-emerald-300">
-                      {r.msg}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* XP Banner */}
-        {earnedXP && (
-          <div className="p-4 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-xs font-bold flex items-center justify-between text-blue-700 dark:text-blue-300 animate-fade-in">
-            <div className="flex items-center gap-2">
-              <span className="text-xl">🎉</span>
-              <span>Challenge Completed! +{earnedXP} XP added to your standing.</span>
+              )}
             </div>
-            <span className="px-2.5 py-1 rounded-full bg-blue-600 text-white text-[10px]">
-              Streak +1 🔥
-            </span>
+
+            {/* Modal Footer */}
+            <div className="p-4 border-t border-[var(--border-soft)] bg-[var(--surface-soft)]/50 flex justify-end">
+              <button
+                onClick={() => setActiveModalChallenge(null)}
+                className="button button-sm text-xs font-black"
+              >
+                Close Window
+              </button>
+            </div>
           </div>
-        )}
-      </div>
+        </div>
+      )
+      }
 
-      {/* Modal Footer */}
-      <div className="p-4 border-t border-[var(--border-soft)] bg-[var(--surface-soft)]/50 flex justify-end">
-        <button
-          onClick={() => setActiveModalChallenge(null)}
-          className="button button-sm text-xs font-black"
-        >
-          Close Window
-        </button>
-      </div>
-    </div>
-  </div>
-)
-}
-
-<SiteFooter />
+      <SiteFooter />
     </div >
   );
 }
