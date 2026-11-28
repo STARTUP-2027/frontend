@@ -124,7 +124,7 @@ export default function StudentDashboardPage() {
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 pb-32 space-y-6">
 
         {/* ================= 1. DYNAMIC STUDENT HERO COMMAND CENTER ================= */}
-        <section className="relative overflow-hidden rounded-[28px] bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-sm p-6 sm:p-8">
+        <section className="relative overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-sm p-6 sm:p-8">
           {/* Subtle Ambient Backlight Glow */}
           <div className="absolute -top-24 -right-24 w-96 h-96 bg-blue-500/10 dark:bg-blue-500/15 rounded-full blur-3xl pointer-events-none" />
           <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-purple-500/10 dark:bg-purple-500/15 rounded-full blur-3xl pointer-events-none" />
@@ -416,7 +416,7 @@ export default function StudentDashboardPage() {
 
         {/* ================= 4. JUMP BACK IN / RESUME LEARNING FEATURE CARD ================= */}
         {primaryResumeCourse && (
-          <div className="relative overflow-hidden p-6 sm:p-7 rounded-[28px] bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white border border-indigo-900/50 shadow-md">
+          <div className="relative overflow-hidden p-6 sm:p-7 rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white border border-indigo-900/50 shadow-md">
             <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-radial from-blue-500/15 via-transparent to-transparent pointer-events-none" />
 
             <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
@@ -568,7 +568,7 @@ export default function StudentDashboardPage() {
               })}
             </div>
           ) : (
-            <div className="p-8 text-center rounded-[28px] bg-slate-50 dark:bg-slate-900/40 border border-dashed border-slate-200 dark:border-slate-800 space-y-3">
+            <div className="p-8 text-center rounded-2xl bg-slate-50 dark:bg-slate-900/40 border border-dashed border-slate-200 dark:border-slate-800 space-y-3">
               <span className="text-3xl block">📚</span>
               <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200">
                 No courses match this filter
@@ -587,7 +587,7 @@ export default function StudentDashboardPage() {
         </section>
 
         {/* ================= 6. DAILY ACTIVITY HEATMAP (52-WEEK MATRIX) ================= */}
-        <section className="p-6 rounded-[28px] bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-2xs space-y-4">
+        <section className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-2xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
               <h3 className="text-sm font-black uppercase tracking-wider text-blue-600 dark:text-blue-400 flex items-center gap-2">
@@ -630,7 +630,7 @@ export default function StudentDashboardPage() {
 
         {/* ================= 7. VERIFIED CERTIFICATES SHOWCASE ================= */}
         {certificates.length > 0 && (
-          <section className="p-6 rounded-[28px] bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-2xs space-y-4">
+          <section className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-2xs space-y-4">
             <div className="flex items-center justify-between">
               <h3 className="text-sm font-black uppercase tracking-wider text-purple-600 dark:text-purple-400 flex items-center gap-2">
                 <span>🏆</span> My Verified Certificates ({certificates.length})

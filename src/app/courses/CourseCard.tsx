@@ -148,7 +148,7 @@ export default function CourseCard({
       <>
         <article
           onClick={handleCardClick}
-          className="group relative rounded-[28px] bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 hover:border-blue-400/50 dark:hover:border-blue-500/50 shadow-sm hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 flex flex-col md:flex-row items-stretch overflow-hidden cursor-pointer text-left select-none"
+          className="group relative rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 hover:border-blue-400/50 dark:hover:border-blue-500/50 shadow-sm hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 flex flex-col md:flex-row items-stretch overflow-hidden cursor-pointer text-left select-none"
         >
           {/* Left Thumbnail with Badge, Duration, and Rating pills */}
           <div className="relative w-full md:w-72 lg:w-80 shrink-0 aspect-[16/10] md:aspect-auto overflow-hidden bg-slate-950">
@@ -349,7 +349,7 @@ export default function CourseCard({
     <>
       <article
         onClick={handleCardClick}
-        className="group relative rounded-[28px] bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 hover:border-blue-400/50 dark:hover:border-blue-500/50 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer text-left h-full select-none"
+        className="group relative rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 hover:border-blue-400/50 dark:hover:border-blue-500/50 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer text-left h-full select-none"
       >
         <div>
           {/* ================= 1. THUMBNAIL CONTAINER WITH ORGANIC CURVE ================= */}

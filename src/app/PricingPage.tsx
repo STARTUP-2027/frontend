@@ -204,10 +204,23 @@ export default function PricingPage() {
                     </div>
 
                     <button
-                      className={plan.popular ? "button" : "price-button"}
+                      className={`w-full h-11 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer mt-5 shadow-xs ${
+                        plan.popular
+                          ? "bg-blue-600 hover:bg-blue-700 text-white font-extrabold shadow-md shadow-blue-500/25 hover:scale-[1.01] active:scale-[0.99]"
+                          : plan.name === "Team & Enterprise"
+                            ? "bg-indigo-50 dark:bg-indigo-950/50 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800/80 font-extrabold"
+                            : "bg-slate-900 hover:bg-slate-800 text-white dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-white"
+                      }`}
                       onClick={() => navigate("/signup")}
                     >
-                      {plan.name === "Team & Enterprise" ? "Enroll Engineering Team" : "Start learning free"} <Icon name="arrow" />
+                      <span>
+                        {plan.name === "Team & Enterprise"
+                          ? "Enroll Engineering Team"
+                          : plan.popular
+                            ? "Get Pro All-Access"
+                            : "Start Free Trial"}
+                      </span>
+                      <Icon name="arrow" />
                     </button>
                   </div>
 
