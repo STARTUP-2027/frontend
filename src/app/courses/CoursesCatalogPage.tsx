@@ -308,34 +308,49 @@ export default function CoursesCatalogPage() {
 
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 pb-32 space-y-6">
 
-          {/* ================= SLEEK & MODERN HERO HEADER (MATCHING REFERENCE DESIGN) ================= */}
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-[var(--border-soft)]">
-            {/* Left: Sparkle Badge + Heading + Subtitle */}
-            <div className="space-y-1.5 max-w-2xl">
-              {/* Top Sparkles & "Your Learning Journey" Badge */}
-              <div className="flex items-center gap-2">
-                <span className="text-purple-500 dark:text-purple-400 text-xs font-mono font-bold select-none tracking-tighter">
-                  \ | /
-                </span>
-                <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-purple-50 dark:bg-purple-950/60 border border-purple-200/80 dark:border-purple-800/60 text-purple-600 dark:text-purple-400 text-xs font-extrabold shadow-2xs">
-                  <span>★</span>
-                  <span>Your Learning Journey</span>
-                </span>
-              </div>
+          {/* ================= SLEEK & MODERN HERO TITLE ================= */}
+          <div className="space-y-1.5 max-w-2xl pb-1">
+            {/* Top Sparkles & "Your Learning Journey" Badge */}
+            <div className="flex items-center gap-2">
+              <span className="text-purple-500 dark:text-purple-400 text-xs font-mono font-bold select-none tracking-tighter">
+                \ | /
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-purple-50 dark:bg-purple-950/60 border border-purple-200/80 dark:border-purple-800/60 text-purple-600 dark:text-purple-400 text-xs font-extrabold shadow-2xs">
+                <span>★</span>
+                <span>Your Learning Journey</span>
+              </span>
+            </div>
 
-              {/* Title */}
-              <h1 className="text-3xl sm:text-4xl font-black text-[var(--text)] tracking-tight">
-                Explore Our Courses
-              </h1>
+            {/* Title */}
+            <h1 className="text-3xl sm:text-4xl font-black text-[var(--text)] tracking-tight">
+              Explore Our Courses
+            </h1>
 
-              {/* Subtitle */}
-              <p className="text-xs sm:text-sm text-[var(--muted)] leading-relaxed">
-                Build in-demand skills with expertly curated courses and hands-on projects.
-              </p>
+            {/* Subtitle */}
+            <p className="text-xs sm:text-sm text-[var(--muted)] leading-relaxed">
+              Build in-demand skills with expertly curated courses and hands-on projects.
+            </p>
+          </div>
+
+          {/* ================= STICKY SEARCH & CONTROLS BAR (STOPS JUST BELOW NAVBAR) ================= */}
+          <div className="sticky top-[86px] sm:top-[90px] z-30 py-3 px-4 sm:px-6 rounded-2xl bg-[var(--surface)]/95 backdrop-blur-xl border border-[var(--border)] shadow-sm transition-all flex flex-wrap items-center justify-between gap-3">
+            {/* Left: Active Results Count */}
+            <div className="flex items-center gap-3">
+              <span className="text-xs font-bold text-[var(--muted)]">
+                Showing <strong className="text-[var(--text)]">{filteredCourses.length}</strong> masterclasses
+              </span>
+              {hasActiveFilters && (
+                <button
+                  onClick={handleClearAllFilters}
+                  className="text-xs text-blue-600 dark:text-blue-400 hover:underline font-bold cursor-pointer"
+                >
+                  Reset Filters ✕
+                </button>
+              )}
             </div>
 
             {/* Right: Integrated Controls (Search Pill + Category Dropdown + Grid/List) */}
-            <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 w-full lg:w-auto">
+            <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 w-full sm:w-auto">
               {/* Search Pill */}
               <div className="relative flex-1 sm:w-64 sm:flex-initial">
                 <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--muted)] pointer-events-none">
@@ -349,7 +364,7 @@ export default function CoursesCatalogPage() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search courses..."
-                  className="w-full pl-9 pr-8 py-2.5 rounded-full bg-[var(--surface-soft)] border border-[var(--border)] text-xs sm:text-sm text-[var(--text)] placeholder-[var(--muted)] focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all font-medium shadow-2xs"
+                  className="w-full pl-9 pr-8 py-2 rounded-full bg-[var(--surface-soft)] border border-[var(--border)] text-xs sm:text-sm text-[var(--text)] placeholder-[var(--muted)] focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all font-medium shadow-2xs"
                 />
                 {searchQuery && (
                   <button
@@ -367,7 +382,7 @@ export default function CoursesCatalogPage() {
                 <button
                   type="button"
                   onClick={() => setShowCategoryDropdown(!showCategoryDropdown)}
-                  className="px-4 py-2.5 rounded-full bg-[var(--surface-soft)] hover:bg-[var(--surface)] border border-[var(--border)] text-xs font-semibold text-[var(--text)] flex items-center gap-2 transition-all shadow-2xs cursor-pointer whitespace-nowrap"
+                  className="px-4 py-2 rounded-full bg-[var(--surface-soft)] hover:bg-[var(--surface)] border border-[var(--border)] text-xs font-semibold text-[var(--text)] flex items-center gap-2 transition-all shadow-2xs cursor-pointer whitespace-nowrap"
                 >
                   <span>{activeCategoryLabel}</span>
                   <svg
@@ -423,7 +438,7 @@ export default function CoursesCatalogPage() {
               <button
                 type="button"
                 onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
-                className="lg:hidden px-3.5 py-2.5 rounded-full bg-[var(--surface-soft)] border border-[var(--border)] text-xs font-bold text-[var(--text)] flex items-center gap-1.5"
+                className="lg:hidden px-3.5 py-2 rounded-full bg-[var(--surface-soft)] border border-[var(--border)] text-xs font-bold text-[var(--text)] flex items-center gap-1.5"
               >
                 <span>⚙️</span> Filters
               </button>
@@ -461,10 +476,21 @@ export default function CoursesCatalogPage() {
           {/* FLIPKART STYLE TWO-COLUMN WORKSPACE: LEFT FILTERS SIDEBAR + RIGHT PRODUCT CATALOG */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 
+            {/* Mobile Backdrop for Filters Drawer */}
+            {isMobileFilterOpen && (
+              <div
+                className="fixed inset-0 bg-black/60 backdrop-blur-xs z-[55] lg:hidden animate-fade-in"
+                onClick={() => setIsMobileFilterOpen(false)}
+              />
+            )}
+
             {/* ================= LEFT SIDEBAR FILTERS (FLIPKART STYLE) ================= */}
             <aside
-            className={`lg:col-span-3 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs overflow-hidden sticky top-28 z-10 max-h-[calc(100vh-8.5rem)] overflow-y-auto ${isMobileFilterOpen ? "block fixed inset-4 z-[60] overflow-y-auto bg-[var(--surface)]" : "hidden lg:block"
-                }`}
+              className={`rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs overflow-hidden ${
+                isMobileFilterOpen
+                  ? "block fixed inset-4 z-[60] overflow-y-auto bg-[var(--surface)] p-1 shadow-2xl"
+                  : "hidden lg:block lg:col-span-3 lg:sticky lg:top-[152px] lg:z-20 lg:max-h-[calc(100vh-10.5rem)] lg:overflow-y-auto"
+              }`}
             >
               {/* Sidebar Top Header */}
               <div className="p-4 border-b border-[var(--border-soft)] flex items-center justify-between bg-[var(--surface-soft)]/50">

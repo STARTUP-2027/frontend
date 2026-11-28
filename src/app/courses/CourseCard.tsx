@@ -148,10 +148,10 @@ export default function CourseCard({
       <>
         <article
           onClick={handleCardClick}
-          className="group relative rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 hover:border-blue-400/50 dark:hover:border-blue-500/50 shadow-sm hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 flex flex-col md:flex-row items-stretch overflow-hidden cursor-pointer text-left select-none"
+          className="group relative rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 hover:border-blue-400/50 dark:hover:border-blue-500/50 shadow-sm hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 flex flex-col md:flex-row md:h-[200px] items-stretch overflow-hidden cursor-pointer text-left select-none"
         >
           {/* Left Thumbnail with Badge, Duration, and Rating pills */}
-          <div className="relative w-full md:w-72 lg:w-80 shrink-0 aspect-[16/10] md:aspect-auto overflow-hidden bg-slate-950">
+          <div className="relative w-full md:w-72 lg:w-76 shrink-0 aspect-[16/10] md:aspect-auto md:h-full overflow-hidden bg-slate-950">
             {course.thumbnailUrl ? (
               <img
                 src={course.thumbnailUrl}
@@ -222,43 +222,43 @@ export default function CourseCard({
             </div>
           </div>
 
-          {/* Middle Content Body */}
-          <div className="flex-1 p-5 sm:p-6 flex flex-col justify-between gap-3 min-w-0">
-            <div className="space-y-2">
+          {/* Middle Content Body - Fixed Height & Uniform Spacing */}
+          <div className="flex-1 p-4 sm:p-5 flex flex-col justify-between min-w-0 md:h-full overflow-hidden">
+            <div className="space-y-1.5 min-w-0">
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 shrink-0">
                   {course.categoryLabel}
                 </span>
                 <span className="text-xs text-slate-300 dark:text-slate-700">•</span>
-                <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">
+                <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 truncate">
                   {course.studentsCount ? `${course.studentsCount.toLocaleString()} learners` : "2.5k+ learners"}
                 </span>
               </div>
 
-              <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2 leading-snug tracking-tight">
+              <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-1 sm:line-clamp-2 leading-snug tracking-tight h-[2.85rem] overflow-hidden">
                 {course.title}
               </h3>
 
-              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed h-[2.5rem] overflow-hidden">
                 {course.tagline || course.description}
               </p>
             </div>
 
             {/* Single Row of 3 Attribute Badges matching reference image */}
-            <div className="flex items-center gap-2 flex-wrap pt-1">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 border border-blue-200/60 dark:border-blue-800/40 text-[11px] font-bold whitespace-nowrap">
+            <div className="flex items-center gap-2 flex-nowrap overflow-hidden pt-1 shrink-0">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 border border-blue-200/60 dark:border-blue-800/40 text-[11px] font-bold whitespace-nowrap shrink-0">
                 <span>💻</span> Projects
               </span>
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400 border border-amber-200/60 dark:border-amber-800/40 text-[11px] font-bold whitespace-nowrap">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400 border border-amber-200/60 dark:border-amber-800/40 text-[11px] font-bold whitespace-nowrap shrink-0">
                 <span>📜</span> Certificate
               </span>
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-teal-50 dark:bg-teal-950/50 text-teal-600 dark:text-teal-400 border border-teal-200/60 dark:border-teal-800/40 text-[11px] font-bold whitespace-nowrap">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-teal-50 dark:bg-teal-950/50 text-teal-600 dark:text-teal-400 border border-teal-200/60 dark:border-teal-800/40 text-[11px] font-bold whitespace-nowrap shrink-0">
                 <span>♾</span> Lifetime
               </span>
               {course.skills?.slice(0, 3).map((s) => (
                 <span
                   key={s}
-                  className="hidden xl:inline-flex items-center px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-[10px] font-medium text-slate-600 dark:text-slate-300"
+                  className="hidden xl:inline-flex items-center px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-[10px] font-medium text-slate-600 dark:text-slate-300 shrink-0"
                 >
                   {s}
                 </span>
@@ -267,7 +267,7 @@ export default function CourseCard({
           </div>
 
           {/* Right Action Column / Footer matching Grid view footer */}
-          <div className="p-4 sm:p-5 md:w-56 lg:w-64 border-t md:border-t-0 md:border-l border-slate-100 dark:border-slate-800/80 bg-slate-50/50 dark:bg-slate-900/40 flex flex-row md:flex-col items-center justify-between md:justify-center gap-4 shrink-0">
+          <div className="p-4 sm:p-5 md:w-52 lg:w-56 border-t md:border-t-0 md:border-l border-slate-100 dark:border-slate-800/80 bg-slate-50/50 dark:bg-slate-900/40 flex flex-row md:flex-col items-center justify-between md:justify-center gap-3 shrink-0 md:h-full">
             {enrolledState ? (
               <>
                 <div className="flex items-center gap-2.5 min-w-0 md:w-full md:justify-center">

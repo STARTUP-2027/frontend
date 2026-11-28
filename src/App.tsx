@@ -11,7 +11,6 @@ import HeroInteractiveGraph from "./app/components/HeroInteractiveGraph";
 import AlumniMarquee from "./app/components/AlumniMarquee";
 import CourseCard from "./app/courses/CourseCard";
 import CoursePreviewModal from "./app/courses/CoursePreviewModal";
-import AstraPlatformWidget from "./app/components/AstraPlatformWidget";
 
 type IconName =
   | "arrow"
@@ -720,9 +719,6 @@ export function SiteFooter() {
           </button>
         </div>
       </div>
-
-      {/* Global Interactive Astra Platform Widget */}
-      <AstraPlatformWidget />
     </footer>
   );
 }
