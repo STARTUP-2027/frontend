@@ -1,12 +1,17 @@
+"use client";
+
 import { useState, type ReactNode } from "react";
 import { Link, useNavigate } from "react-router";
 import { useTheme } from "./app/theme";
 import { useAuth } from "./app/context/AuthContext";
-import { useCourses } from "./app/context/CourseContext";
+import { useCourses, type Course } from "./app/context/CourseContext";
 import StudentDashboardPage from "./app/dashboard/StudentDashboardPage";
 import AdminCreatorHub from "./app/admin/AdminCreatorHub";
 import HeroInteractiveGraph from "./app/components/HeroInteractiveGraph";
 import AlumniMarquee from "./app/components/AlumniMarquee";
+import CourseCard from "./app/courses/CourseCard";
+import CoursePreviewModal from "./app/courses/CoursePreviewModal";
+import AstraPlatformWidget from "./app/components/AstraPlatformWidget";
 
 type IconName =
   | "arrow"
@@ -114,13 +119,13 @@ const domainShowcaseData: Record<
         title: "2. Multi-Agent Swarms with LangGraph & Tool Calling",
         duration: "6.0 Hours",
         tag: "Interactive Lab",
-        tagClass: "bg-purple-500/10 text-purple-400 border-purple-500/30",
+        tagClass: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20",
       },
       {
         title: "3. Production RAG Benchmarking & Evaluators",
         duration: "5.5 Hours",
         tag: "Hands-on",
-        tagClass: "bg-indigo-500/10 text-indigo-400 border-indigo-500/30",
+        tagClass: "bg-slate-500/10 text-slate-600 dark:text-slate-300 border-slate-500/20",
       },
       {
         title: "4. Capstone: Autonomous Code Synthesis Engine",
@@ -159,13 +164,13 @@ const domainShowcaseData: Record<
         title: "2. Edge Streaming & Real-time WebSocket Hubs",
         duration: "6.5 Hours",
         tag: "Interactive Lab",
-        tagClass: "bg-purple-500/10 text-purple-400 border-purple-500/30",
+        tagClass: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20",
       },
       {
         title: "3. Distributed Database Indexing & Caching Shards",
         duration: "4.5 Hours",
         tag: "Hands-on",
-        tagClass: "bg-indigo-500/10 text-indigo-400 border-indigo-500/30",
+        tagClass: "bg-slate-500/10 text-slate-600 dark:text-slate-300 border-slate-500/20",
       },
       {
         title: "4. Capstone: Real-time Multi-tenant SaaS Engine",
@@ -204,13 +209,13 @@ const domainShowcaseData: Record<
         title: "2. Zero-Trust Identity & mTLS Authentication",
         duration: "5.5 Hours",
         tag: "Interactive Lab",
-        tagClass: "bg-purple-500/10 text-purple-400 border-purple-500/30",
+        tagClass: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20",
       },
       {
         title: "3. Cryptographic Token Guards & Tenant Isolation",
         duration: "4.5 Hours",
         tag: "Hands-on",
-        tagClass: "bg-indigo-500/10 text-indigo-400 border-indigo-500/30",
+        tagClass: "bg-slate-500/10 text-slate-600 dark:text-slate-300 border-slate-500/20",
       },
       {
         title: "4. Capstone: Production Zero-Trust Security Gateway",
@@ -249,13 +254,13 @@ const domainShowcaseData: Record<
         title: "2. Kubernetes Cluster Orchestration & Ingress Routing",
         duration: "7.0 Hours",
         tag: "Interactive Lab",
-        tagClass: "bg-purple-500/10 text-purple-400 border-purple-500/30",
+        tagClass: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20",
       },
       {
         title: "3. ArgoCD GitOps Continuous Delivery Pipelines",
         duration: "5.0 Hours",
         tag: "Hands-on",
-        tagClass: "bg-indigo-500/10 text-indigo-400 border-indigo-500/30",
+        tagClass: "bg-slate-500/10 text-slate-600 dark:text-slate-300 border-slate-500/20",
       },
       {
         title: "4. Capstone: High-Availability Cloud Infrastructure",
@@ -290,6 +295,7 @@ export function Logo() {
 
 export function SiteNav() {
   const { user, isLoggedIn, logout, switchRole } = useAuth();
+  const { courses } = useCourses();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
@@ -298,7 +304,7 @@ export function SiteNav() {
     <header className="nav-wrap">
       <nav className="nav">
         <Link to="/" aria-label="Astra Academy home"><Logo /></Link>
-        
+
         {/* Navigation Links */}
         <div className={`nav-links ${menuOpen ? "open" : ""}`}>
           {!isLoggedIn ? (
@@ -384,7 +390,7 @@ export function SiteNav() {
                 onClick={() => setProfileOpen(!profileOpen)}
                 className="flex items-center gap-2.5 p-1.5 pr-3 rounded-full bg-[var(--surface-soft)] border border-[var(--border-soft)] hover:border-[var(--accent)] transition-all"
               >
-                <span className="w-8 h-8 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-600 text-white font-extrabold text-xs flex items-center justify-center">
+                <span className="w-8 h-8 rounded-full bg-blue-600 text-white font-extrabold text-xs flex items-center justify-center">
                   {user?.avatar || "AM"}
                 </span>
                 <span className="text-xs font-bold hidden sm:inline-block truncate max-w-[120px]">
@@ -399,38 +405,82 @@ export function SiteNav() {
                   <div className="p-2 border-b border-[var(--border-soft)]">
                     <p className="font-extrabold truncate">{user?.name}</p>
                     <p className="text-[10px] text-[var(--muted)] truncate">{user?.email}</p>
-                    <span className="mt-1 inline-block text-[9px] font-bold px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20 uppercase">
+                    <span className="mt-1 inline-block text-[9px] font-bold px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 uppercase">
                       {user?.role === "admin" ? "Platform Admin / Creator" : "Pro Student"}
                     </span>
                   </div>
 
-                  <Link to="/dashboard" onClick={() => setProfileOpen(false)} className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold">
-                    <span>🎓</span> My Learning Dashboard
-                  </Link>
-                  <Link to="/notes" onClick={() => setProfileOpen(false)} className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold">
-                    <span>📑</span> Saved Notes & Flashcards
-                  </Link>
-                  <Link to="/contests" onClick={() => setProfileOpen(false)} className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold">
-                    <span>⚡</span> Contest Arena & Quizzes
-                  </Link>
-                  <Link to="/dsa-sheet" onClick={() => setProfileOpen(false)} className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold">
-                    <span>🧠</span> DSA Problem Sheets
-                  </Link>
-                  <Link to="/verify" onClick={() => setProfileOpen(false)} className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold">
-                    <span>🏆</span> Verified Credentials
-                  </Link>
-
+                  {/* Admin Specific Studio Options (Moved from horizontal bar) */}
                   {user?.role === "admin" ? (
-                    <>
-                      <Link to="/admin" onClick={() => setProfileOpen(false)} className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold text-purple-400">
-                        <span>✨</span> Creator Studio & Editor
+                    <div className="space-y-1">
+                      <div className="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[var(--accent)]">
+                        Admin &amp; Curriculum Studio
+                      </div>
+                      <Link
+                        to="/admin?tab=studio"
+                        onClick={() => setProfileOpen(false)}
+                        className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold text-[var(--foreground)] transition-colors"
+                      >
+                        <span>✏️</span> Dynamic Course Studio
                       </Link>
-                      <button onClick={() => { switchRole("student"); setProfileOpen(false); navigate("/dashboard"); }} className="w-full text-left flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] text-[var(--muted)] font-semibold">
-                        <span>🎓</span> Switch to Student View
-                      </button>
-                    </>
-                  ) : (
-                    <button onClick={() => { switchRole("admin"); setProfileOpen(false); navigate("/admin"); }} className="w-full text-left flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] text-purple-400 font-semibold">
+                      <Link
+                        to="/admin?tab=courses"
+                        onClick={() => setProfileOpen(false)}
+                        className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold text-[var(--foreground)] transition-colors"
+                      >
+                        <span>📚</span> Manage Catalog ({courses.length})
+                      </Link>
+                      <Link
+                        to="/admin?tab=students"
+                        onClick={() => setProfileOpen(false)}
+                        className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold text-[var(--foreground)] transition-colors"
+                      >
+                        <span>👥</span> Manage All Students
+                      </Link>
+                      <Link
+                        to="/admin?tab=analytics"
+                        onClick={() => setProfileOpen(false)}
+                        className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold text-[var(--foreground)] transition-colors"
+                      >
+                        <span>📊</span> Customizable Analytics Dashboard
+                      </Link>
+                      <Link
+                        to="/admin?tab=hackathons"
+                        onClick={() => setProfileOpen(false)}
+                        className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold text-[var(--foreground)] transition-colors"
+                      >
+                        <span>🏆</span> Hackathons &amp; Arenas
+                      </Link>
+                    </div>
+                  ) : null}
+
+                  {/* Non-duplicated utility items */}
+                  <div className="pt-2 border-t border-[var(--border-soft)] space-y-1">
+                    <Link
+                      to="/notes"
+                      onClick={() => setProfileOpen(false)}
+                      className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold text-[var(--foreground)]"
+                    >
+                      <span>📑</span> Saved Notes &amp; Flashcards
+                    </Link>
+                    <Link
+                      to="/verify"
+                      onClick={() => setProfileOpen(false)}
+                      className="flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] font-semibold text-[var(--foreground)]"
+                    >
+                      <span>📜</span> Verified Credentials
+                    </Link>
+                  </div>
+
+                  {user?.role !== "admin" && (
+                    <button
+                      onClick={() => {
+                        switchRole("admin");
+                        setProfileOpen(false);
+                        navigate("/admin");
+                      }}
+                      className="w-full text-left flex items-center gap-2 p-2 rounded-xl hover:bg-[var(--surface-soft)] text-blue-600 dark:text-blue-400 font-semibold"
+                    >
                       <span>👑</span> Switch to Admin Creator View
                     </button>
                   )}
@@ -476,11 +526,11 @@ export function SiteFooter() {
   return (
     <footer className="mt-8 sm:mt-10 border-t border-[var(--border-soft)] bg-gradient-to-b from-[var(--surface)] to-[var(--bg)] text-[var(--text)] transition-colors relative overflow-hidden">
       {/* Subtle Glow backdrop effect */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-24 bg-gradient-to-b from-purple-500/10 to-transparent blur-3xl pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-24 bg-gradient-to-b from-blue-500/5 to-transparent blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-10 pb-10 space-y-8 relative z-10">
         {/* Top Tier: Live Metrics Banner & Newsletter */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 p-8 rounded-3xl bg-[var(--surface)]/70 border border-[var(--border-soft)] backdrop-blur-md shadow-xl">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 p-6 sm:p-8 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs">
           {/* Brand & Live Platform Status */}
           <div className="lg:col-span-6 space-y-4">
             <Link to="/" aria-label="Astra Academy home"><Logo /></Link>
@@ -568,7 +618,7 @@ export function SiteFooter() {
 
           {/* Column 3: Learning Tracks */}
           <div className="space-y-3">
-            <h5 className="font-extrabold uppercase tracking-wider text-purple-400 text-[11px]">
+            <h5 className="font-extrabold uppercase tracking-wider text-[var(--text)] text-[11px]">
               Learning Tracks
             </h5>
             <ul className="space-y-2 text-[var(--muted)]">
@@ -582,7 +632,7 @@ export function SiteFooter() {
 
           {/* Column 4: Platform & Creator */}
           <div className="space-y-3">
-            <h5 className="font-extrabold uppercase tracking-wider text-indigo-400 text-[11px]">
+            <h5 className="font-extrabold uppercase tracking-wider text-[var(--text)] text-[11px]">
               Platform & Creator
             </h5>
             <ul className="space-y-2 text-[var(--muted)]">
@@ -670,6 +720,9 @@ export function SiteFooter() {
           </button>
         </div>
       </div>
+
+      {/* Global Interactive Astra Platform Widget */}
+      <AstraPlatformWidget />
     </footer>
   );
 }
@@ -696,6 +749,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState("ai");
   const [annual, setAnnual] = useState(true);
   const [testimonial, setTestimonial] = useState(0);
+  const [previewCourse, setPreviewCourse] = useState<Course | null>(null);
 
   // If logged in, automatically show the appropriate dashboard view!
   if (isLoggedIn) {
@@ -742,8 +796,8 @@ export default function App() {
               </div>
               <div className="px-4 py-2 rounded-2xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-md flex items-center gap-2.5 text-xs">
                 <div className="avatar-stack flex -space-x-1.5">
-                  <i className="w-5 h-5 rounded-full bg-purple-500 text-[9px] text-white flex items-center justify-center">AV</i>
-                  <i className="w-5 h-5 rounded-full bg-indigo-500 text-[9px] text-white flex items-center justify-center">JB</i>
+                  <i className="w-5 h-5 rounded-full bg-blue-600 text-[9px] text-white flex items-center justify-center">AV</i>
+                  <i className="w-5 h-5 rounded-full bg-sky-600 text-[9px] text-white flex items-center justify-center">JB</i>
                   <i className="w-5 h-5 rounded-full bg-emerald-500 text-[9px] text-white flex items-center justify-center">MS</i>
                 </div>
                 <span><strong>15,000+ Engineers</strong> <span className="text-[var(--muted)]">building now</span></span>
@@ -758,106 +812,22 @@ export default function App() {
         {/* Featured Masterclasses Grid */}
         <section className="section features" id="features">
           <SectionHeader eyebrow="Curated Masterclasses" title={<>Built by industry leaders. <span className="gradient-text">Mastered by you.</span></>} copy="Every course is packed with architectural diagrams, production-grade projects, and portfolio-ready capstones." />
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-4 max-w-7xl mx-auto">
             {courses.slice(0, 4).map((c) => (
-              <article
+              <CourseCard
                 key={c.id}
-                className="group relative rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] hover:border-[var(--accent)] shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col justify-between overflow-hidden text-left h-full"
-              >
-                <div>
-                  {/* Standardized Course Image Thumbnail */}
-                  <div className="relative h-40 w-full overflow-hidden bg-[var(--surface-soft)]">
-                    {c.thumbnailUrl ? (
-                      <img
-                        src={c.thumbnailUrl}
-                        alt={c.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        loading="lazy"
-                      />
-                    ) : (
-                      <div
-                        className="w-full h-full"
-                        style={{ background: c.bannerGradient || "linear-gradient(135deg, #7c3aed 0%, #4338ca 100%)" }}
-                      />
-                    )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/35 pointer-events-none" />
-                    
-                    <div className="relative z-10 p-3 flex items-center justify-between">
-                      <span className="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-black/60 text-white backdrop-blur-md border border-white/20">
-                        {c.categoryLabel}
-                      </span>
-                      {c.bestseller && (
-                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-amber-400 text-black shadow-md">
-                          ★ BESTSELLER
-                        </span>
-                      )}
-                    </div>
-
-                    <div className="absolute bottom-2.5 left-3 right-3 z-10 flex items-center justify-between text-white text-[10px]">
-                      <span className="bg-black/60 backdrop-blur-md px-2 py-0.5 rounded-md font-mono text-white/90">
-                        ⏱ {c.duration}
-                      </span>
-                      <span className="text-amber-300 bg-black/60 backdrop-blur-md px-2 py-0.5 rounded-md font-bold">
-                        ★ {c.rating}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Body Content */}
-                  <div className="p-4 space-y-2.5">
-                    <div className="flex items-center justify-between text-[10px] text-[var(--muted)] font-semibold">
-                      <span className="flex items-center gap-1.5">
-                        <span className="w-2 h-2 rounded-full bg-purple-400 inline-block" />
-                        {c.level}
-                      </span>
-                      <span>{c.studentsCount.toLocaleString()} enrolled</span>
-                    </div>
-
-                    <h3 className="text-sm font-extrabold text-[var(--text)] group-hover:text-[var(--accent)] transition-colors line-clamp-1 leading-snug">
-                      {c.title}
-                    </h3>
-                    <p className="text-xs text-[var(--muted)] line-clamp-2 leading-relaxed min-h-[2.5rem]">
-                      {c.tagline}
-                    </p>
-
-                    <div className="flex flex-wrap gap-1 pt-1 min-h-[1.75rem]">
-                      {c.skills.slice(0, 2).map((skill) => (
-                        <span
-                          key={skill}
-                          className="px-2 py-0.5 rounded-md bg-[var(--surface-soft)] border border-[var(--border-soft)] text-[9px] font-medium text-[var(--text)]"
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                      {c.skills.length > 2 && (
-                        <span className="text-[9px] text-[var(--muted)] self-center font-semibold">
-                          +{c.skills.length - 2}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Footer Action */}
-                <div className="p-4 pt-2.5 border-t border-[var(--border-soft)] bg-[var(--surface-soft)]/30 flex items-center justify-between gap-2 mt-auto">
-                  <div className="flex items-center gap-2 min-w-0">
-                    <div className="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 font-bold text-[9px] flex items-center justify-center shrink-0">
-                      {c.instructor.avatar}
-                    </div>
-                    <span className="text-[11px] font-semibold text-[var(--text)] truncate max-w-[80px]">
-                      {c.instructor.name}
-                    </span>
-                  </div>
-
-                  <button
-                    onClick={() => navigate(`/learn/${c.id}`)}
-                    className="button button-sm text-[11px] py-1 px-3 font-bold shrink-0"
-                  >
-                    Start Learning →
-                  </button>
-                </div>
-              </article>
+                course={c}
+                isEnrolled={isEnrolled(c.id)}
+                onPreview={(course) => setPreviewCourse(course)}
+                onStartLearning={(course) => {
+                  if (isEnrolled(course.id)) {
+                    navigate(`/learn/${course.id}`);
+                  } else {
+                    setPreviewCourse(course);
+                  }
+                }}
+              />
             ))}
           </div>
         </section>
@@ -996,15 +966,34 @@ export default function App() {
           <div className="pricing-grid">
             {pricing.map((plan) => {
               const price = annual ? Math.round(plan.monthly * 0.8) : plan.monthly;
-              return <article className={`price-card ${plan.popular ? "popular" : ""}`} key={plan.name}>
-                {plan.popular && <span className="popular-tag"><Icon name="sparkles" size={13} /> MOST POPULAR</span>}
-                <span className="plan-icon"><Icon name={plan.name === "Starter Pass" ? "bolt" : plan.name === "Pro All-Access" ? "sparkles" : "globe"} /></span>
-                <h3>{plan.name}</h3><p>{plan.copy}</p>
-                <div className="price"><sup>$</sup><b>{price}</b><span>/ month<br />billed {annual ? "annually" : "monthly"}</span></div>
-                <button className={plan.popular ? "button" : "price-button"} onClick={() => navigate("/signup")}>Start Learning <Icon name="arrow" /></button>
-                <small>WHAT’S INCLUDED</small>
-                <ul>{plan.features.map((feature) => <li key={feature}><span><Icon name="check" size={13} /></span>{feature}</li>)}</ul>
-              </article>;
+              return (
+                <article className={`price-card ${plan.popular ? "popular" : ""}`} key={plan.name}>
+                  {plan.popular && <span className="popular-tag"><Icon name="sparkles" size={13} /> MOST POPULAR</span>}
+                  <div>
+                    <span className="plan-icon"><Icon name={plan.name === "Starter Pass" ? "bolt" : plan.name === "Pro All-Access" ? "sparkles" : "globe"} /></span>
+                    <h3>{plan.name}</h3>
+                    <p>{plan.copy}</p>
+                    <div className="price">
+                      <sup>$</sup><b>{price}</b>
+                      <span>/ month<br />billed {annual ? "annually" : "monthly"}</span>
+                    </div>
+                    <button className={plan.popular ? "button" : "price-button"} onClick={() => navigate("/signup")}>
+                      Start Learning <Icon name="arrow" />
+                    </button>
+                  </div>
+                  <div className="mt-6 pt-6 border-t border-[var(--border-soft)]">
+                    <small className="feature-header">WHAT’S INCLUDED</small>
+                    <ul>
+                      {plan.features.map((feature) => (
+                        <li key={feature}>
+                          <span><Icon name="check" size={13} /></span>
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </article>
+              );
             })}
           </div>
         </section>
@@ -1027,6 +1016,17 @@ export default function App() {
           </div>
         </section>
       </main>
+
+      {/* Course Preview Modal for Unenrolled Users */}
+      <CoursePreviewModal
+        course={previewCourse}
+        isOpen={!!previewCourse}
+        onClose={() => setPreviewCourse(null)}
+        onEnroll={(courseId) => {
+          enrollInCourse(courseId);
+          navigate(`/learn/${courseId}`);
+        }}
+      />
 
       <SiteFooter />
     </div>

@@ -1,4 +1,4 @@
-import type { ChapterTimestamp, QuizQuestion, CourseResource } from "../context/CourseContext";
+import type { ChapterTimestamp, QuizQuestion, CourseResource, ContentBlock } from "../context/CourseContext";
 
 export interface NavigableItem {
   id: string;
@@ -19,6 +19,7 @@ export interface NavigableItem {
   quizzes?: QuizQuestion[];
   resources?: CourseResource[];
   flashcards?: Array<{ front: string; back: string }>;
+  blocks?: ContentBlock[];
 }
 
 export type ContentTabType =

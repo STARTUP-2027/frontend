@@ -61,7 +61,7 @@ export default function WorkspaceTabs({
       label: "🎥 Video Lecture",
       badge: activeItem.timestamps?.length ? `${activeItem.timestamps.length} Ch` : undefined,
     },
-    { id: "reading", label: "📄 Cisco Theory & Interactive Reading" },
+    { id: "reading", label: "📄 Interactive Lesson & Architecture" },
     {
       id: "quiz",
       label: `🧠 Assessments (${activeItem.quizzes?.length || 1})`,
@@ -76,7 +76,7 @@ export default function WorkspaceTabs({
   ];
 
   return (
-    <div className="rounded-3xl border border-[var(--border)] bg-[var(--surface)] overflow-hidden shadow-xl">
+    <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] overflow-hidden shadow-xs">
       {/* Horizontal Tabs Bar */}
       <div className="flex border-b border-[var(--border-soft)] bg-[var(--surface-soft)]/80 overflow-x-auto no-scrollbar">
         {tabsConfig.map((tab) => (
@@ -85,13 +85,13 @@ export default function WorkspaceTabs({
             onClick={() => onTabChange(tab.id)}
             className={`px-4 py-3 text-xs font-bold transition-all border-b-2 whitespace-nowrap flex items-center gap-2 cursor-pointer ${
               activeTab === tab.id
-                ? "border-purple-500 text-purple-400 bg-[var(--surface)] shadow-inner"
+                ? "border-blue-500 text-blue-600 dark:text-blue-400 bg-[var(--surface)]"
                 : "border-transparent text-[var(--muted)] hover:text-[var(--text)] hover:bg-[var(--surface)]/50"
             }`}
           >
             <span>{tab.label}</span>
             {tab.badge && (
-              <span className="px-1.5 py-0.2 rounded-md bg-purple-500/20 text-purple-300 text-[10px] font-black">
+              <span className="px-1.5 py-0.2 rounded-md bg-blue-500/10 text-blue-600 dark:text-blue-400 text-[10px] font-bold">
                 {tab.badge}
               </span>
             )}

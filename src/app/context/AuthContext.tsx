@@ -59,12 +59,14 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<UserProfile | null>(() => {
-    const saved = localStorage.getItem("astra_learn_user");
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch {
-        return null;
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("astra_learn_user");
+      if (saved) {
+        try {
+          return JSON.parse(saved);
+        } catch {
+          return null;
+        }
       }
     }
     // Default to visitor on first load or can be null
@@ -72,10 +74,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   });
 
   useEffect(() => {
-    if (user) {
-      localStorage.setItem("astra_learn_user", JSON.stringify(user));
-    } else {
-      localStorage.removeItem("astra_learn_user");
+    if (typeof window !== "undefined") {
+      if (user) {
+        localStorage.setItem("astra_learn_user", JSON.stringify(user));
+      } else {
+        localStorage.removeItem("astra_learn_user");
+      }
     }
   }, [user]);
 

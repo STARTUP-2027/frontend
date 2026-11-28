@@ -23,7 +23,6 @@ export const router = createBrowserRouter([
   { path: "/dsa-sheet", Component: DsaSheetPage },
   { path: "/sheet", Component: DsaSheetPage },
   { path: "/sheets", Component: DsaSheetPage },
-  { path: "/sandbox", Component: DsaSheetPage },
   { path: "/verify", Component: CertificateVerifyPage },
   { path: "/verify/:credentialId", Component: CertificateVerifyPage },
   { path: "/admin", Component: AdminCreatorHub },

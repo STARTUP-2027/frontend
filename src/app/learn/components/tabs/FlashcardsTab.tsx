@@ -49,9 +49,9 @@ export default function FlashcardsTab({ item }: FlashcardsTabProps) {
       {currentCard && (
         <div
           onClick={() => setIsCardFlipped(!isCardFlipped)}
-          className="min-h-[220px] p-8 rounded-3xl bg-[var(--surface-soft)] border border-[var(--border)] hover:border-purple-500/50 shadow-2xl flex flex-col items-center justify-center cursor-pointer transition-all hover:scale-[1.01]"
+          className="min-h-[220px] p-8 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border)] hover:border-blue-500/50 shadow-xs flex flex-col items-center justify-center cursor-pointer transition-all hover:-translate-y-0.5"
         >
-          <span className="text-[10px] font-black uppercase text-purple-400 tracking-wider mb-3">
+          <span className="text-[10px] font-bold uppercase text-blue-600 dark:text-blue-400 tracking-wider mb-3">
             {isCardFlipped
               ? "Answer / Explanation (Click to flip)"
               : "Concept Term (Click to reveal)"}

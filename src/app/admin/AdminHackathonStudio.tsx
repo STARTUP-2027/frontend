@@ -253,10 +253,10 @@ export default function AdminHackathonStudio() {
       )}
 
       {/* Header Bar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-xl">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="px-3 py-0.5 rounded-full bg-purple-500/20 text-purple-400 border border-purple-500/30 text-[10px] font-black uppercase">
+            <span className="px-3 py-0.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 text-[10px] font-bold uppercase">
               Hackathon Creator Studio
             </span>
             <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-bold">
@@ -271,7 +271,7 @@ export default function AdminHackathonStudio() {
           <button
             type="button"
             onClick={handleAddProblem}
-            className="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-black text-xs shadow-lg shadow-purple-600/30 flex items-center gap-2"
+            className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-sm flex items-center gap-2"
           >
             <span>➕ Add Problem Statement</span>
           </button>
@@ -290,11 +290,10 @@ export default function AdminHackathonStudio() {
             key={t.id}
             type="button"
             onClick={() => setActiveTab(t.id as any)}
-            className={`pb-3 px-3 text-xs font-bold transition-all border-b-2 flex items-center gap-2 ${
-              activeTab === t.id
-                ? "border-purple-500 text-purple-400"
-                : "border-transparent text-[var(--muted)] hover:text-[var(--text)]"
-            }`}
+            className={`pb-3 px-3 text-xs font-bold transition-all border-b-2 flex items-center gap-2 ${activeTab === t.id
+              ? "border-[var(--accent)] text-[var(--accent)]"
+              : "border-transparent text-[var(--muted)] hover:text-[var(--text)]"
+              }`}
           >
             <span>{t.icon}</span>
             <span>{t.label}</span>
@@ -306,10 +305,10 @@ export default function AdminHackathonStudio() {
       {activeTab === "problems" && (
         <div className="space-y-6">
           {currentHackathon.problems.map((prob, pIdx) => (
-            <div key={prob.id} className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-xl space-y-5">
+            <div key={prob.id} className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs space-y-5">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[var(--border-soft)] pb-4">
                 <div className="flex items-center gap-2.5">
-                  <span className="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-400 font-black text-xs flex items-center justify-center">
+                  <span className="w-8 h-8 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold text-xs flex items-center justify-center">
                     #{pIdx + 1}
                   </span>
                   <div>
@@ -322,7 +321,7 @@ export default function AdminHackathonStudio() {
                   <button
                     type="button"
                     onClick={() => handleAddTestCase(prob.id)}
-                    className="px-3 py-1.5 rounded-xl bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 font-bold text-xs border border-indigo-500/30 flex items-center gap-1"
+                    className="px-3 py-1.5 rounded-xl bg-blue-500/10 hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 font-bold text-xs border border-blue-500/20 flex items-center gap-1"
                   >
                     <span>➕ Add Test Case</span>
                   </button>
@@ -337,7 +336,7 @@ export default function AdminHackathonStudio() {
                     type="text"
                     value={prob.title}
                     onChange={(e) => handleUpdateProblem(prob.id, "title", e.target.value)}
-                    className="w-full px-3.5 py-2 rounded-xl bg-[var(--surface-soft)] border border-[var(--border-soft)] text-[var(--text)] font-semibold outline-none focus:border-purple-500"
+                    className="w-full px-3.5 py-2 rounded-xl bg-[var(--surface-soft)] border border-[var(--border-soft)] text-[var(--text)] font-semibold outline-none focus:border-[var(--accent)]"
                   />
                 </div>
 
@@ -347,7 +346,7 @@ export default function AdminHackathonStudio() {
                     type="text"
                     value={prob.starterRepoUrl}
                     onChange={(e) => handleUpdateProblem(prob.id, "starterRepoUrl", e.target.value)}
-                    className="w-full px-3.5 py-2 rounded-xl bg-[var(--surface-soft)] border border-[var(--border-soft)] text-[var(--text)] font-mono outline-none focus:border-purple-500"
+                    className="w-full px-3.5 py-2 rounded-xl bg-[var(--surface-soft)] border border-[var(--border-soft)] text-[var(--text)] font-mono outline-none focus:border-[var(--accent)]"
                   />
                 </div>
 
@@ -357,7 +356,7 @@ export default function AdminHackathonStudio() {
                     rows={4}
                     value={prob.description}
                     onChange={(e) => handleUpdateProblem(prob.id, "description", e.target.value)}
-                    className="w-full p-3.5 rounded-xl bg-[var(--surface-soft)] border border-[var(--border-soft)] text-[var(--text)] font-mono text-xs outline-none focus:border-purple-500 leading-relaxed resize-none"
+                    className="w-full p-3.5 rounded-xl bg-[var(--surface-soft)] border border-[var(--border-soft)] text-[var(--text)] font-mono text-xs outline-none focus:border-[var(--accent)] leading-relaxed resize-none"
                   />
                 </div>
               </div>
@@ -376,13 +375,13 @@ export default function AdminHackathonStudio() {
                     <div key={tc.id} className="p-4 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border-soft)] space-y-3 text-xs">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <span className="font-mono font-bold text-purple-400">Case #{tcIdx + 1}</span>
+                          <span className="font-mono font-bold text-blue-600 dark:text-blue-400">Case #{tcIdx + 1}</span>
                           <label className="flex items-center gap-1.5 text-[11px] font-bold cursor-pointer">
                             <input
                               type="checkbox"
                               checked={tc.isHidden}
                               onChange={(e) => handleUpdateTestCase(prob.id, tc.id, "isHidden", e.target.checked)}
-                              className="accent-purple-500"
+                              className="accent-blue-600"
                             />
                             <span className={tc.isHidden ? "text-amber-400" : "text-emerald-400"}>
                               {tc.isHidden ? "🔒 Hidden Suite (Eval Only)" : "🌐 Public Sample"}
@@ -426,7 +425,7 @@ export default function AdminHackathonStudio() {
                             rows={2}
                             value={tc.expected}
                             onChange={(e) => handleUpdateTestCase(prob.id, tc.id, "expected", e.target.value)}
-                            className="w-full p-2 rounded-lg bg-[var(--surface)] border border-[var(--border-soft)] text-indigo-300 outline-none resize-none text-[11px]"
+                            className="w-full p-2 rounded-lg bg-[var(--surface)] border border-[var(--border-soft)] text-slate-300 outline-none resize-none text-[11px]"
                           />
                         </div>
                       </div>
@@ -442,7 +441,7 @@ export default function AdminHackathonStudio() {
       {/* TAB 2: OVERVIEW & PRIZE POOL */}
       {activeTab === "overview" && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-xl space-y-4 text-xs">
+          <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs space-y-4 text-xs">
             <h3 className="text-sm font-black uppercase text-[var(--accent)] flex items-center gap-2">
               <span>📅</span> Timeline & Phases
             </h3>
@@ -465,7 +464,7 @@ export default function AdminHackathonStudio() {
             </div>
           </div>
 
-          <div className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-xl space-y-4 text-xs">
+          <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs space-y-4 text-xs">
             <h3 className="text-sm font-black uppercase text-amber-400 flex items-center gap-2">
               <span>🏆</span> Prize Pool Breakdown (${currentHackathon.prizePool.toLocaleString()})
             </h3>
@@ -483,7 +482,7 @@ export default function AdminHackathonStudio() {
 
       {/* TAB 3: RUBRIC */}
       {activeTab === "rubric" && (
-        <div className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-xl space-y-4 text-xs">
+        <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs space-y-4 text-xs">
           <h3 className="text-sm font-black uppercase text-[var(--accent)] flex items-center gap-2">
             <span>⚖️</span> Evaluation Rubric Weights
           </h3>
@@ -493,12 +492,12 @@ export default function AdminHackathonStudio() {
             <div className="p-4 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border-soft)] text-center space-y-1">
               <span className="text-2xl">💡</span>
               <h4 className="font-bold text-[var(--text)]">Innovation & Uniqueness</h4>
-              <span className="text-xl font-black text-purple-400">30%</span>
+              <span className="text-xl font-black text-blue-600 dark:text-blue-400">30%</span>
             </div>
             <div className="p-4 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border-soft)] text-center space-y-1">
               <span className="text-2xl">💻</span>
               <h4 className="font-bold text-[var(--text)]">Code Architecture & Tests</h4>
-              <span className="text-xl font-black text-indigo-400">25%</span>
+              <span className="text-xl font-black text-slate-700 dark:text-slate-300">25%</span>
             </div>
             <div className="p-4 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border-soft)] text-center space-y-1">
               <span className="text-2xl">⚡</span>
@@ -516,7 +515,7 @@ export default function AdminHackathonStudio() {
 
       {/* TAB 4: SUBMISSIONS */}
       {activeTab === "submissions" && (
-        <div className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-xl space-y-4 text-xs">
+        <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs space-y-4 text-xs">
           <div className="flex items-center justify-between border-b border-[var(--border-soft)] pb-3">
             <h3 className="text-sm font-black uppercase text-[var(--accent)] flex items-center gap-2">
               <span>📥</span> Registered Teams & Live Submissions
@@ -534,7 +533,7 @@ export default function AdminHackathonStudio() {
               <div key={i} className="py-3 flex items-center justify-between">
                 <div>
                   <p className="font-extrabold text-[var(--text)]">{sub.team} ({sub.members} engineers)</p>
-                  <a href={`https://${sub.repo}`} target="_blank" rel="noreferrer" className="text-[11px] text-purple-400 font-mono hover:underline">
+                  <a href={`https://${sub.repo}`} target="_blank" rel="noreferrer" className="text-[11px] text-blue-600 dark:text-blue-400 font-mono hover:underline">
                     {sub.repo}
                   </a>
                 </div>

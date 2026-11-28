@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { useParams, Link } from "react-router";
 import { useCourses } from "../context/CourseContext";
@@ -53,7 +55,7 @@ export default function CertificateVerifyPage() {
 
       <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-28 space-y-8">
         {/* Verification Status Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-xl">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center text-2xl shrink-0">
               ✓
@@ -82,7 +84,7 @@ export default function CertificateVerifyPage() {
         </div>
 
         {/* The Official Certificate Parchment Card */}
-        <div className="relative p-8 sm:p-14 rounded-3xl bg-gradient-to-b from-[#18142a] via-[#110e20] to-[#0d0a17] text-white border-2 border-amber-500/40 shadow-2xl space-y-8 text-center overflow-hidden">
+        <div className="relative p-8 sm:p-14 rounded-2xl bg-gradient-to-b from-[#18142a] via-[#110e20] to-[#0d0a17] text-white border-2 border-amber-500/40 shadow-xl space-y-8 text-center overflow-hidden">
           {/* Decorative Corner Filigrees */}
           <div className="absolute top-4 left-4 w-12 h-12 border-t-2 border-l-2 border-amber-400/40 rounded-tl-xl" />
           <div className="absolute top-4 right-4 w-12 h-12 border-t-2 border-r-2 border-amber-400/40 rounded-tr-xl" />
@@ -106,13 +108,13 @@ export default function CertificateVerifyPage() {
             <p className="text-xs text-gray-400 uppercase tracking-widest font-semibold">
               This credential certifies that
             </p>
-            <p className="text-2xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-white to-purple-200 border-b border-gray-700 pb-3 inline-block px-8">
+            <p className="text-2xl sm:text-3xl font-black text-white border-b border-gray-700 pb-3 inline-block px-8">
               {activeCert.studentName}
             </p>
             <p className="text-xs sm:text-sm text-gray-300 leading-relaxed pt-2">
               has completed all rigorous architectural labs, interactive code sandboxes, and capstone benchmarks for
             </p>
-            <p className="text-lg sm:text-xl font-extrabold text-purple-300">
+            <p className="text-lg sm:text-xl font-extrabold text-blue-400">
               {activeCert.courseTitle}
             </p>
           </div>
@@ -126,7 +128,7 @@ export default function CertificateVerifyPage() {
               {skillsList.map((skill) => (
                 <span
                   key={skill}
-                  className="px-3 py-1 rounded-full text-[11px] font-semibold bg-purple-500/10 text-purple-300 border border-purple-500/20"
+                  className="px-3 py-1 rounded-full text-[11px] font-semibold bg-blue-500/10 text-blue-300 border border-blue-500/20"
                 >
                   ✓ {skill}
                 </span>
@@ -168,7 +170,7 @@ export default function CertificateVerifyPage() {
         </div>
 
         {/* Share & Actions Toolbar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-md">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs">
           <div className="flex items-center gap-3">
             <button
               onClick={handleAddToLinkedIn}

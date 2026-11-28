@@ -105,6 +105,7 @@ export function useNavigableHierarchy(course?: Course): NavigableItem[] {
                 back: "Persisting intermediate state to durable storage to support replay and fault recovery.",
               },
             ],
+            blocks: node.blocks,
           });
         }
 
@@ -177,6 +178,7 @@ export function useNavigableHierarchy(course?: Course): NavigableItem[] {
                 back: "Fundamental pattern required for resilient high-scale deployment.",
               },
             ],
+            blocks: l.blocks,
           });
         });
       }

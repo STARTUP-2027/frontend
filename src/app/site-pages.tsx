@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, type FormEvent, type ReactNode } from "react";
 import { Link, useNavigate } from "react-router";
 import { SiteFooter, SiteNav } from "../App";
@@ -125,12 +127,12 @@ export function AuthPage({ mode }: { mode: "signin" | "signup" }) {
                 <button
                   type="button"
                   onClick={() => handleQuickLogin("admin")}
-                  className="w-full text-left p-2 rounded-lg bg-[var(--surface)] hover:border-purple-400 border border-[var(--border-soft)] flex justify-between items-center transition-all group"
+                  className="w-full text-left p-2 rounded-lg bg-[var(--surface)] hover:border-[var(--accent)] border border-[var(--border-soft)] flex justify-between items-center transition-all group"
                 >
                   <div>
-                    <span className="font-bold text-purple-400">👑 Admin/Creator:</span> <code>admin@astra.edu</code> / <code>admin123</code>
+                    <span className="font-bold text-[var(--accent)]">👑 Admin/Creator:</span> <code>admin@astra.edu</code> / <code>admin123</code>
                   </div>
-                  <span className="text-[10px] font-bold text-purple-400 group-hover:underline">1-Click Login →</span>
+                  <span className="text-[10px] font-bold text-[var(--accent)] group-hover:underline">1-Click Login →</span>
                 </button>
               </div>
             </div>

@@ -1,7 +1,10 @@
-import { useState } from "react";
+"use client";
+
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router";
 import { Icon, Logo, SiteFooter, SiteNav } from "../App";
 import { useTheme } from "./theme";
+import { astraApi } from "../lib/api";
 
 export default function PricingPage() {
   const { dark } = useTheme();
@@ -9,10 +12,19 @@ export default function PricingPage() {
   const [annual, setAnnual] = useState(true);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
-  const pricingPlans = [
+  const [pricingPlans, setPricingPlans] = useState<Array<{
+    name: string;
+    icon: any;
+    copy: string;
+    monthly: number;
+    customText?: string;
+    features: string[];
+    cta: string;
+    popular: boolean;
+  }>>([
     {
       name: "Starter Pass",
-      icon: "bolt" as const,
+      icon: "bolt",
       copy: "For self-paced developers starting their tech and AI journey.",
       monthly: 19,
       features: [
@@ -27,7 +39,7 @@ export default function PricingPage() {
     },
     {
       name: "Pro All-Access",
-      icon: "sparkles" as const,
+      icon: "sparkles",
       copy: "For ambitious engineers advancing to Senior, Staff, and AI roles.",
       monthly: 49,
       features: [
@@ -43,7 +55,7 @@ export default function PricingPage() {
     },
     {
       name: "Team & Enterprise",
-      icon: "globe" as const,
+      icon: "globe",
       copy: "For engineering orgs and companies scaling technical excellence.",
       monthly: 99,
       customText: "Custom",
@@ -58,7 +70,28 @@ export default function PricingPage() {
       cta: "Talk to sales",
       popular: false,
     },
-  ];
+  ]);
+
+  useEffect(() => {
+    astraApi.getSubscriptionPlans().then((res) => {
+      if (res?.data && res.data.length > 0) {
+        setPricingPlans(
+          res.data.map((p) => ({
+            name: p.name,
+            icon: p.id === "pro" ? "sparkles" : p.id === "enterprise" ? "globe" : "bolt",
+            copy: p.tagline,
+            monthly: p.monthlyPrice,
+            customText: p.id === "enterprise" ? "Custom" : undefined,
+            features: p.features,
+            cta: p.ctaText,
+            popular: Boolean(p.isPopular),
+          }))
+        );
+      }
+    }).catch(() => {
+      // safe fallback
+    });
+  }, []);
 
   const faqs = [
     {
@@ -151,40 +184,44 @@ export default function PricingPage() {
                       <Icon name="sparkles" size={13} /> MOST POPULAR
                     </span>
                   )}
-                  <span className="plan-icon">
-                    <Icon name={plan.icon} />
-                  </span>
-                  <h3>{plan.name}</h3>
-                  <p>{plan.copy}</p>
+                  <div>
+                    <span className="plan-icon">
+                      <Icon name={plan.icon} />
+                    </span>
+                    <h3>{plan.name}</h3>
+                    <p>{plan.copy}</p>
 
-                  <div className="price">
-                    {plan.name === "Enterprise" ? (
-                      <b>{plan.customText}</b>
-                    ) : (
-                      <>
-                        <sup>$</sup>
-                        <b>{price}</b>
-                        <span>/ user<br />/ month</span>
-                      </>
-                    )}
+                    <div className="price">
+                      {plan.name === "Enterprise" ? (
+                        <b>{plan.customText}</b>
+                      ) : (
+                        <>
+                          <sup>$</sup>
+                          <b>{price}</b>
+                          <span>/ user<br />/ month</span>
+                        </>
+                      )}
+                    </div>
+
+                    <button
+                      className={plan.popular ? "button" : "price-button"}
+                      onClick={() => navigate("/signup")}
+                    >
+                      {plan.name === "Team & Enterprise" ? "Enroll Engineering Team" : "Start learning free"} <Icon name="arrow" />
+                    </button>
                   </div>
 
-                  <button
-                    className={plan.popular ? "button" : "price-button"}
-                    onClick={() => navigate("/signup")}
-                  >
-                    {plan.name === "Team & Enterprise" ? "Enroll Engineering Team" : "Start learning free"} <Icon name="arrow" />
-                  </button>
-
-                  <small>WHAT’S INCLUDED</small>
-                  <ul>
-                    {plan.features.map((feature) => (
-                      <li key={feature}>
-                        <span><Icon name="check" size={13} /></span>
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="mt-6 pt-6 border-t border-[var(--border-soft)]">
+                    <small className="feature-header">WHAT’S INCLUDED</small>
+                    <ul>
+                      {plan.features.map((feature) => (
+                        <li key={feature}>
+                          <span><Icon name="check" size={13} /></span>
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </article>
               );
             })}

@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import { useTheme } from "../theme";
 
@@ -261,8 +263,8 @@ export default function HeroInteractiveCopilot() {
 
   return (
     <div className="w-full flex flex-col items-center select-none">
-      {/* Outer Glow Container with Radiant Purple/Indigo Aura */}
-      <div className="relative w-full max-w-5xl rounded-3xl p-1 sm:p-2.5 bg-gradient-to-b from-[#6366f1]/30 via-[#8b5cf6]/20 to-transparent shadow-[0_0_100px_rgba(99,102,241,0.25)] dark:shadow-[0_0_120px_rgba(139,92,246,0.35)]">
+      {/* Clean, Modern Code Workspace Container */}
+      <div className="relative w-full max-w-5xl rounded-2xl p-1 bg-slate-200/50 dark:bg-slate-800/40 border border-slate-300/60 dark:border-slate-800 shadow-xl">
         {/* Main VS Code App Window */}
         <div className="w-full rounded-2xl bg-[#0d1117] border border-[#30363d] overflow-hidden shadow-2xl flex flex-col font-sans">
           

@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect, useMemo } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router";
 import { useAuth } from "../context/AuthContext";
@@ -50,7 +52,7 @@ const ALL_CHALLENGES: Challenge[] = [
     solvedCount: 1420,
     acceptanceRate: "64.2%",
     tags: ["LangGraph", "Cyclic Memory", "AI Agents", "StateGraph"],
-    bannerGradient: "linear-gradient(135deg, #7c3aed 0%, #4338ca 100%)",
+    bannerGradient: "linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)",
   },
   {
     id: "ch-2",
@@ -160,7 +162,7 @@ function computeRRF(denseRank, sparseRank, k = 60) {
     solvedCount: 890,
     acceptanceRate: "59.4%",
     tags: ["Vector Search", "RRF", "RAG", "Qdrant"],
-    bannerGradient: "linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%)",
+    bannerGradient: "linear-gradient(135deg, #0284c7 0%, #0369a1 100%)",
   },
   {
     id: "ch-6",
@@ -237,7 +239,7 @@ function acquireToken(capacity, available, requested) {
     solvedCount: 1540,
     acceptanceRate: "76.4%",
     tags: ["Go (Golang)", "Concurrency", "Worker Pool", "Rate Limiting"],
-    bannerGradient: "linear-gradient(135deg, #6366f1 0%, #4338ca 100%)",
+    bannerGradient: "linear-gradient(135deg, #2563eb 0%, #1e40af 100%)",
   },
 ];
 
@@ -482,76 +484,75 @@ export default function ContestArenaPage() {
       <div className="subpage-noise" />
       <SiteNav />
 
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-32 sm:pt-36 pb-20 space-y-8">
+        <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-32 sm:pt-36 pb-36 space-y-8">
 
-        {/* HERO ARENA HEADER */}
-        <div className="relative overflow-hidden p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-purple-900/40 via-indigo-950/60 to-purple-900/20 border border-[var(--border-soft)] shadow-2xl backdrop-blur-xl">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
-            <div className="space-y-2 max-w-2xl">
-              <div className="flex items-center gap-3">
-                <span className="px-3 py-1 rounded-full text-[11px] font-extrabold tracking-wider bg-amber-500/20 text-amber-400 border border-amber-500/30 uppercase flex items-center gap-1.5 shadow-sm">
-                  <span>⚡</span> Live Coding & Contest Arena
-                </span>
-                <span className="text-xs text-[var(--muted)] font-mono">Season 4 Active</span>
+          {/* HERO ARENA HEADER */}
+          <div className="relative overflow-hidden p-6 sm:p-8 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
+              <div className="space-y-2 max-w-2xl">
+                <div className="flex items-center gap-3">
+                  <span className="px-3 py-1 rounded-full text-[11px] font-extrabold tracking-wider bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 uppercase flex items-center gap-1.5 shadow-sm">
+                    <span>⚡</span> Live Coding & Contest Arena
+                  </span>
+                  <span className="text-xs text-[var(--muted)] font-mono">Season 4 Active</span>
+                </div>
+                <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-[var(--text)]">
+                  Quiz Playground & Hackathon Arena
+                </h1>
+                <p className="text-xs sm:text-sm text-[var(--muted)] leading-relaxed">
+                  Compete in daily architectural benchmark quizzes, timed code challenges, and real-time 1v1 code duels to climb the global leaderboard.
+                </p>
               </div>
-              <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-[var(--text)]">
-                Quiz Playground & Hackathon Arena
-              </h1>
-              <p className="text-xs sm:text-sm text-[var(--muted)] leading-relaxed">
-                Compete in daily architectural benchmark quizzes, timed code challenges, and real-time 1v1 code duels to climb the global leaderboard.
-              </p>
-            </div>
 
-            {/* Quick Stats Pill */}
-            <div className="flex items-center gap-3 bg-[var(--surface)]/90 backdrop-blur-md p-4 rounded-2xl border border-[var(--border-soft)] shadow-lg shrink-0">
-              <div className="text-center px-3 border-r border-[var(--border-soft)]">
-                <span className="text-[10px] uppercase font-black text-[var(--muted)] tracking-wider">Your Rank</span>
-                <p className="text-lg font-black text-amber-400">#4</p>
-              </div>
-              <div className="text-center px-3 border-r border-[var(--border-soft)]">
-                <span className="text-[10px] uppercase font-black text-[var(--muted)] tracking-wider">Contest XP</span>
-                <p className="text-lg font-black text-[var(--accent)]">{user?.xp || 4900} XP</p>
-              </div>
-              <div className="text-center px-3">
-                <span className="text-[10px] uppercase font-black text-[var(--muted)] tracking-wider">Win Rate</span>
-                <p className="text-lg font-black text-emerald-400">85%</p>
+              {/* Quick Stats Pill */}
+              <div className="flex items-center gap-3 bg-[var(--surface-soft)] p-4 rounded-2xl border border-[var(--border-soft)] shadow-sm shrink-0">
+                <div className="text-center px-3 border-r border-[var(--border-soft)]">
+                  <span className="text-[10px] uppercase font-black text-[var(--muted)] tracking-wider">Your Rank</span>
+                  <p className="text-lg font-black text-amber-500">#4</p>
+                </div>
+                <div className="text-center px-3 border-r border-[var(--border-soft)]">
+                  <span className="text-[10px] uppercase font-black text-[var(--muted)] tracking-wider">Contest XP</span>
+                  <p className="text-lg font-black text-blue-600 dark:text-blue-400">{user?.xp || 4900} XP</p>
+                </div>
+                <div className="text-center px-3">
+                  <span className="text-[10px] uppercase font-black text-[var(--muted)] tracking-wider">Win Rate</span>
+                  <p className="text-lg font-black text-emerald-600 dark:text-emerald-400">85%</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* ARENA MODE TABS */}
-        <div className="flex border-b border-[var(--border-soft)] gap-2 overflow-x-auto no-scrollbar">
-          <button
-            onClick={() => setActiveMainTab("catalog")}
-            className={`pb-3 px-4 text-xs font-bold transition-all border-b-2 flex items-center gap-2 whitespace-nowrap ${
-              activeMainTab === "catalog"
-                ? "border-[var(--accent)] text-[var(--accent)] font-extrabold"
-                : "border-transparent text-[var(--muted)] hover:text-[var(--text)]"
-            }`}
-          >
-            <span className="text-sm">🎯</span> Daily Quizzes & Benchmarks ({ALL_CHALLENGES.length})
-          </button>
+          {/* ARENA MODE TABS */}
+          <div className="flex border-b border-[var(--border-soft)] gap-2 overflow-x-auto no-scrollbar">
+            <button
+              onClick={() => setActiveMainTab("catalog")}
+              className={`pb-3 px-4 text-xs font-bold transition-all border-b-2 flex items-center gap-2 whitespace-nowrap cursor-pointer ${
+                activeMainTab === "catalog"
+                  ? "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400 font-extrabold"
+                  : "border-transparent text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
+              }`}
+            >
+              <span className="text-sm">🎯</span> Daily Quizzes & Benchmarks ({ALL_CHALLENGES.length})
+            </button>
           <button
             onClick={() => setActiveMainTab("hackathon")}
-            className={`pb-3 px-4 text-xs font-bold transition-all border-b-2 flex items-center gap-2 whitespace-nowrap ${
-              activeMainTab === "hackathon"
-                ? "border-[var(--accent)] text-[var(--accent)] font-extrabold"
-                : "border-transparent text-[var(--muted)] hover:text-[var(--text)]"
-            }`}
-          >
-            <span className="text-sm">🏆</span> Speed Hackathons & Scoreboard
-          </button>
-          <button
-            onClick={() => setActiveMainTab("duel")}
-            className={`pb-3 px-4 text-xs font-bold transition-all border-b-2 flex items-center gap-2 whitespace-nowrap ${
-              activeMainTab === "duel"
-                ? "border-[var(--accent)] text-[var(--accent)] font-extrabold"
-                : "border-transparent text-[var(--muted)] hover:text-[var(--text)]"
-            }`}
-          >
-            <span className="text-sm">⚔️</span> Battle Mode (1v1 AI Code Duel)
-          </button>
+            className = {`pb-3 px-4 text-xs font-bold transition-all border-b-2 flex items-center gap-2 whitespace-nowrap cursor-pointer ${activeMainTab === "hackathon"
+                    ? "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400 font-extrabold"
+                    : "border-transparent text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
+                }`}
+            >
+              <span className="text-sm">🏆</span> Speed Hackathons & Scoreboard
+            </button>
+            <button
+              onClick={() => setActiveMainTab("duel")}
+              className={`pb-3 px-4 text-xs font-bold transition-all border-b-2 flex items-center gap-2 whitespace-nowrap cursor-pointer ${
+                activeMainTab === "duel"
+                  ? "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400 font-extrabold"
+                  : "border-transparent text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
+              }`}
+            >
+              <span className="text-sm">⚔️</span> Battle Mode (1v1 AI Code Duel)
+            </button>
         </div>
 
         {/* ================= TAB 1: QUIZZES & BENCHMARKS CATALOG WITH FILTERS ================= */}
@@ -559,7 +560,7 @@ export default function ContestArenaPage() {
           <div className="space-y-6">
 
             {/* SEARCH & FILTERS HUB (FLIPKART / MODERN CLEAN STYLE) */}
-            <div className="p-4 sm:p-5 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-xl space-y-4 backdrop-blur-xl">
+            <div className="p-4 sm:p-5 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs space-y-4 backdrop-blur-xl">
 
               {/* Row 1: Search + Category + Difficulty + Type */}
               <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
@@ -646,167 +647,153 @@ export default function ContestArenaPage() {
                     <button
                       key={tab.id}
                       onClick={() => setSelectedStatus(tab.id)}
-                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 ${
-                        selectedStatus === tab.id
-                          ? "bg-[var(--accent)] text-white shadow-sm"
-                          : "bg-[var(--surface-soft)] text-[var(--muted)] hover:text-[var(--text)]"
-                      }`}
+              className = {`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 cursor-pointer ${selectedStatus === tab.id
+                    ? "bg-blue-600 text-white shadow-sm font-black"
+                    : "bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 font-bold"
+                }`}
                     >
-                      {tab.label}
-                    </button>
+            {tab.label}
+          </button>
                   ))}
-                </div>
+        </div>
 
-                {/* Filter Result Counter & Reset */}
-                <div className="flex items-center gap-3 text-[var(--muted)] font-semibold">
-                  <span>Showing <strong className="text-[var(--text)]">{filteredChallenges.length}</strong> quizzes & challenges</span>
-                  {hasActiveFilters && (
-                    <button
-                      onClick={handleClearFilters}
-                      className="text-xs text-[var(--accent)] hover:underline font-bold"
-                    >
-                      Reset Filters ✕
-                    </button>
-                  )}
-                </div>
-              </div>
+        {/* Filter Result Counter & Reset */}
+        <div className="flex items-center gap-3 text-[var(--muted)] font-semibold">
+          <span>Showing <strong className="text-[var(--text)]">{filteredChallenges.length}</strong> quizzes & challenges</span>
+          {hasActiveFilters && (
+            <button
+              onClick={handleClearFilters}
+              className="text-xs text-blue-600 dark:text-blue-400 hover:underline font-bold cursor-pointer"
+            >
+              Reset Filters ✕
+            </button>
+          )}
+        </div>
+    </div>
+            </div >
+
+    {/* TWO-COLUMN GRID: CARDS FEED (LEFT 8 COLS) + LEADERBOARD (RIGHT 4 COLS) */ }
+    < div className = "grid grid-cols-1 lg:grid-cols-12 gap-6 items-start" >
+
+      {/* ================= CARDS FEED (8 COLS) ================= */ }
+      < div className = "lg:col-span-8 space-y-4" >
+      {
+        filteredChallenges.length === 0 ? (
+          <div className="p-12 text-center rounded-2xl bg-[var(--surface)] border border-[var(--border)] space-y-4 shadow-xs">
+            <div className="w-16 h-16 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-3xl flex items-center justify-center mx-auto">
+              🔍
             </div>
+            <h3 className="text-lg font-black">No quizzes match your filter criteria</h3>
+            <p className="text-xs text-[var(--muted)] max-w-md mx-auto">
+              Try resetting your domain or difficulty selection to discover exciting technical challenges.
+            </p>
+            <button
+              onClick={handleClearFilters}
+              className="button button-sm text-xs font-bold mx-auto mt-2 cursor-pointer"
+            >
+              Reset All Filters
+            </button>
+          </div>
+        ) : (
+          /* ROCK-SOLID MODERN GRID: Sleek cards with clear visual hierarchy */
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 auto-rows-fr">
+            {filteredChallenges.map((ch) => {
+              const isSolved = solvedChallengeIds.includes(ch.id);
 
-            {/* TWO-COLUMN GRID: CARDS FEED (LEFT 8 COLS) + LEADERBOARD (RIGHT 4 COLS) */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+              return (
+                <article
+                  key={ch.id}
+                  className="group relative rounded-3xl bg-[var(--surface)] border border-[var(--border)] hover:border-blue-400/50 dark:hover:border-blue-500/50 shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between overflow-hidden text-left h-full p-5"
+                >
+                  <div className="flex flex-col h-full justify-between space-y-4">
+                    {/* Clean, Uniform Top Header (No dark multi-colored banners) */}
+                    <div className="flex items-center justify-between gap-2 flex-wrap">
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                          <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-lg bg-blue-100 text-blue-900 border border-blue-300 dark:bg-blue-950/70 dark:text-blue-200 dark:border-blue-700 shadow-2xs">
+                            {ch.categoryLabel}
+                          </span>
+                            <span className="text-[10px] font-bold tracking-wider px-2 py-0.5 rounded-md bg-slate-100 text-slate-800 border border-slate-300 dark:bg-slate-800 dark:text-slate-200 dark:border-slate-700">
+                              {ch.type === "quiz" ? "Architect Quiz" : "Live Benchmark"}
+                            </span>
+                          </div>
 
-              {/* ================= CARDS FEED (8 COLS) ================= */}
-              <div className="lg:col-span-8 space-y-4">
-                {filteredChallenges.length === 0 ? (
-                  <div className="p-12 text-center rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] space-y-4 shadow-xl">
-                    <div className="w-16 h-16 rounded-full bg-purple-500/10 text-purple-400 text-3xl flex items-center justify-center mx-auto">
-                      🔍
-                    </div>
-                    <h3 className="text-lg font-black">No quizzes match your filter criteria</h3>
-                    <p className="text-xs text-[var(--muted)] max-w-md mx-auto">
-                      Try resetting your domain or difficulty selection to discover exciting technical challenges.
-                    </p>
-                    <button
-                      onClick={handleClearFilters}
-                      className="button button-sm text-xs font-bold mx-auto mt-2"
-                    >
-                      Reset All Filters
-                    </button>
-                  </div>
-                ) : (
-                  /* ROCK-SOLID MODERN GRID: Sleek glassmorphism cards with glowing accents */
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5 auto-rows-fr">
-                    {filteredChallenges.map((ch) => {
-                      const isSolved = solvedChallengeIds.includes(ch.id);
-
-                      return (
-                        <article
-                          key={ch.id}
-                          className="group relative rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] hover:border-purple-500/50 shadow-lg hover:shadow-2xl hover:shadow-purple-500/10 transition-all duration-300 flex flex-col justify-between overflow-hidden text-left h-full"
-                        >
-                          {/* Ambient radial glow background on card hover */}
-                          <div className="absolute top-0 right-0 w-44 h-44 bg-purple-500/5 rounded-full blur-2xl group-hover:bg-purple-500/15 transition-all pointer-events-none" />
-
-                          {/* Card Inner Wrapper for 100% Equal Height Alignment */}
-                          <div className="flex flex-col h-full justify-between relative z-10">
-
-                            {/* Top Header Stripe with Modern Glassmorphic Badges */}
-                            <div
-                              className="p-4 flex items-center justify-between text-white relative overflow-hidden shrink-0 border-b border-white/10"
-                              style={{ background: ch.bannerGradient || "linear-gradient(135deg, #7c3aed 0%, #4338ca 100%)" }}
-                            >
-                              <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px] pointer-events-none" />
-
-                              {/* Badges */}
-                              <div className="relative z-10 flex items-center gap-2 flex-wrap">
-                                <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 shadow-sm flex items-center gap-1">
-                                  <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse" />
-                                  {ch.categoryLabel}
+                          <div className="flex items-center gap-1.5">
+                            {isSolved && (
+                                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-900 border border-emerald-300 dark:bg-emerald-950/70 dark:text-emerald-200 dark:border-emerald-700 flex items-center gap-1">
+                                  <span>✓</span> Solved
                                 </span>
-                                <span className="text-[10px] font-extrabold tracking-wider px-2 py-0.5 rounded-full bg-black/30 backdrop-blur-md border border-white/10">
-                                  {ch.type === "quiz" ? "🧠 ARCHITECT QUIZ" : "💻 LIVE BENCHMARK"}
-                                </span>
-                              </div>
-
-                              {/* Solved Status & XP */}
-                              <div className="relative z-10 flex items-center gap-2">
-                                {isSolved && (
-                                  <span className="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-emerald-400 text-slate-950 shadow-md flex items-center gap-1">
-                                    <span>✓</span> SOLVED
-                                  </span>
                                 )}
-                                <span className="text-[11px] font-black px-2.5 py-1 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/40 backdrop-blur-md shadow-sm">
-                                  +{ch.xp} XP
-                                </span>
+                                  <span className="text-[11px] font-mono font-black px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300 dark:bg-amber-950/70 dark:text-amber-200 dark:border-amber-700">
+                                    +{ch.xp} XP
+                                  </span>
+                                </div>
                               </div>
-                            </div>
 
-                            {/* Card Body with Fixed Line-Clamped Heights to Prevent Layout Distortion */}
-                            <div className="p-5 space-y-3.5 flex-1 flex flex-col justify-between">
-
-                              {/* Title with Fixed Height */}
-                              <div>
-                                <h3 className="text-sm sm:text-base font-extrabold text-[var(--text)] group-hover:text-purple-400 transition-colors line-clamp-2 leading-snug min-h-[2.75rem]">
+                            {/* Card Body */}
+                            <div className="space-y-2.5 flex-1">
+                                <h3 className="text-base font-bold text-[var(--text)] group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2 leading-snug min-h-[2.5rem]">
                                   {ch.title}
                                 </h3>
 
-                                {/* Question Preview Line Clamped */}
-                                <p className="text-xs text-[var(--muted)] line-clamp-2 leading-relaxed mt-1.5 min-h-[2.25rem]">
+                                <p className="text-xs text-[var(--muted)] line-clamp-2 leading-relaxed min-h-[2.25rem]">
                                   {ch.question}
                                 </p>
-                              </div>
 
-                              {/* Tags Row with Controlled Overflow */}
-                              <div className="flex flex-wrap gap-1.5 pt-1 min-h-[1.75rem]">
-                                {ch.tags.slice(0, 3).map((tag) => (
-                                  <span
-                                    key={tag}
-                                    className="px-2 py-0.5 rounded-lg bg-[var(--surface-soft)] border border-[var(--border-soft)] group-hover:border-purple-500/30 text-[10px] font-semibold text-[var(--text)] transition-colors"
-                                  >
-                                    #{tag}
-                                  </span>
-                                ))}
-                                {ch.tags.length > 3 && (
-                                  <span className="text-[10px] text-[var(--muted)] font-semibold self-center">
-                                    +{ch.tags.length - 3}
-                                  </span>
-                                )}
-                              </div>
+                                {/* Tags */}
+                                <div className="flex flex-wrap gap-1.5 pt-1 min-h-[1.75rem]">
+                                  {ch.tags.slice(0, 3).map((tag) => (
+                                    <span
+                                      key={tag}
+                                      className="px-2 py-0.5 rounded-md bg-[var(--surface-soft)] border border-[var(--border-soft)] text-[10px] font-medium text-[var(--muted)] hover:text-[var(--text)]"
+                                    >
+                                      #{tag}
+                                    </span>
+                                  ))}
+                                  {ch.tags.length > 3 && (
+                                    <span className="text-[10px] text-[var(--muted)] font-semibold self-center">
+                                      +{ch.tags.length - 3}
+                                    </span>
+                                  )}
+                                </div>
+                            </div>
 
-                              {/* Metadata Strip: 3-column stats */}
-                              <div className="grid grid-cols-3 gap-2 py-2 px-3 rounded-xl bg-[var(--surface-soft)]/60 border border-[var(--border-soft)] text-[11px] text-[var(--muted)] font-semibold text-center">
-                                <div className="flex flex-col">
-                                  <span className="text-[9px] text-[var(--muted)] uppercase font-bold">Timer</span>
-                                  <span className="text-[var(--text)] font-extrabold">⏱️ {Math.floor(ch.timeLimitSec / 60)} min</span>
-                                </div>
-                                <div className="flex flex-col border-x border-[var(--border-soft)]">
-                                  <span className="text-[9px] text-[var(--muted)] uppercase font-bold">Solved</span>
-                                  <span className="text-[var(--text)] font-extrabold">👥 {ch.solvedCount.toLocaleString()}</span>
-                                </div>
-                                <div className="flex flex-col">
-                                  <span className="text-[9px] text-[var(--muted)] uppercase font-bold">Acceptance</span>
-                                  <span className="text-emerald-400 font-extrabold font-mono">{ch.acceptanceRate}</span>
-                                </div>
+                            {/* Metadata Strip: 3-column stats */}
+                            <div className="grid grid-cols-3 gap-2 py-2 px-3 rounded-xl bg-[var(--surface-soft)]/60 border border-[var(--border-soft)] text-[11px] text-[var(--muted)] font-medium text-center">
+                              <div className="flex flex-col">
+                                <span className="text-[9px] text-[var(--muted)] uppercase font-bold tracking-wider">Timer</span>
+                                <span className="text-[var(--text)] font-bold">⏱️ {Math.floor(ch.timeLimitSec / 60)} min</span>
+                              </div>
+                              <div className="flex flex-col border-x border-[var(--border-soft)]">
+                                <span className="text-[9px] text-[var(--muted)] uppercase font-bold tracking-wider">Solved</span>
+                                <span className="text-[var(--text)] font-bold">👥 {ch.solvedCount.toLocaleString()}</span>
+                              </div>
+                              <div className="flex flex-col">
+                                <span className="text-[9px] text-[var(--muted)] uppercase font-bold tracking-wider">Acceptance</span>
+                                <span className="text-emerald-600 dark:text-emerald-400 font-bold font-mono">{ch.acceptanceRate}</span>
                               </div>
                             </div>
 
-                            {/* Pinned Card Footer Action (Always aligned at the exact bottom baseline!) */}
-                            <div className="p-4 pt-3 border-t border-[var(--border-soft)] bg-[var(--surface-soft)]/40 flex items-center justify-between gap-3 mt-auto">
+                            {/* Pinned Card Footer Action */}
+                            <div className="pt-3 border-t border-[var(--border-soft)] flex items-center justify-between gap-3 mt-auto">
                               <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider ${
                                 ch.difficulty === "Beginner"
-                                  ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30"
+                                  ? "bg-emerald-100 text-emerald-900 border border-emerald-300 dark:bg-emerald-950/60 dark:text-emerald-200"
                                   : ch.difficulty === "Intermediate"
-                                  ? "bg-amber-500/15 text-amber-400 border border-amber-500/30"
+                                  ? "bg-amber-100 text-amber-900 border border-amber-300 dark:bg-amber-950/60 dark:text-amber-200"
                                   : ch.difficulty === "Advanced"
-                                  ? "bg-rose-500/15 text-rose-400 border border-rose-500/30"
-                                  : "bg-purple-500/15 text-purple-400 border border-purple-500/30"
+                                  ? "bg-rose-100 text-rose-900 border border-rose-300 dark:bg-rose-950/60 dark:text-rose-200"
+                                  : "bg-purple-100 text-purple-900 border border-purple-300 dark:bg-purple-950/60 dark:text-purple-200"
                               }`}>
                                 {ch.difficulty}
                               </span>
 
                               <button
                                 onClick={() => handleOpenChallenge(ch)}
-                                className="px-4 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-extrabold text-xs shadow-md shadow-purple-600/20 hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5"
+                                className={`px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 shadow-2xs cursor-pointer ${
+                                  isSolved
+                                    ? "bg-slate-100 hover:bg-slate-200 text-slate-900 border border-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-white dark:border-slate-600"
+                                    : "bg-blue-600 hover:bg-blue-700 text-white shadow-blue-500/20"
+                                }`}
                               >
                                 <span>{isSolved ? "Retake" : "Solve Challenge"}</span>
                                 <span>→</span>
@@ -822,9 +809,9 @@ export default function ContestArenaPage() {
 
               {/* ================= ARENA LEADERBOARD (4 COLS) ================= */}
               <aside className="lg:col-span-4 space-y-5 sticky top-28">
-                <div className="p-6 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] space-y-4 shadow-xl">
+                <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] space-y-4 shadow-xs">
                   <div className="flex items-center justify-between border-b border-[var(--border-soft)] pb-3">
-                    <h3 className="text-sm font-black uppercase tracking-wider text-[var(--accent)] flex items-center gap-1.5">
+                    <h3 className="text-sm font-extrabold uppercase tracking-wider text-blue-600 dark:text-blue-400 flex items-center gap-1.5">
                       <span>👑</span> Arena Leaderboard
                     </h3>
                     <span className="text-[10px] text-[var(--muted)] font-mono">Real-time Sync</span>
@@ -839,7 +826,7 @@ export default function ContestArenaPage() {
                           }`}>
                             {usr.rank === 1 ? "🥇" : usr.rank === 2 ? "🥈" : usr.rank === 3 ? "🥉" : `#${usr.rank}`}
                           </span>
-                          <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-600 text-white font-bold text-[11px] flex items-center justify-center shrink-0">
+                          <div className="w-7 h-7 rounded-full bg-blue-600 text-white font-bold text-[11px] flex items-center justify-center shrink-0">
                             {usr.avatar}
                           </div>
                           <div className="min-w-0">
@@ -856,13 +843,13 @@ export default function ContestArenaPage() {
                     ))}
                   </div>
 
-                  {/* Sandbox CTA */}
+                  {/* DSA Sheet CTA */}
                   <div className="pt-2 border-t border-[var(--border-soft)]">
                     <Link
-                      to="/sandbox"
-                      className="button button-sm w-full text-xs font-black text-center block shadow-md"
+                      to="/dsa-sheet"
+                      className="button button-sm w-full text-xs font-bold text-center block shadow-xs"
                     >
-                      ⚡ Open Interactive Code Sandbox
+                      🧠 Practice Pattern DSA Sheets →
                     </Link>
                   </div>
                 </div>
@@ -874,7 +861,7 @@ export default function ContestArenaPage() {
         {/* ================= TAB 2: WEEKLY SPEED HACKATHON ================= */}
         {activeMainTab === "hackathon" && (
           <div className="space-y-6">
-            <div className="p-8 rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-xl relative overflow-hidden">
+            <div className="p-8 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xs relative overflow-hidden">
               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div className="space-y-3 max-w-2xl">
                   <div className="flex items-center gap-2">
@@ -901,10 +888,10 @@ export default function ContestArenaPage() {
 
                 <div className="flex flex-col gap-3 shrink-0">
                   <button
-                    onClick={() => navigate("/sandbox")}
-                    className="button py-3.5 px-8 text-xs font-black shadow-xl hover:scale-105 transition-transform flex items-center justify-center gap-2"
+                    onClick={() => setActiveMainTab("duel")}
+                    className="button py-3.5 px-8 text-xs font-bold shadow-xs hover:scale-102 transition-transform flex items-center justify-center gap-2"
                   >
-                    <span>🚀</span> Enter Hackathon Arena & Open Sandbox
+                    <span>⚔️</span> Join 1v1 Battle Arena Duel
                   </button>
                   <span className="text-[10px] text-center text-[var(--muted)]">342 active contestants online</span>
                 </div>
@@ -928,12 +915,12 @@ export default function ContestArenaPage() {
       {/* ================= INTERACTIVE CHALLENGE / QUIZ SOLVER MODAL ================= */}
       {activeModalChallenge && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md animate-fade-in">
-          <div className="w-full max-w-2xl rounded-3xl bg-[var(--surface)] border border-[var(--border-soft)] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+          <div className="w-full max-w-2xl rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
 
             {/* Modal Header */}
             <div className="p-5 border-b border-[var(--border-soft)] bg-[var(--surface-soft)]/60 flex items-center justify-between shrink-0">
               <div className="flex items-center gap-2">
-                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-purple-500/15 text-purple-400 border border-purple-500/30">
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
                   {activeModalChallenge.categoryLabel}
                 </span>
                 <span className="text-xs font-bold text-emerald-400">+{activeModalChallenge.xp} XP</span>
@@ -980,102 +967,103 @@ export default function ContestArenaPage() {
                         key={optIdx}
                         onClick={() => !quizSubmitted && setQuizSelectedOption(optIdx)}
                         className={`w-full p-4 rounded-2xl border text-left text-xs transition-all flex items-start justify-between gap-3 ${btnStyle}`}
-                      >
-                        <span className="leading-relaxed">{opt}</span>
-                        {quizSubmitted && optIdx === activeModalChallenge.correctIndex && (
-                          <span className="text-emerald-400 font-bold shrink-0">✓ Correct</span>
-                        )}
-                      </button>
-                    );
-                  })}
+                                  >
+                                    <span className="leading-relaxed">{opt}</span>
+                                    {quizSubmitted && optIdx === activeModalChallenge.correctIndex && (
+                                      <span className="text-emerald-400 font-bold shrink-0">✓ Correct</span>
+                                    )}
+                                  </button>
+                                );
+                              })}
 
-                  {!quizSubmitted ? (
-                    <button
-                      onClick={handleSubmitQuiz}
-                      disabled={quizSelectedOption === null}
-                      className="button button-sm w-full text-xs font-black py-3 mt-4 disabled:opacity-50"
-                    >
-                      Submit Verification Answer →
-                    </button>
-                  ) : (
-                    <div className="p-4 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border-soft)] text-xs space-y-1 animate-fade-in">
-                      <span className="font-extrabold text-[var(--accent)]">Architectural Explanation:</span>
-                      <p className="text-[var(--muted)] leading-relaxed">{activeModalChallenge.explanation}</p>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* CODE CHALLENGE MODE */}
-              {activeModalChallenge.type === "code" && (
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-[var(--muted)]">AST Code Solution Editor</span>
-                    <button
-                      onClick={handleRunCodeAssertions}
-                      disabled={isRunningTests}
-                      className="button button-sm text-xs flex items-center gap-2 shadow-md"
-                    >
-                      <span>⚡</span>
-                      {isRunningTests ? "Running Benchmarks..." : "Run Test Suite"}
-                    </button>
-                  </div>
-
-                  <textarea
-                    rows={8}
-                    value={codeEditorVal}
-                    onChange={(e) => setCodeEditorVal(e.target.value)}
-                    className="w-full p-4 rounded-2xl font-mono text-xs bg-[#0b0a14] text-[#93c5fd] border border-[var(--border)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] resize-none"
-                  />
-
-                  {testResults && (
-                    <div className="p-4 rounded-2xl bg-[#06050b] border border-emerald-500/30 space-y-2 text-xs font-mono animate-fade-in">
-                      <div className="flex items-center justify-between text-emerald-400 font-bold">
-                        <span>✅ All Assertions Passed! (100% Score)</span>
-                        <span className="text-[10px] bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
-                          Passing in 4.2ms
-                        </span>
-                      </div>
-                      <div className="divide-y divide-gray-800 space-y-1 pt-1 text-[11px] text-gray-300">
-                        {testResults.map((r, i) => (
-                          <div key={i} className="pt-1 text-emerald-300">
-                            {r.msg}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* XP Banner */}
-              {earnedXP && (
-                <div className="p-4 rounded-2xl bg-gradient-to-r from-purple-500/20 to-indigo-500/20 border border-purple-500/40 text-xs font-bold flex items-center justify-between text-purple-300 animate-fade-in">
-                  <div className="flex items-center gap-2">
-                    <span className="text-xl">🎉</span>
-                    <span>Challenge Completed! +{earnedXP} XP added to your standing.</span>
-                  </div>
-                  <span className="px-2.5 py-1 rounded-full bg-purple-500/30 text-white text-[10px]">
-                    Streak +1 🔥
-                  </span>
-                </div>
-              )}
-            </div>
-
-            {/* Modal Footer */}
-            <div className="p-4 border-t border-[var(--border-soft)] bg-[var(--surface-soft)]/50 flex justify-end">
+            {!quizSubmitted ? (
               <button
-                onClick={() => setActiveModalChallenge(null)}
-                className="button button-sm text-xs font-black"
+                onClick={handleSubmitQuiz}
+                disabled={quizSelectedOption === null}
+                className="button button-sm w-full text-xs font-black py-3 mt-4 disabled:opacity-50"
               >
-                Close Window
+                Submit Verification Answer →
+              </button>
+            ) : (
+              <div className="p-4 rounded-2xl bg-[var(--surface-soft)] border border-[var(--border-soft)] text-xs space-y-1 animate-fade-in">
+                <span className="font-extrabold text-[var(--accent)]">Architectural Explanation:</span>
+                <p className="text-[var(--muted)] leading-relaxed">{activeModalChallenge.explanation}</p>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* CODE CHALLENGE MODE */}
+        {activeModalChallenge.type === "code" && (
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold text-[var(--muted)]">AST Code Solution Editor</span>
+              <button
+                onClick={handleRunCodeAssertions}
+                disabled={isRunningTests}
+                className="button button-sm text-xs flex items-center gap-2 shadow-md"
+              >
+                <span>⚡</span>
+                {isRunningTests ? "Running Benchmarks..." : "Run Test Suite"}
               </button>
             </div>
-          </div>
-        </div>
-      )}
 
-      <SiteFooter />
+            <textarea
+              rows={8}
+              value={codeEditorVal}
+              onChange={(e) => setCodeEditorVal(e.target.value)}
+              className="w-full p-4 rounded-2xl font-mono text-xs bg-[#0b0a14] text-[#93c5fd] border border-[var(--border)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] resize-none"
+            />
+
+            {testResults && (
+              <div className="p-4 rounded-2xl bg-[#06050b] border border-emerald-500/30 space-y-2 text-xs font-mono animate-fade-in">
+                <div className="flex items-center justify-between text-emerald-400 font-bold">
+                  <span>✅ All Assertions Passed! (100% Score)</span>
+                  <span className="text-[10px] bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+                    Passing in 4.2ms
+                  </span>
+                </div>
+                <div className="divide-y divide-gray-800 space-y-1 pt-1 text-[11px] text-gray-300">
+                  {testResults.map((r, i) => (
+                    <div key={i} className="pt-1 text-emerald-300">
+                      {r.msg}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* XP Banner */}
+        {earnedXP && (
+          <div className="p-4 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-xs font-bold flex items-center justify-between text-blue-700 dark:text-blue-300 animate-fade-in">
+            <div className="flex items-center gap-2">
+              <span className="text-xl">🎉</span>
+              <span>Challenge Completed! +{earnedXP} XP added to your standing.</span>
+            </div>
+            <span className="px-2.5 py-1 rounded-full bg-blue-600 text-white text-[10px]">
+              Streak +1 🔥
+            </span>
+          </div>
+        )}
+      </div>
+
+      {/* Modal Footer */}
+      <div className="p-4 border-t border-[var(--border-soft)] bg-[var(--surface-soft)]/50 flex justify-end">
+        <button
+          onClick={() => setActiveModalChallenge(null)}
+          className="button button-sm text-xs font-black"
+        >
+          Close Window
+        </button>
+      </div>
     </div>
+  </div>
+)
+}
+
+<SiteFooter />
+    </div >
   );
 }
